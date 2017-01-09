@@ -114,7 +114,7 @@ class TaskController
 
     public function editAction(Request $request, Response $response, array $args)
     {
-        $task = Task::find($args['id']);
+        $task = Task::findOrFail($args['id']);
 
         $staff = User::where('email', 'LIKE', '%@expomark.es')
             ->orderBy('first_name', 'ASC')
@@ -133,7 +133,7 @@ class TaskController
 
     public function completeAction(Request $request, Response $response, array $args)
     {
-        $task = Task::find($args['id']);
+        $task = Task::findOrFail($args['id']);
 
         $task->done_at = Carbon::now();
 
@@ -146,7 +146,7 @@ class TaskController
 
     public function reopenAction(Request $request, Response $response, array $args)
     {
-        $task = Task::find($args['id']);
+        $task = Task::findOrFail($args['id']);
 
         $task->done_at = null;
 
@@ -207,7 +207,7 @@ class TaskController
             ]));
         }
 
-        $task = Task::find($args['id']);
+        $task = Task::findOrFail($args['id']);
 
         $task->staff_id = $request->getParam('staff') ? filter_var($request->getParam('staff'), FILTER_SANITIZE_NUMBER_INT) : null;
         $task->name = filter_var($request->getParam('name'), FILTER_SANITIZE_STRING);
@@ -224,7 +224,7 @@ class TaskController
 
     public function deleteAction(Request $request, Response $response, array $args)
     {
-        $task = Task::find($args['id']);
+        $task = Task::findOrFail($args['id']);
 
         $task->delete();
 

@@ -86,7 +86,7 @@
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-sm-12">
-                                <a href="{{ path_for('task.delete', { 'id': task.task_id }) }}" class="btn btn-danger btn-lg">Borrar</a>
+                                <a href="{{ path_for('task.delete', { 'id': task.task_id }) }}" class="btn btn-danger btn-lg btn-delete">Borrar</a>
                                 {% if task.done_at == null %}
                                     <a href="{{ path_for('task.complete', { 'id': task.task_id }) }}" class="btn btn-warning btn-lg">Completar</a>
                                 {% else %}
@@ -108,11 +108,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
     <script src="{{ base_url() }}/js/vendor/datetimepicker.es.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.3/js/bootstrap-dialog.min.js"></script>
     <script>
         $(document).ready(function() {
             $(".select2").select2();
             $('.datetimepicker').datetimepicker({
                 locale: 'es'
+            });
+        });
+        $('.btn-delete').click(function(e) {
+            e.preventDefault();
+            var button = $(this);
+            BootstrapDialog.confirm({
+                title: 'Cuidado!!',
+                message: '¿Seguro que quieres borrar esta tarea?',
+                type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                closable: true, // <-- Default value is false
+                draggable: true, // <-- Default value is false
+                btnCancelLabel: '¡Mejor No!', // <-- Default value is 'Cancel',
+                btnOKLabel: '¡Bórrala!', // <-- Default value is 'OK',
+                btnOKClass: 'btn-danger', // <-- If you didn't specify it, dialog type will be used,
+                callback: function(result) {
+                    if (result) {
+                        window.location = button.attr('href')
+                    }
+                }
             });
         });
     </script>

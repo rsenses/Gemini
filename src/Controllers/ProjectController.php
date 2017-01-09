@@ -137,7 +137,7 @@ class ProjectController
 
     public function printAction(Request $request, Response $response, array $args)
     {
-        $project = Project::find($args['id']);
+        $project = Project::findOrFail($args['id']);
 
         $project->is_printed = 1;
 
@@ -150,7 +150,7 @@ class ProjectController
 
     public function editAction(Request $request, Response $response, array $args)
     {
-        $project = Project::find($args['id']);
+        $project = Project::findOrFail($args['id']);
 
         $clients = Client::orderBy('name', 'ASC')->get();
 
@@ -171,7 +171,7 @@ class ProjectController
 
     public function completeAction(Request $request, Response $response, array $args)
     {
-        $project = Project::find($args['id']);
+        $project = Project::findOrFail($args['id']);
 
         $project->done_at = Carbon::now();
 
@@ -184,7 +184,7 @@ class ProjectController
 
     public function reopenAction(Request $request, Response $response, array $args)
     {
-        $project = Project::find($args['id']);
+        $project = Project::findOrFail($args['id']);
 
         $project->done_at = null;
 
@@ -258,7 +258,7 @@ class ProjectController
             ]));
         }
 
-        $project = Project::find($args['id']);
+        $project = Project::findOrFail($args['id']);
 
         $project->user_id = filter_var($request->getParam('user'), FILTER_SANITIZE_NUMBER_INT);
         $project->name = filter_var($request->getParam('name'), FILTER_SANITIZE_STRING);
@@ -279,7 +279,9 @@ class ProjectController
 
     public function deleteAction(Request $request, Response $response, array $args)
     {
-        $project = Project::find($args['id']);
+        $project = Project::findOrFail($args['id']);
+
+        Task::where('project_id', $project->project_id)->delete();
 
         $project->delete();
 
