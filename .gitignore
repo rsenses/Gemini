@@ -1,0 +1,5 @@
+/vendor/
+/storage/
+.htaccess
+.DS_Store
+composer.phar

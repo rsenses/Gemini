@@ -1,0 +1,66 @@
+{% extends 'layouts/private.twig' %}
+
+{% block content %}
+    {% if places %}
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- start: page -->
+                <section class="panel next-events">
+                    <header class="panel-heading">
+                        <p><a href="{{ path_for('place.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un lugar</a></p>
+                    </header>
+                    <div class="panel-body">
+                        <table class="table table-bordered table-striped mb-none datatables">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th>Ciudad</th>
+                                    <th>C.P.</th>
+                                    <th>Provincia</th>
+                                    <th>Pais</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for place in places %}
+                                    <tr class="gradeX">
+                                        <td>{{ place.name }}</td>
+                                        <td>{{ place.address }}</td>
+                                        <td>{{ place.city }}</td>
+                                        <td>{{ place.zip }}</td>
+                                        <td>{{ place.state.name }}</td>
+                                        <td>{{ place.state.country.name }}</td>
+                                        <td class="text-center">
+                                            {% if place.is_shareable %}
+                                                <i class="fa fa-share-alt text-success" aria-hidden="true" title="De uso público"></i>
+                                            {% else %}
+                                                <i class="fa fa-ban text-danger" aria-hidden="true" title="De uso privado"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center"><a href="{{ path_for('place.edit', {'id': place.place_id }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-xs-12">
+                <p>No tiene ningún lugar creado:</p>
+                <p><a href="{{ path_for('place.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un lugar</a></p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <script src="{{ base_url() }}/assets/javascripts/theme.places.js"></script>
+{% endblock %}

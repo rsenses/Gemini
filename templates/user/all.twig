@@ -1,0 +1,72 @@
+{% extends 'layouts/private.twig' %}
+
+{% block content %}
+    {% if users %}
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- start: page -->
+                <section class="panel next-events">
+                    <div class="panel-body">
+                        <table class="table table-bordered table-striped mb-none datatables">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nombre</th>
+                                    <th>Apellidos</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th width="20">Admin</th>
+                                    <th width="20"></th>
+                                    <th width="20"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr class="gradeX">
+                                        <td>
+                                            <img src="{{ user.avatar }}" alt="{{ user.first_name~' '~user.last_name }}">
+                                            <span class="sr_only">{{ user.first_name~' '~user.last_name }}</span>
+                                        </td>
+                                        <td>{{ user.first_name }}</td>
+                                        <td>{{ user.last_name }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.phone }}</td>
+                                        <td class="text-center">
+                                            {% if user.is_admin %}
+                                                <i class="fa fa-unlock text-success" aria-hidden="true" title="Administrador"></i>
+                                            {% else %}
+                                                <i class="fa fa-lock text-danger" aria-hidden="true" title="Staff"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            {% if user.is_active %}
+                                                <i class="fa fa-thumbs-up text-success" aria-hidden="true" title="Activo"></i>
+                                            {% else %}
+                                                <i class="fa fa-thumbs-down text-danger" aria-hidden="true" title="No activo"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center"><a href="{{ path_for('user.edit', {'id': user.user_id }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-xs-12">
+                <p>No tiene ningún usuario:</p>
+                <p><a href="{{ path_for('user.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un usuario</a></p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <script src="{{ base_url() }}/assets/javascripts/theme.users.js"></script>
+{% endblock %}

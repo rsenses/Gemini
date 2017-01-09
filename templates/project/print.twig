@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="{{ base_url() }}/css/print.css">
+    </head>
+    <body class="print" onload="window.print()">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                       <table class="col-izq">
+                            <thead>
+                                <tr>
+                                    <td>
+                                       <h2>{{ project.project_id }}</h2>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                   <td>
+                                      <h3>{{ project.client.name }}</h3>
+                                      <h4>{{ project.contact }}</h4>
+                                   </td>
+                               </tr>
+                                <tr>
+                                    <td>
+                                        <table class="users">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <strong>
+                                                            {{ project.user.fullname() }}
+                                                        </strong>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                   </td>
+                               </tr>
+                            </tbody>
+                       </table>
+                    </td>
+                    <td>
+                        <table class="description">
+                            <tr>
+                                <td>
+                                    <h3 class="title">{{ project.name }}</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        {{ project.detail }}
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="dates">
+                            <tbody>
+                                <tr>
+                                    <td align="left">
+                                        FI-{{ project.started_at|date("d/m/Y") }}
+                                    </td>
+                                    <td align="right">
+                                        FF-{{ project.due_at|date("d/m/Y") }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

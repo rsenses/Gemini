@@ -1,0 +1,65 @@
+<!-- start: sidebar -->
+<aside id="sidebar-left" class="sidebar-left">
+
+    <div class="sidebar-header">
+        <div class="sidebar-title">&nbsp;</div>
+        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
+
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+                <ul class="nav nav-main">
+                    <li{% if route_name == 'Escritorio' %} class="nav-active"{% endif %}>
+                        <a href="{{ path_for('Escritorio') }}">
+                            <i class="fa fa-Escritorio" aria-hidden="true"></i>
+                            <span>Escritorio</span>
+                        </a>
+                    </li>
+                    <li{% if route_name == 'product.all' or route_name == 'product.new' or route_name == 'product.edit' or route_name == 'registration.all' %} class="nav-active"{% endif %}>
+                        <a href="{{ path_for('product.all') }}">
+                            <i class="fa fa-archive" aria-hidden="true"></i>
+                            <span>Eventos</span>
+                        </a>
+                    </li>
+                    <li{% if route_name == 'place.all' or route_name == 'place.new' or route_name == 'place.edit' %} class="nav-active"{% endif %}>
+                        <a href="{{ path_for('place.all') }}">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>Lugares</span>
+                        </a>
+                    </li>
+                    <li{% if route_name == 'user.all' or route_name == 'user.new' or route_name == 'user.edit' %} class="nav-active"{% endif %}>
+                        <a href="{{ path_for('user.all') }}">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>Staff</span>
+                        </a>
+                    </li>
+                    {# <li>
+                        <a href="calendario.php">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span>Calendario</span>
+                        </a>
+                    </li>
+                    <li>
+                        <hr>
+                    </li>
+                    <li>
+                        <a href="#0" disabled>
+                            <i class="fa fa-send-o" aria-hidden="true"></i>
+                            <span>SMS</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#0" disabled>
+                            <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                            <span>Camapañas</span>
+                        </a>
+                    </li> #}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</aside>
+<!-- end: sidebar -->

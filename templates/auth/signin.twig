@@ -1,0 +1,53 @@
+{% extends 'layouts/public.twig' %}
+
+{% block content %}
+<div class="panel panel-sign">
+    <div class="panel-title-sign">
+        <h2 class="text-uppercase"><i class="fa fa-user"></i> Bienvenido</h2>
+    </div>
+    <div class="panel-body">
+        <form action="{{ path_for('auth.signin') }}" method="POST">
+            <div class="form-group{{ validation_errors.email ? ' has-error' : '' }}">
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <input type="email" class="form-control" id="email" placeholder="johndoe@example.com" name="email" value="{{ old_input.email }}">
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope"></i>
+                    </span>
+                </div>
+                {% if validation_errors.email %}
+                    <span class="help-block">
+                        {{ validation_errors.email | first }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <div class="form-group{{ validation_errors.password ? ' has-error' : '' }}">
+                <label for="password">Contraseña</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password">
+                    <span class="input-group-addon">
+                        <i class="fa fa-lock"></i>
+                    </span>
+                </div>
+                {% if validation_errors.password %}
+                    <span class="help-block">
+                        {{ validation_errors.password | first }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in" aria-hidden="true"></i> Entrar</button>
+                </div>
+                <div class="col-sm-6">
+                    <a href="#0" class="btn btn-default btn-block"><i class="fa fa-question-circle" aria-hidden="true"></i> ¿No recuerdas tu contraseña?</a>
+                </div>
+            </div>
+
+            {{ csrf.field | raw }}
+        </form>
+    </div>
+</div>
+{% endblock %}

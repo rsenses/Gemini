@@ -1,0 +1,146 @@
+body {
+    font-size: 81.3%;
+    color: #444;
+    margin: 0;
+}
+html {
+    line-height: 1.4;
+}
+.print {
+    font-family: 'Open Sans', sans-serif;
+    border-top: 1px dotted #eaeaea;
+    border-bottom: 1px dotted #eaeaea;
+}
+.print .table {
+    width: 630px;
+    height: 167px;
+    margin: 10px;
+    overflow: hidden;
+    display: block;
+}
+.print .table td {
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+}
+.print .table>tbody>tr>td:first-child {
+    width: 200px;
+}
+.print .table>tbody>tr>td:last-child {
+    width: 430px;
+}
+.print .table .col-izq td {
+    padding-bottom: 10px;
+}
+.print .table .col-izq .users td:last-child {
+    padding-bottom: 0;
+    padding-right: 10px;
+}
+.print h1,
+.print h2,
+.print h3,
+.print h4,
+.print h5,
+.print p {
+    margin: 0;
+    padding: 0;
+}
+.print h4 {
+    font-weight: 400;
+}
+.print .table td h2,
+.print .table td span.black {
+    background-color: #000;
+    color: #FFF;
+    padding: 2px 5px 0;
+    text-align: center;
+    font-weight: 700;
+}
+.print .table td h2 {
+    float: left;
+    font-size: 28px;
+}
+h3.title {
+    font-size: 16px;
+    min-height: 50px;
+    max-width: 92%;
+}
+.print .table .dates {
+    width: 100%;
+    font-weight: 600;
+}
+.print .table .dates td {
+    width: 50%;
+}
+.print .table .description {
+    width: 100%;
+}
+.print .table .description>tbody>tr>td>div {
+    max-height: 85px;
+    min-height: 85px;
+    min-width: 98%;
+    padding: 3px;
+    border: 1px solid #DDD;
+    overflow: hidden;
+    font-size: 12px;
+    display: block;
+}
+.print .table .users {
+    font-size: 12px;
+}
+@media print {
+    * {
+        box-shadow: none!important;
+        text-shadow: none!important;
+    }
+    a,
+    a:visited {
+        text-decoration: underline
+    }
+    a[href]:after {
+        content: " (" attr(href) ")"
+    }
+    abbr[title]:after {
+        content: " (" attr(title) ")"
+    }
+    .ir a:after,
+    a[href^=javascript:]:after,
+    a[href^=#]:after {
+        content: ""
+    }
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+    thead {
+        display: table-header-group
+    }
+    tr,
+    img {
+        page-break-inside: avoid
+    }
+    img {
+        max-width: 100%!important
+    }
+    /* Style adjustments print */
+
+    .tclose,
+    .link-print {
+        display: none !important;
+    }
+    .print {
+        border: 0 none !important;
+        margin-top: 0 !important;
+    }
+    .print .table td h2 {
+        color: #FFFFFF !important;
+        background-color: #000000 !important;
+        -webkit-print-color-adjust: exact !important;
+    }
+    .print .table .dates,
+    h3.title {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}

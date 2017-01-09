@@ -1,0 +1,179 @@
+{% extends 'layouts/private.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            <section class="panel">
+                <form class="form-horizontal" method="POST" action="{{ path_for('project.modify', {'id': project.project_id}) }}" enctype="multipart/form-data">
+                    <div class="panel-body">
+                        <div class="form-group{{ validation_errors.user ? ' has-error' : '' }}">
+                            <label class="col-md-3 control-label" for="user">Responsable</label>
+                            <div class="col-md-9">
+                                <select class="form-control select2" name="user" id="user">
+                                    <option disabled selected value data-hidden="true">Selecciona uno</option>
+                                    {% for user in users %}
+                                        <option value="{{ user.user_id }}"{{ user.user_id == project.user_id ? ' selected' : '' }}>{{ user.fullName() }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% if validation_errors.user %}
+                                    <span class="help-block">
+                                        {{ validation_errors.user | first }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
+                            <label class="col-md-3 control-label" for="name">Nombre</label>
+                            <div class="col-md-9">
+                                <input class="form-control" id="name" type="text" name="name" value="{{ project.name }}">
+                                {% if validation_errors.name %}
+                                    <span class="help-block">
+                                        {{ validation_errors.name | first }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group{{ validation_errors.short_description ? ' has-error' : '' }}">
+                            <label class="col-md-3 control-label" for="short_description">Descripción breve</label>
+                            <div class="col-md-9">
+                                <input class="form-control" id="short_description" type="text" name="short_description" value="{{ project.short_description }}">
+                                {% if validation_errors.short_description %}
+                                    <span class="help-block">
+                                        {{ validation_errors.short_description | first }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
+                            <label class="col-md-3 control-label" for="description">Descripción</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control tinymce" rows="3" id="description" name="description">{{ project.description }}</textarea>
+                                {% if validation_errors.description %}
+                                    <span class="help-block">
+                                        {{ validation_errors.description | first }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <fieldset>
+                            <legend>Cliente</legend>
+                            <div class="form-group{{ validation_errors.client ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label" for="client">Cliente</label>
+                                <div class="col-md-6">
+                                    <select class="form-control select2" name="client" id="client">
+                                        <option disabled selected value data-hidden="true">Selecciona uno</option>
+                                        {% for client in clients %}
+                                            <option value="{{ client.client_id }}"{{ client.client_id == project.client_id ? ' selected' : '' }}>{{ client.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {% if validation_errors.client %}
+                                        <span class="help-block">
+                                            {{ validation_errors.client | first }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="#"  class="btn btn-default simple-ajax-modal">Nuevo <i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="form-group{{ validation_errors.contact ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label" for="contact">Contacto</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="contact" type="text" name="contact" value="{{ project.contact }}">
+                                    {% if validation_errors.contact %}
+                                        <span class="help-block">
+                                            {{ validation_errors.contact | first }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Entrega</legend>
+                            <div class="form-group{{ validation_errors.started_at ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label">Fecha de inicio</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.started_at }}">
+                                        <span class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
+                                    </div>
+                                    {% if validation_errors.started_at %}
+                                        <span class="help-block">
+                                            {{ validation_errors.started_at | first }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group{{ validation_errors.due_at ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label">Fecha de entrega</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.due_at }}">
+                                        <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
+                                    </div>
+                                    {% if validation_errors.due_at %}
+                                        <span class="help-block">
+                                            {{ validation_errors.due_at | first }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Facturación</legend>
+                            <div class="form-group{{ validation_errors.budget ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label" for="budget">Presupuesto</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="budget" type="text" name="budget" value="{{ project.budget }}">
+                                    {% if validation_errors.budget %}
+                                        <span class="help-block">
+                                            {{ validation_errors.budget | first }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group{{ validation_errors.bill ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label" for="bill">Factura</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="bill" type="text" name="bill" value="{{ project.bill }}">
+                                    {% if validation_errors.bill %}
+                                        <span class="help-block">
+                                            {{ validation_errors.bill | first }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success btn-lg pull-right">Guardar</button>
+                                {{ csrf.field | raw }}
+                            </div>
+                        </div>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{ base_url() }}/js/vendor/datetimepicker.es.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".select2").select2();
+            $('.datetimepicker').datetimepicker({
+                locale: 'es'
+            });
+        });
+    </script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+{% endblock %}
