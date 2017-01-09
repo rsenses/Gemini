@@ -3,8 +3,38 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12">
-            {# <h2><i class="fa fa-tachometer" aria-hidden="true"></i> Escritorio</h3> #}
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, eos magni incidunt aperiam, odit, nesciunt repellat quam voluptate cupiditate minima quibusdam iusto molestiae necessitatibus laborum illum iste veniam ipsum rerum?</p>
+            <!-- start: page -->
+            <section class="panel next-events">
+                <header class="panel-heading">
+                    <p><a href="{{ path_for('task.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
+                </header>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped datatables">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Proyecto</th>
+                                <th>Cierre</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in tasks %}
+                                <tr class="gradeX">
+                                    <td><a href="{{ path_for('task.edit', {'id': task.task_id }) }}">{{ task.name }}</a></td>
+                                    <td><a href="{{ path_for('project.edit', {'id': task.project_id }) }}">{{ task.project.name }}</a></td>
+                                    <td>{{ task.due_at }}</td>
+                                    <td>
+                                        <a href="{{ path_for('task.edit', {'id': task.task_id }) }}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </div>
     </div>
 {% endblock %}

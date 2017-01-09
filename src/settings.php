@@ -5,7 +5,7 @@ return [
          * Fixed Settings, never change
          */
         'determineRouteBeforeAppMiddleware' => true, // Allow middlewares determine route
-        'session_name' => 'trackitAdminSessName',
+        'session_name' => 'geminiSessName',
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
         // Monolog settings
         'logger' => [

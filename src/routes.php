@@ -48,6 +48,10 @@ $app->group('', function () {
         $this->get('/new', 'ProjectController:newAction')->setName('project.new');
         // Edit Project
         $this->get('/edit/{id:[0-9]+}', 'ProjectController:editAction')->setName('project.edit');
+        // Complete Project
+        $this->get('/complete/{id:[0-9]+}', 'ProjectController:completeAction')->setName('project.complete');
+        // Reopen Project
+        $this->get('/reopen/{id:[0-9]+}', 'ProjectController:reopenAction')->setName('project.reopen');
         // Save Project
         $this->post('/save', 'ProjectController:saveAction')->setName('project.save');
         // Modify Project
@@ -59,7 +63,7 @@ $app->group('', function () {
     // Task Group
     $this->group('/task', function () {
         // User Tasks
-        $this->get('/all', 'TaskController:userAction')->setName('task');
+        $this->get('/all', 'TaskController:inProgressAction')->setName('task.inprogress');
         // Completed User Tasks
         $this->get('/completed', 'TaskController:completedUserAction')->setName('task.completed');
         // Project Tasks
@@ -69,9 +73,13 @@ $app->group('', function () {
         // Unassigned Tasks
         $this->get('/unnasigned', 'TaskController:unnasignedUserAction')->setName('task.unnasigned');
         // New Task
-        $this->get('/new', 'TaskController:newAction')->setName('task.new');
+        $this->get('/new[/{id:[0-9]+}]', 'TaskController:newAction')->setName('task.new');
         // Edit Task
         $this->get('/edit/{id:[0-9]+}', 'TaskController:editAction')->setName('task.edit');
+        // Complete Task
+        $this->get('/complete/{id:[0-9]+}', 'TaskController:completeAction')->setName('task.complete');
+        // Reopne Task
+        $this->get('/reopen/{id:[0-9]+}', 'TaskController:reopenAction')->setName('task.reopen');
         // Save Task
         $this->post('/save', 'TaskController:saveAction')->setName('task.save');
         // Modify Task

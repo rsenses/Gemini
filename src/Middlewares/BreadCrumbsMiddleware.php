@@ -111,12 +111,36 @@ class BreadCrumbsMiddleware
                     'url' => $this->getUrl($request, $routeName)
                 ];
                 break;
-            case 'registration.all':
-                $breadcrumbs['current'] = 'Registros';
+            case 'task.inprogress':
+                $breadcrumbs['current'] = 'Mis tareas';
                 $breadcrumbs['routes'][] = [
-                    'name' => 'Mis Proyectos',
-                    'route' => 'project.inprogress',
-                    'url' => $this->getUrl($request, 'project.inprogress')
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
+            case 'task.completed':
+                $breadcrumbs['current'] = 'Tareas completadas';
+                $breadcrumbs['routes'][] = [
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
+            case 'task.unnasigned':
+                $breadcrumbs['current'] = 'Tareas sin asignar';
+                $breadcrumbs['routes'][] = [
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
+            case 'task.new':
+                $breadcrumbs['current'] = 'Nueva Tarea';
+                $breadcrumbs['routes'][] = [
+                    'name' => 'Mis Tareas',
+                    'route' => 'task.inprogress',
+                    'url' => $this->getUrl($request, 'task.inprogress')
                 ];
                 $breadcrumbs['routes'][] = [
                     'name' => $breadcrumbs['current'],
@@ -124,33 +148,12 @@ class BreadCrumbsMiddleware
                     'url' => $this->getUrl($request, $routeName)
                 ];
                 break;
-            case 'place.all':
-                $breadcrumbs['current'] = 'Lugares';
+            case 'task.edit':
+                $breadcrumbs['current'] = 'Editar Tarea';
                 $breadcrumbs['routes'][] = [
-                    'name' => $breadcrumbs['current'],
-                    'route' => $routeName,
-                    'url' => $this->getUrl($request, $routeName)
-                ];
-                break;
-            case 'place.new':
-                $breadcrumbs['current'] = 'Nuevo Lugar';
-                $breadcrumbs['routes'][] = [
-                    'name' => 'Lugares',
-                    'route' => 'place.all',
-                    'url' => $this->getUrl($request, 'place.all')
-                ];
-                $breadcrumbs['routes'][] = [
-                    'name' => $breadcrumbs['current'],
-                    'route' => $routeName,
-                    'url' => $this->getUrl($request, $routeName)
-                ];
-                break;
-            case 'place.edit':
-                $breadcrumbs['current'] = 'Editar Lugar';
-                $breadcrumbs['routes'][] = [
-                    'name' => 'Lugares',
-                    'route' => 'place.all',
-                    'url' => $this->getUrl($request, 'place.all')
+                    'name' => 'Mis Tareas',
+                    'route' => 'task.inprogress',
+                    'url' => $this->getUrl($request, 'task.inprogress')
                 ];
                 $breadcrumbs['routes'][] = [
                     'name' => $breadcrumbs['current'],
@@ -189,7 +192,7 @@ class BreadCrumbsMiddleware
     }
 
     private function getUrl(Request $request, $route) {
-        $args = $request->getAttribute('routeInfo')[2] ?: ['lang' => $this->settings['allowedLocales'][0]];
+        $args = isset($request->getAttribute('routeInfo')[2]) ? $request->getAttribute('routeInfo')[2] : ['lang' => $this->settings['allowedLocales'][0]];
         return $this->router->pathFor($route, $args);
     }
 }

@@ -10,7 +10,7 @@
                         <p><a href="{{ path_for('project.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un proyecto</a></p>
                     </header>
                     <div class="panel-body">
-                        <table class="table table-bordered table-striped datatables">
+                        <table class="table table-bordered table-striped mb-none datatables">
                             <thead>
                                 <tr>
                                     <th>Código</th>
@@ -31,16 +31,12 @@
                                             <a href="{{ path_for('project.edit', {'id': project.project_id }) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
-                                            {% if project.is_printed == 0 %}
-                                                <a href="{{ path_for('project.print', {'id': project.project_id }) }}" target="_blank">
-                                                    <i class="fa fa-print" aria-hidden="true"></i>
-                                                </a>
-                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                        {{ pagination | raw }}
                     </div>
                 </section>
             </div>

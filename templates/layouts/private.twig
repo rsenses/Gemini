@@ -54,6 +54,11 @@
                                 <i class="fa fa-cogs" aria-hidden="true"></i> Configuración
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ path_for('auth.signout') }}">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i> Salir
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -76,7 +81,10 @@
                     <hr>
                     <ul class="nav nav-sidebar">
                         <li>
-                            <a href="{{ path_for('task') }}"><i class="fa fa-gg-circle" aria-hidden="true"></i> Tareas pendientes</a>
+                            <a href="{{ path_for('task.inprogress') }}"><i class="fa fa-gg-circle" aria-hidden="true"></i> Tareas pendientes</a>
+                        </li>
+                        <li>
+                            <a href="{{ path_for('task.completed') }}"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Tareas completadas</a>
                         </li>
                         <li>
                             <a href="{{ path_for('task.unnasigned') }}"><i class="fa fa-user-circle" aria-hidden="true"></i> Tareas sin asignar</a>

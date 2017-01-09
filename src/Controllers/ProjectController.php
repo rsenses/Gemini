@@ -18,9 +18,10 @@ use Carbon\Carbon;
 use Slim\Csrf\Guard;
 use JasonGrimes\Paginator;
 
-use App\Entities\Project;
-use App\Entities\User;
 use App\Entities\Client;
+use App\Entities\Project;
+use App\Entities\Task;
+use App\Entities\User;
 
 /**
  *
@@ -110,6 +111,18 @@ class ProjectController
         ]);
     }
 
+    public function userAction(Request $request, Response $response, array $args)
+    {
+        $projects = Project::where('user_id', $args['id'])
+            ->whereNull('done_at')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        return $this->view->render($response, 'project/all.twig', [
+            'projects' => $projects
+        ]);
+    }
+
     public function newAction(Request $request, Response $response, array $args)
     {
         $clients = Client::orderBy('name', 'ASC')->get();
@@ -143,11 +156,43 @@ class ProjectController
 
         $users = User::orderBy('first_name', 'ASC')->get();
 
+        $tasks = Task::where('staff_id', $this->auth->getUserId())
+            ->whereNull('done_at')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
         return $this->view->render($response, 'project/edit.twig', [
             'project' => $project,
             'clients' => $clients,
             'users' => $users,
+            'tasks' => $tasks,
         ]);
+    }
+
+    public function completeAction(Request $request, Response $response, array $args)
+    {
+        $project = Project::find($args['id']);
+
+        $project->done_at = Carbon::now();
+
+        $project->save();
+
+        return $response->withRedirect($this->router->pathFor('project.edit', [
+            'id' => $args['id'],
+        ]));
+    }
+
+    public function reopenAction(Request $request, Response $response, array $args)
+    {
+        $project = Project::find($args['id']);
+
+        $project->done_at = null;
+
+        $project->save();
+
+        return $response->withRedirect($this->router->pathFor('project.edit', [
+            'id' => $args['id'],
+        ]));
     }
 
     public function saveAction(Request $request, Response $response, array $args)
@@ -230,6 +275,15 @@ class ProjectController
         return $response->withRedirect($this->router->pathFor('project.edit', [
             'id' => $project->project_id,
         ]));
+    }
+
+    public function deleteAction(Request $request, Response $response, array $args)
+    {
+        $project = Project::find($args['id']);
+
+        $project->delete();
+
+        return $response->withRedirect($this->router->pathFor('project.inprogress'));
     }
 
     private function colorPicker()

@@ -15,7 +15,6 @@ class Project extends \Illuminate\Database\Eloquent\Model
     ];
     protected $fillable = [
         'name',
-        'slug',
         'description',
         'short_description',
         'contact',

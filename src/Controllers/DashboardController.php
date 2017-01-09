@@ -9,8 +9,9 @@ use Psr\Log\LoggerInterface;
 use App\Auth\AuraAuth;
 use Carbon\Carbon;
 
-use App\Entities\User;
 use App\Entities\Project;
+use App\Entities\Task;
+use App\Entities\User;
 
 /**
  *
@@ -30,13 +31,13 @@ class DashboardController
 
     public function indexAction(Request $request, Response $response, array $args)
     {
-        // $projects = Project::where('client_id', $this->auth->getClientId())
-        $projects = Project::whereNull('done_at')
+        $tasks = Task::where('staff_id', $this->auth->getUserId())
+            ->whereNull('done_at')
             ->orderBy('due_at', 'ASC')
             ->get();
 
         return $this->view->render($response, 'dashboard/dashboard.twig', [
-            'projects' => $projects
+            'tasks' => $tasks
         ]);
     }
 }

@@ -7,10 +7,10 @@
                 <form class="form-horizontal" method="POST" action="{{ path_for('project.save') }}" enctype="multipart/form-data">
                     <div class="panel-body">
                         <div class="form-group{{ validation_errors.user ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="user">Responsable</label>
+                            <label class="col-md-3 control-label" for="user">Responsable<span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                                <select class="form-control select2" name="user" id="user">
-                                    <option disabled selected value data-hidden="true">Selecciona uno</option>
+                                <select class="form-control select2" name="user" id="user" required>
+                                    <option disabled selected value data-hidden="true">Selecciona un responsable</option>
                                     {% for user in users %}
                                         <option value="{{ user.user_id }}">{{ user.fullName() }}</option>
                                     {% endfor %}
@@ -23,9 +23,9 @@
                             </div>
                         </div>
                         <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="name">Nombre</label>
+                            <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                                <input class="form-control" id="name" type="text" name="name">
+                                <input class="form-control" id="name" type="text" name="name" required>
                                 {% if validation_errors.name %}
                                     <span class="help-block">
                                         {{ validation_errors.name | first }}
@@ -34,9 +34,9 @@
                             </div>
                         </div>
                         <div class="form-group{{ validation_errors.short_description ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="short_description">Descripción breve</label>
+                            <label class="col-md-3 control-label" for="short_description">Descripción breve<span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                                <input class="form-control" id="short_description" type="text" name="short_description">
+                                <input class="form-control" id="short_description" type="text" name="short_description" required>
                                 {% if validation_errors.short_description %}
                                     <span class="help-block">
                                         {{ validation_errors.short_description | first }}
@@ -45,9 +45,9 @@
                             </div>
                         </div>
                         <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="description">Descripción</label>
+                            <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                                <textarea class="form-control tinymce" rows="3" id="description" name="description"></textarea>
+                                <textarea class="form-control tinymce" rows="3" id="description" name="description" required></textarea>
                                 {% if validation_errors.description %}
                                     <span class="help-block">
                                         {{ validation_errors.description | first }}
@@ -59,10 +59,10 @@
                         <fieldset>
                             <legend>Cliente</legend>
                             <div class="form-group{{ validation_errors.client ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label" for="client">Cliente</label>
+                                <label class="col-md-3 control-label" for="client">Cliente<span class="text-danger">*</span></label>
                                 <div class="col-md-6">
-                                    <select class="form-control select2" name="client" id="client">
-                                        <option disabled selected value data-hidden="true">Selecciona uno</option>
+                                    <select class="form-control select2" name="client" id="client" required>
+                                        <option disabled selected value data-hidden="true">Selecciona un cliente</option>
                                         {% for client in clients %}
                                             <option value="{{ client.client_id }}">{{ client.name }}</option>
                                         {% endfor %}
@@ -78,9 +78,9 @@
                                 </div>
                             </div>
                             <div class="form-group{{ validation_errors.contact ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label" for="contact">Contacto</label>
+                                <label class="col-md-3 control-label" for="contact">Contacto<span class="text-danger">*</span></label>
                                 <div class="col-md-9">
-                                    <input class="form-control" id="contact" type="text" name="contact">
+                                    <input class="form-control" id="contact" type="text" name="contact" required>
                                     {% if validation_errors.contact %}
                                         <span class="help-block">
                                             {{ validation_errors.contact | first }}
@@ -93,10 +93,10 @@
                         <fieldset>
                             <legend>Entrega</legend>
                             <div class="form-group{{ validation_errors.started_at ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label">Fecha de inicio</label>
+                                <label class="col-md-3 control-label">Fecha de inicio<span class="text-danger">*</span></label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm">
+                                        <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" required>
                                         <span class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                                     </div>
                                     {% if validation_errors.started_at %}
@@ -107,10 +107,10 @@
                                 </div>
                             </div>
                             <div class="form-group{{ validation_errors.due_at ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label">Fecha de entrega</label>
+                                <label class="col-md-3 control-label">Fecha de entrega<span class="text-danger">*</span></label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm">
+                                        <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" required>
                                         <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
                                     </div>
                                     {% if validation_errors.due_at %}

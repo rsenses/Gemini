@@ -4,11 +4,21 @@ namespace App\Entities;
 
 class Task extends \Illuminate\Database\Eloquent\Model
 {
-    protected $table = 'client';
-    protected $primaryKey = 'client_id';
-    public $timestamps = false;
+    protected $table = 'task';
+    protected $primaryKey = 'task_id';
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'due_at',
+        'done_at',
+    ];
     protected $fillable = [
         'name',
+        'description',
+        'user_id',
+        'staff_id',
+        'project_id',
+        'due_at',
     ];
 
     public function comments()
