@@ -47,7 +47,7 @@
                         <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
                             <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                                <textarea class="form-control tinymce" rows="3" id="description" name="description" required></textarea>
+                                <textarea class="form-control tinymce" rows="3" id="description" name="description"></textarea>
                                 {% if validation_errors.description %}
                                     <span class="help-block">
                                         {{ validation_errors.description | first }}

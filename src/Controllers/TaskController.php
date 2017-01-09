@@ -124,10 +124,16 @@ class TaskController
             ->orderBy('name', 'ASC')
             ->get();
 
+        $totalTimeTrack = 0;
+        foreach ($task->timetracks as $track) {
+            $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+        }
+
         return $this->view->render($response, 'task/edit.twig', [
             'task' => $task,
             'staff' => $staff,
             'projects' => $projects,
+            'totalTimeTrack' => $totalTimeTrack,
         ]);
     }
 

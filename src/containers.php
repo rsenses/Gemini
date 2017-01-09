@@ -31,12 +31,22 @@ $container['view'] = function ($container) {
         $container->get('request')->getUri()
     ));
     $view->addExtension(new Twig_Extension_Debug());
+    $view->addExtension(new Twig_Extensions_Extension_Date());
+
+    $diff = new Twig_SimpleFilter('timediff', function ($date, $now = null) {
+        $date = strtotime($date);
+
+        $now = $now ? strtotime($now) : time();
+
+        return date('H:i:s', $now - $date);
+    });
 
     $view->getEnvironment()->addGlobal('auth', [
         'status' => $container->auth->getStatus(),
         'user' => $container->auth->getUserData()
     ]);
     $view->getEnvironment()->addGlobal('flash', $container->flash);
+    $view->getEnvironment()->addFilter($diff);
 
     return $view;
 };
