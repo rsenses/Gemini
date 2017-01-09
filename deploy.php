@@ -21,11 +21,6 @@ after('deploy', 'success');
 
 // Define a server for deployment.
 // Let's name it "prod" and use port 22.
-// server('ams3-expomark', 'ams3.expomark.es', 22)
-//     ->user('root')
-//     ->forwardAgent() // You can use identity key, ssh config, or username/password to auth on the server.
-//     ->stage('production')
-//     ->env('deploy_path', '/home/tedae/deployment'); // Define the base path to deploy your project to.
 server('scl-prs3', 'scl.prs3.expomark.es', 22)
     ->user('root')
     ->forwardAgent() // You can use identity key, ssh config, or username/password to auth on the server.
@@ -36,7 +31,7 @@ server('scl-prs3', 'scl.prs3.expomark.es', 22)
 // The server needs to have git installed for this to work.
 // If you're not using a forward agent, then the server has to be able to clone
 // your project from this repository.
-set('repository', 'git@bitbucket.org:rsenses/tedae.git');
+set('repository', 'git@bitbucket.org:expomark/gemini.git');
 
 // set('shared_files', ['app/.env']);
 
