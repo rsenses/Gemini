@@ -106,7 +106,9 @@
             <section class="panel next-events">
                 <header class="panel-heading">
                     {% if active_timetrack == 0 %}
-                        <p><a href="{{ path_for('timetrack.start', { 'id': task.task_id }) }}" class="btn btn-primary"><i class="fa fa-play" aria-hidden="true"></i> Iniciar contador</a></p>
+                        {% if task.staff_id == auth.user.user_id %}
+                            <p><a href="{{ path_for('timetrack.start', { 'id': task.task_id }) }}" class="btn btn-primary"><i class="fa fa-play" aria-hidden="true"></i> Iniciar contador</a></p>
+                        {% endif %}
                     {% else %}
                         <p><a href="{{ path_for('timetrack.stop') }}" class="btn btn-danger"><i class="fa fa-stop" aria-hidden="true"></i> Detener contador</a></p>
                     {% endif %}
