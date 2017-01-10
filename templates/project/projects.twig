@@ -26,7 +26,7 @@
                                     <tr{{ project.user_id != auth.user.user_id ? ' class="assigned"' : '' }}>
                                         <td>{{ project.project_id }}</td>
                                         <td>{{ project.client.name }}</td>
-                                        <td><a href="{{ path_for('project.edit', {'id': project.project_id }) }}">{{ project.name }}</a></td>
+                                        <td><a href="{{ path_for('project.edit', {'id': project.project_id }) }}">{{ project.name | raw }}</a></td>
                                         <td>{{ project.user.fullname() }}</td>
                                         <td nowrap>{{ project.due_at }}</td>
                                         <td nowrap>

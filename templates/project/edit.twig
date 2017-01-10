@@ -7,7 +7,7 @@
                 <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <input class="form-control" id="name" type="text" name="name" value="{{ project.name }}" required>
+                        <input class="form-control" id="name" type="text" name="name" value="{{ project.name | raw }}" required>
                         {% if validation_errors.name %}
                             <span class="help-block">
                                 {{ validation_errors.name | first }}
@@ -18,7 +18,7 @@
                 <div class="form-group{{ validation_errors.short_description ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="short_description">Descripción breve<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <input class="form-control" id="short_description" type="text" name="short_description" value="{{ project.short_description }}" required>
+                        <input class="form-control" id="short_description" type="text" name="short_description" value="{{ project.short_description | raw }}" required>
                         {% if validation_errors.short_description %}
                             <span class="help-block">
                                 {{ validation_errors.short_description | first }}
