@@ -156,7 +156,7 @@ class ProjectController
 
         $users = User::orderBy('first_name', 'ASC')->get();
 
-        $inProgressTasks = Task::where('staff_id', $this->auth->getUserId())
+        $inProgressTasks = Task::where('project_id', $project->project_id)
             ->whereNull('done_at')
             ->orderBy('due_at', 'ASC')
             ->get();
@@ -175,7 +175,7 @@ class ProjectController
             $project->inProgressTasksTime += $totalTimeTrack;
         }
 
-        $completedTasks = Task::where('staff_id', $this->auth->getUserId())
+        $completedTasks = Task::where('project_id', $project->project_id)
             ->whereNotNull('done_at')
             ->orderBy('due_at', 'ASC')
             ->get();
