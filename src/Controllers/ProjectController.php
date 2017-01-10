@@ -294,7 +294,8 @@ class ProjectController
             'started_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('started_at')),
             'due_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')),
             'budget' => filter_var($request->getParam('budget'), FILTER_SANITIZE_STRING),
-            'bill' => filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING)
+            'bill' => filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING),
+            'billed_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('billed_at'))
         ]);
 
         foreach ($request->getParam('staff') as $id) {
@@ -342,6 +343,7 @@ class ProjectController
         $project->due_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at'));
         $project->budget = filter_var($request->getParam('budget'), FILTER_SANITIZE_STRING);
         $project->bill = filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING);
+        $project->billed_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('billed_at'));
 
         $project->save();
 
