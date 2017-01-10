@@ -194,7 +194,7 @@ class TaskController
             'user_id' => $this->auth->getUserId(),
             'staff_id' => $request->getParam('staff') ? filter_var($request->getParam('staff'), FILTER_SANITIZE_NUMBER_INT) : null,
             'name' => filter_var($request->getParam('name'), FILTER_SANITIZE_STRING),
-            'description' => filter_var($request->getParam('description'), FILTER_SANITIZE_STRING),
+            'description' => $request->getParam('description'),
             'project_id' => filter_var($request->getParam('project'), FILTER_SANITIZE_NUMBER_INT),
             'due_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')),
         ]);
@@ -227,7 +227,7 @@ class TaskController
 
         $task->staff_id = $request->getParam('staff') ? filter_var($request->getParam('staff'), FILTER_SANITIZE_NUMBER_INT) : null;
         $task->name = filter_var($request->getParam('name'), FILTER_SANITIZE_STRING);
-        $task->description = filter_var($request->getParam('description'), FILTER_SANITIZE_STRING);
+        $task->description = $request->getParam('description');
         $task->project_id = filter_var($request->getParam('project'), FILTER_SANITIZE_NUMBER_INT);
         $task->due_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at'));
 

@@ -254,7 +254,7 @@ class ProjectController
             'user_id' => filter_var($request->getParam('user'), FILTER_SANITIZE_NUMBER_INT),
             'name' => filter_var($request->getParam('name'), FILTER_SANITIZE_STRING),
             'short_description' => filter_var($request->getParam('short_description'), FILTER_SANITIZE_STRING),
-            'description' => filter_var($request->getParam('description'), FILTER_SANITIZE_STRING),
+            'description' => $request->getParam('description'),
             'color' => $this->colorPicker(),
             'client_id' => filter_var($request->getParam('client'), FILTER_SANITIZE_NUMBER_INT),
             'contact' => filter_var($request->getParam('contact'), FILTER_SANITIZE_STRING),
@@ -297,7 +297,7 @@ class ProjectController
         $project->user_id = filter_var($request->getParam('user'), FILTER_SANITIZE_NUMBER_INT);
         $project->name = filter_var($request->getParam('name'), FILTER_SANITIZE_STRING);
         $project->short_description = filter_var($request->getParam('short_description'), FILTER_SANITIZE_STRING);
-        $project->description = filter_var($request->getParam('description'), FILTER_SANITIZE_STRING);
+        $project->description = $request->getParam('description');
         $project->client_id = filter_var($request->getParam('client'), FILTER_SANITIZE_NUMBER_INT);
         $project->started_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('started_at'));
         $project->due_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at'));

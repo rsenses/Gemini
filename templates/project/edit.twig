@@ -153,6 +153,7 @@
                         {% else %}
                             <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning btn-lg">Reabrir</a>
                         {% endif %}
+                        <a href="{{ path_for('project.print', { 'id': project.project_id }) }}" target="_blank" class="btn btn-info btn-lg">Imprimir</a>
                         <button class="btn btn-success btn-lg pull-right">Guardar</button>
                         {{ csrf.field | raw }}
                     </div>
