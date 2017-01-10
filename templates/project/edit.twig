@@ -3,169 +3,164 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12">
-            <section class="panel">
-                <form class="form-horizontal" method="POST" action="{{ path_for('project.modify', {'id': project.project_id}) }}" enctype="multipart/form-data">
-                    <div class="panel-body">
-                        <div class="form-group{{ validation_errors.user ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="user">Responsable<span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                                <select class="form-control select2" name="user" id="user" required>
-                                    <option disabled selected value data-hidden="true">Selecciona un responsable</option>
-                                    {% for user in users %}
-                                        <option value="{{ user.user_id }}"{{ user.user_id == project.user_id ? ' selected' : '' }}>{{ user.fullName() }}</option>
-                                    {% endfor %}
-                                </select>
-                                {% if validation_errors.user %}
-                                    <span class="help-block">
-                                        {{ validation_errors.user | first }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                                <input class="form-control" id="name" type="text" name="name" value="{{ project.name }}" required>
-                                {% if validation_errors.name %}
-                                    <span class="help-block">
-                                        {{ validation_errors.name | first }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="form-group{{ validation_errors.short_description ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="short_description">Descripción breve<span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                                <input class="form-control" id="short_description" type="text" name="short_description" value="{{ project.short_description }}" required>
-                                {% if validation_errors.short_description %}
-                                    <span class="help-block">
-                                        {{ validation_errors.short_description | first }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                                <textarea class="form-control tinymce" rows="3" id="description" name="description">{{ project.description }}</textarea>
-                                {% if validation_errors.description %}
-                                    <span class="help-block">
-                                        {{ validation_errors.description | first }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <fieldset>
-                            <legend>Cliente</legend>
-                            <div class="form-group{{ validation_errors.client ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label" for="client">Cliente<span class="text-danger">*</span></label>
-                                <div class="col-md-6">
-                                    <select class="form-control select2" name="client" id="client" required>
-                                        <option disabled selected value data-hidden="true">Selecciona un cliente</option>
-                                        {% for client in clients %}
-                                            <option value="{{ client.client_id }}"{{ client.client_id == project.client_id ? ' selected' : '' }}>{{ client.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    {% if validation_errors.client %}
-                                        <span class="help-block">
-                                            {{ validation_errors.client | first }}
-                                        </span>
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-3">
-                                    <a href="#"  class="btn btn-default simple-ajax-modal">Nuevo <i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                            <div class="form-group{{ validation_errors.contact ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label" for="contact">Contacto<span class="text-danger">*</span></label>
-                                <div class="col-md-9">
-                                    <input class="form-control" id="contact" type="text" name="contact" value="{{ project.contact }}" required>
-                                    {% if validation_errors.contact %}
-                                        <span class="help-block">
-                                            {{ validation_errors.contact | first }}
-                                        </span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Entrega</legend>
-                            <div class="form-group{{ validation_errors.started_at ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label">Fecha de inicio<span class="text-danger">*</span></label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.started_at }}" required>
-                                        <span class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
-                                    </div>
-                                    {% if validation_errors.started_at %}
-                                        <span class="help-block">
-                                            {{ validation_errors.started_at | first }}
-                                        </span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="form-group{{ validation_errors.due_at ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label">Fecha de entrega<span class="text-danger">*</span></label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.due_at }}" required>
-                                        <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
-                                    </div>
-                                    {% if validation_errors.due_at %}
-                                        <span class="help-block">
-                                            {{ validation_errors.due_at | first }}
-                                        </span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Facturación</legend>
-                            <div class="form-group{{ validation_errors.budget ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label" for="budget">Presupuesto</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" id="budget" type="text" name="budget" value="{{ project.budget }}">
-                                    {% if validation_errors.budget %}
-                                        <span class="help-block">
-                                            {{ validation_errors.budget | first }}
-                                        </span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="form-group{{ validation_errors.bill ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label" for="bill">Factura</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" id="bill" type="text" name="bill" value="{{ project.bill }}">
-                                    {% if validation_errors.bill %}
-                                        <span class="help-block">
-                                            {{ validation_errors.bill | first }}
-                                        </span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </fieldset>
+            <form class="form-horizontal" method="POST" action="{{ path_for('project.modify', {'id': project.project_id}) }}" enctype="multipart/form-data">
+                <div class="form-group{{ validation_errors.user ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="user">Responsable<span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <select class="form-control select2" name="user" id="user" required>
+                            <option disabled selected value data-hidden="true">Selecciona un responsable</option>
+                            {% for user in users %}
+                                <option value="{{ user.user_id }}"{{ user.user_id == project.user_id ? ' selected' : '' }}>{{ user.fullName() }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if validation_errors.user %}
+                            <span class="help-block">
+                                {{ validation_errors.user | first }}
+                            </span>
+                        {% endif %}
                     </div>
-                    <footer class="panel-footer">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-lg btn-delete">Borrar</a>
-                                {% if project.done_at == null %}
-                                    <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-warning btn-lg">Completar</a>
-                                {% else %}
-                                    <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning btn-lg">Reabrir</a>
-                                {% endif %}
-                                <button class="btn btn-success btn-lg pull-right">Guardar</button>
-                                {{ csrf.field | raw }}
-                            </div>
+                </div>
+                <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <input class="form-control" id="name" type="text" name="name" value="{{ project.name }}" required>
+                        {% if validation_errors.name %}
+                            <span class="help-block">
+                                {{ validation_errors.name | first }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group{{ validation_errors.short_description ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="short_description">Descripción breve<span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <input class="form-control" id="short_description" type="text" name="short_description" value="{{ project.short_description }}" required>
+                        {% if validation_errors.short_description %}
+                            <span class="help-block">
+                                {{ validation_errors.short_description | first }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <textarea class="form-control tinymce" rows="3" id="description" name="description">{{ project.description }}</textarea>
+                        {% if validation_errors.description %}
+                            <span class="help-block">
+                                {{ validation_errors.description | first }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <fieldset>
+                    <legend>Cliente</legend>
+                    <div class="form-group{{ validation_errors.client ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label" for="client">Cliente<span class="text-danger">*</span></label>
+                        <div class="col-md-6">
+                            <select class="form-control select2" name="client" id="client" required>
+                                <option disabled selected value data-hidden="true">Selecciona un cliente</option>
+                                {% for client in clients %}
+                                    <option value="{{ client.client_id }}"{{ client.client_id == project.client_id ? ' selected' : '' }}>{{ client.name }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if validation_errors.client %}
+                                <span class="help-block">
+                                    {{ validation_errors.client | first }}
+                                </span>
+                            {% endif %}
                         </div>
-                    </footer>
-                </form>
-            </section>
+                        <div class="col-md-3">
+                            <a href="#"  class="btn btn-default simple-ajax-modal">Nuevo <i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <div class="form-group{{ validation_errors.contact ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label" for="contact">Contacto<span class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="contact" type="text" name="contact" value="{{ project.contact }}" required>
+                            {% if validation_errors.contact %}
+                                <span class="help-block">
+                                    {{ validation_errors.contact | first }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Entrega</legend>
+                    <div class="form-group{{ validation_errors.started_at ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">Fecha de inicio<span class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.started_at }}" required>
+                                <span class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
+                            </div>
+                            {% if validation_errors.started_at %}
+                                <span class="help-block">
+                                    {{ validation_errors.started_at | first }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group{{ validation_errors.due_at ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">Fecha de entrega<span class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.due_at }}" required>
+                                <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
+                            </div>
+                            {% if validation_errors.due_at %}
+                                <span class="help-block">
+                                    {{ validation_errors.due_at | first }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Facturación</legend>
+                    <div class="form-group{{ validation_errors.budget ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label" for="budget">Presupuesto</label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="budget" type="text" name="budget" value="{{ project.budget }}">
+                            {% if validation_errors.budget %}
+                                <span class="help-block">
+                                    {{ validation_errors.budget | first }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group{{ validation_errors.bill ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label" for="bill">Factura</label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="bill" type="text" name="bill" value="{{ project.bill }}">
+                            {% if validation_errors.bill %}
+                                <span class="help-block">
+                                    {{ validation_errors.bill | first }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-lg btn-delete">Borrar</a>
+                        {% if project.done_at == null %}
+                            <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-warning btn-lg">Completar</a>
+                        {% else %}
+                            <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning btn-lg">Reabrir</a>
+                        {% endif %}
+                        <button class="btn btn-success btn-lg pull-right">Guardar</button>
+                        {{ csrf.field | raw }}
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-xs-12">
             <section class="panel next-events">
@@ -179,6 +174,7 @@
                                 <th>Nombre</th>
                                 <th>Proyecto</th>
                                 <th>Cierre</th>
+                                <th>Tiempo</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -188,6 +184,9 @@
                                     <td><a href="{{ path_for('task.edit', {'id': task.task_id }) }}">{{ task.name }}</a></td>
                                     <td><a href="{{ path_for('project.edit', {'id': task.project_id }) }}">{{ task.project.name }}</a></td>
                                     <td>{{ task.due_at }}</td>
+                                    <td>
+                                        {{ task.totalTimeTrack|date('H:i:s') }}
+                                    </td>
                                     <td>
                                         <a href="{{ path_for('task.edit', {'id': task.task_id }) }}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
