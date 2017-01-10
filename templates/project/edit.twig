@@ -20,6 +20,21 @@
                         {% endif %}
                     </div>
                 </div>
+                <div class="form-group{{ validation_errors.staff ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="staff">Staff</label>
+                    <div class="col-md-9">
+                        <select class="form-control select2" name="staff[]" id="staff" multiple>
+                            {% for user in staff %}
+                                <option value="{{ user.user_id }}"{{ user.user_id in project.users.pluck('user_id') ? ' selected' : '' }}>{{ user.fullName() }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if validation_errors.staff %}
+                            <span class="help-block">
+                                {{ validation_errors.staff | first }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
                 <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
                     <div class="col-md-9">
@@ -140,6 +155,20 @@
                             {% if validation_errors.bill %}
                                 <span class="help-block">
                                     {{ validation_errors.bill | first }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group{{ validation_errors.billed_at ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">Fecha de facturación</label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" name="billed_at" id="billed_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.billed_at }}">
+                                <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
+                            </div>
+                            {% if validation_errors.billed_at %}
+                                <span class="help-block">
+                                    {{ validation_errors.billed_at | first }}
                                 </span>
                             {% endif %}
                         </div>

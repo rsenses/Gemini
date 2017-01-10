@@ -290,6 +290,12 @@ class ProjectController
             'bill' => filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING)
         ]);
 
+        foreach ($request->getParam('staff') as $id) {
+            $user = User::find($id);
+
+            $project->users()->attach($user);
+        }
+
         return $response->withRedirect($this->router->pathFor('project.edit', [
             'id' => $project->project_id,
         ]));
@@ -331,6 +337,14 @@ class ProjectController
         $project->bill = filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING);
 
         $project->save();
+
+        $project->users()->detach();
+
+        foreach ($request->getParam('staff') as $id) {
+            $user = User::find($id);
+
+            $project->users()->attach($user);
+        }
 
         return $response->withRedirect($this->router->pathFor('project.edit', [
             'id' => $project->project_id,

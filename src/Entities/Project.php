@@ -12,6 +12,7 @@ class Project extends \Illuminate\Database\Eloquent\Model
         'started_at',
         'due_at',
         'done_at',
+        'billed_at',
     ];
     protected $fillable = [
         'name',
@@ -25,6 +26,7 @@ class Project extends \Illuminate\Database\Eloquent\Model
         'client_id',
         'started_at',
         'due_at',
+        'billed_at',
     ];
 
     public function client()
@@ -50,5 +52,10 @@ class Project extends \Illuminate\Database\Eloquent\Model
     public function user()
     {
         return $this->belongsTo('App\Entities\User');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Entities\User');
     }
 }

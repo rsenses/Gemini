@@ -19,9 +19,14 @@ class User extends \Illuminate\Database\Eloquent\Model
         return $this->belongsTo('App\Entities\Client');
     }
 
-    public function products()
+    public function projects()
     {
-        return $this->hasMany('App\Entities\Product');
+        return $this->hasMany('App\Entities\Project');
+    }
+
+    public function projectsAssigned()
+    {
+        return $this->belongsToMany('App\Entities\Project');
     }
 
     public function roles()
