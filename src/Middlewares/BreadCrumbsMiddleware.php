@@ -96,9 +96,9 @@ class BreadCrumbsMiddleware
             case 'project.new':
                 $breadcrumbs['current'] = 'Nuevo Proyecto';
                 $breadcrumbs['routes'][] = [
-                    'name' => 'Mis Proyectos',
-                    'route' => 'project.inprogress',
-                    'url' => $this->getUrl($request, 'project.inprogress')
+                    'name' => 'Todos los proyectos',
+                    'route' => 'project.all',
+                    'url' => $this->getUrl($request, 'project.all')
                 ];
                 $breadcrumbs['routes'][] = [
                     'name' => $breadcrumbs['current'],
@@ -109,9 +109,9 @@ class BreadCrumbsMiddleware
             case 'project.edit':
                 $breadcrumbs['current'] = 'Editar Proyecto';
                 $breadcrumbs['routes'][] = [
-                    'name' => 'Mis Proyectos',
-                    'route' => 'project.inprogress',
-                    'url' => $this->getUrl($request, 'project.inprogress')
+                    'name' => 'Todos los proyectos',
+                    'route' => 'project.all',
+                    'url' => $this->getUrl($request, 'project.all')
                 ];
                 $breadcrumbs['routes'][] = [
                     'name' => $breadcrumbs['current'],
