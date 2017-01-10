@@ -47,6 +47,22 @@ class ProjectController
         $this->view = $view;
     }
 
+    public function inProgressAllUsersAction(Request $request, Response $response, array $args)
+    {
+        $projects = Project::whereNull('done_at')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        $staff = User::where('email', 'LIKE', '%@expomark.es')
+            ->orderBy('first_name', 'ASC')
+            ->get();
+
+        return $this->view->render($response, 'project/all.twig', [
+            'projects' => $projects,
+            'staff' => $staff,
+        ]);
+    }
+
     public function inProgressAction(Request $request, Response $response, array $args)
     {
         $projects = Project::where('user_id', $this->auth->getUserId())
@@ -54,7 +70,7 @@ class ProjectController
             ->orderBy('due_at', 'ASC')
             ->get();
 
-        return $this->view->render($response, 'project/all.twig', [
+        return $this->view->render($response, 'project/projects.twig', [
             'projects' => $projects
         ]);
     }
@@ -66,7 +82,7 @@ class ProjectController
             ->orderBy('due_at', 'DESC')
             ->get();
 
-        return $this->view->render($response, 'project/all.twig', [
+        return $this->view->render($response, 'project/projects.twig', [
             'projects' => $projects
         ]);
     }
@@ -82,7 +98,7 @@ class ProjectController
                 (CASE WHEN `project`.`due_at` < CURDATE() THEN `project`.`due_at` end) DESC')
             ->get();
 
-        return $this->view->render($response, 'project/all.twig', [
+        return $this->view->render($response, 'project/projects.twig', [
             'projects' => $projects,
             'q' => $q
         ]);
@@ -118,8 +134,14 @@ class ProjectController
             ->orderBy('due_at', 'ASC')
             ->get();
 
+        $staff = User::where('email', 'LIKE', '%@expomark.es')
+            ->orderBy('first_name', 'ASC')
+            ->get();
+
         return $this->view->render($response, 'project/all.twig', [
-            'projects' => $projects
+            'projects' => $projects,
+            'staff' => $staff,
+            'userId' => $args['id'],
         ]);
     }
 
@@ -127,11 +149,13 @@ class ProjectController
     {
         $clients = Client::orderBy('name', 'ASC')->get();
 
-        $users = User::orderBy('first_name', 'ASC')->get();
+        $staff = User::where('email', 'LIKE', '%@expomark.es')
+            ->orderBy('first_name', 'ASC')
+            ->get();
 
         return $this->view->render($response, 'project/new.twig', [
             'clients' => $clients,
-            'users' => $users,
+            'staff' => $staff,
         ]);
     }
 
@@ -154,7 +178,9 @@ class ProjectController
 
         $clients = Client::orderBy('name', 'ASC')->get();
 
-        $users = User::orderBy('first_name', 'ASC')->get();
+        $staff = User::where('email', 'LIKE', '%@expomark.es')
+            ->orderBy('first_name', 'ASC')
+            ->get();
 
         $inProgressTasks = Task::where('project_id', $project->project_id)
             ->whereNull('done_at')
@@ -197,7 +223,7 @@ class ProjectController
         return $this->view->render($response, 'project/edit.twig', [
             'project' => $project,
             'clients' => $clients,
-            'users' => $users,
+            'staff' => $staff,
             'inProgressTasks' => $inProgressTasks,
             'completedTasks' => $completedTasks,
         ]);

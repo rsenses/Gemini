@@ -5,44 +5,52 @@
         <div class="row">
             <div class="col-xs-12">
                 <!-- start: page -->
-                <section class="panel next-events">
-                    <header class="panel-heading">
-                        <p><a href="{{ path_for('project.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un proyecto</a></p>
-                    </header>
-                    <div class="panel-body">
-                        <table class="table table-bordered table-striped datatables">
-                            <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Cliente</th>
-                                    <th>Nombre</th>
-                                    <th>Cierre</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for project in projects %}
-                                    <tr class="gradeX">
-                                        <td>{{ project.project_id }}</td>
-                                        <td>{{ project.client.name }}</td>
-                                        <td><a href="{{ path_for('project.edit', {'id': project.project_id }) }}">{{ project.name }}</a></td>
-                                        <td>{{ project.due_at }}</td>
-                                        <td>
-                                            <a href="{{ path_for('project.edit', {'id': project.project_id }) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
-                                            {% if project.is_printed == 0 %}
-                                                <a href="{{ path_for('project.print', {'id': project.project_id }) }}" target="_blank">
-                                                    <i class="fa fa-print" aria-hidden="true"></i>
-                                                </a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                <p><a href="{{ path_for('project.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un proyecto</a></p>
+                <hr>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="staff">Filtrar por responsable</label>
+                    <div class="col-md-9">
+                        <select class="form-control select2" id="user-filter">
+                            <option disabled selected value data-hidden="true">Selecciona un responsable</option>
+                            {% for user in staff %}
+                                <option value="{{ user.user_id }}"{{ user.user_id == userId ? ' selected' : '' }}>{{ user.fullName() }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                </section>
+                </div>
+                <div class="clearfix"></div>
+                <hr>
+                <table class="table table-bordered table-striped datatables">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Cliente</th>
+                            <th>Nombre</th>
+                            <th>Cierre</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in projects %}
+                            <tr class="gradeX">
+                                <td>{{ project.project_id }}</td>
+                                <td>{{ project.client.name }}</td>
+                                <td><a href="{{ path_for('project.edit', {'id': project.project_id }) }}">{{ project.name }}</a></td>
+                                <td>{{ project.due_at }}</td>
+                                <td>
+                                    <a href="{{ path_for('project.edit', {'id': project.project_id }) }}">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                    {% if project.is_printed == 0 %}
+                                        <a href="{{ path_for('project.print', {'id': project.project_id }) }}" target="_blank">
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     {% else %}
@@ -60,4 +68,13 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
     <script src="{{ base_url() }}/assets/javascripts/theme.events.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#user-filter').on('change', function () {
+                var user = $(this).val(); // get selected value
+                window.location = '/project/user/'+user; // redirect
+                return false;
+            });
+        });
+    </script>
 {% endblock %}

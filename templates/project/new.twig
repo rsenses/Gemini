@@ -11,7 +11,7 @@
                             <div class="col-md-9">
                                 <select class="form-control select2" name="user" id="user" required>
                                     <option disabled selected value data-hidden="true">Selecciona un responsable</option>
-                                    {% for user in users %}
+                                    {% for user in staff %}
                                         <option value="{{ user.user_id }}">{{ user.fullName() }}</option>
                                     {% endfor %}
                                 </select>
