@@ -4,37 +4,6 @@
     <div class="row">
         <div class="col-xs-12">
             <form class="form-horizontal" method="POST" action="{{ path_for('project.save') }}" enctype="multipart/form-data">
-                <div class="form-group{{ validation_errors.user ? ' has-error' : '' }}">
-                    <label class="col-md-3 control-label" for="user">Responsable<span class="text-danger">*</span></label>
-                    <div class="col-md-9">
-                        <select class="form-control select2" name="user" id="user" required>
-                            <option disabled selected value data-hidden="true">Selecciona un responsable</option>
-                            {% for user in staff %}
-                                <option value="{{ user.user_id }}">{{ user.fullName() }}</option>
-                            {% endfor %}
-                        </select>
-                        {% if validation_errors.user %}
-                            <span class="help-block">
-                                {{ validation_errors.user | first }}
-                            </span>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="form-group{{ validation_errors.staff ? ' has-error' : '' }}">
-                    <label class="col-md-3 control-label" for="staff">Staff</label>
-                    <div class="col-md-9">
-                        <select class="form-control select2" name="staff[]" id="staff" multiple>
-                            {% for user in staff %}
-                                <option value="{{ user.user_id }}">{{ user.fullName() }}</option>
-                            {% endfor %}
-                        </select>
-                        {% if validation_errors.staff %}
-                            <span class="help-block">
-                                {{ validation_errors.staff | first }}
-                            </span>
-                        {% endif %}
-                    </div>
-                </div>
                 <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
                     <div class="col-md-9">
@@ -68,6 +37,41 @@
                         {% endif %}
                     </div>
                 </div>
+
+                <fieldset>
+                    <legend>Equipo</legend>
+                    <div class="form-group{{ validation_errors.user ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label" for="user">Responsable<span class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                            <select class="form-control select2" name="user" id="user" required>
+                                <option disabled selected value data-hidden="true">Selecciona un responsable</option>
+                                {% for user in staff %}
+                                    <option value="{{ user.user_id }}">{{ user.fullName() }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if validation_errors.user %}
+                                <span class="help-block">
+                                    {{ validation_errors.user | first }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group{{ validation_errors.staff ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label" for="staff">Staff</label>
+                        <div class="col-md-9">
+                            <select class="form-control select2" name="staff[]" id="staff" multiple>
+                                {% for user in staff %}
+                                    <option value="{{ user.user_id }}">{{ user.fullName() }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if validation_errors.staff %}
+                                <span class="help-block">
+                                    {{ validation_errors.staff | first }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </fieldset>
 
                 <fieldset>
                     <legend>Cliente</legend>

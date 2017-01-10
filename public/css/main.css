@@ -144,3 +144,14 @@ aside {
     display: inline-block;
     border-radius: 50%;
 }
+
+
+/*
+ * Tables
+ */
+.assigned {
+    opacity: .7;
+}
+.assigned td:first-child {
+    background-color: #cceeff;
+}

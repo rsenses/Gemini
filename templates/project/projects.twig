@@ -16,18 +16,20 @@
                                     <th>Código</th>
                                     <th>Cliente</th>
                                     <th>Nombre</th>
+                                    <th>Responsable</th>
                                     <th>Cierre</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for project in projects %}
-                                    <tr class="gradeX">
+                                    <tr{{ project.user_id != auth.user.user_id ? ' class="assigned"' : '' }}>
                                         <td>{{ project.project_id }}</td>
                                         <td>{{ project.client.name }}</td>
                                         <td><a href="{{ path_for('project.edit', {'id': project.project_id }) }}">{{ project.name }}</a></td>
-                                        <td>{{ project.due_at }}</td>
-                                        <td>
+                                        <td>{{ project.user.fullname() }}</td>
+                                        <td nowrap>{{ project.due_at }}</td>
+                                        <td nowrap>
                                             <a href="{{ path_for('project.edit', {'id': project.project_id }) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>

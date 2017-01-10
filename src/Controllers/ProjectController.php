@@ -65,8 +65,15 @@ class ProjectController
 
     public function inProgressAction(Request $request, Response $response, array $args)
     {
-        $projects = Project::where('user_id', $this->auth->getUserId())
-            ->whereNull('done_at')
+        $staffId = $this->auth->getUserId();
+
+        $projects = Project::whereNull('done_at')
+            ->where(function($q) use($staffId) {
+                $q->where('project.user_id', $staffId);
+                $q->orWhereHas('users', function($q) use ($staffId) {
+                    $q->where('user.user_id', $staffId);
+                });
+            })
             ->orderBy('due_at', 'ASC')
             ->get();
 

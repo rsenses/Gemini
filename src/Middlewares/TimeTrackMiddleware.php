@@ -26,7 +26,7 @@ class TimeTrackMiddleware
         $staffId = $this->auth->getUserId();
 
         $activeTimeTrack = TimeTrack::whereHas('task', function($q) use ($staffId) {
-                $q->whereStaffId($staffId);
+                $q->where('task.staff_id', $staffId);
             })
             ->where('is_completed', 0)
             ->count();
