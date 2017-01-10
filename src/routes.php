@@ -73,7 +73,7 @@ $app->group('', function () {
         // Unassigned Tasks
         $this->get('/unnasigned', 'TaskController:unnasignedUserAction')->setName('task.unnasigned');
         // New Task
-        $this->get('/new[/{id:[0-9]+}]', 'TaskController:newAction')->setName('task.new');
+        $this->get('/new[/project/{id:[0-9]+}]', 'TaskController:newAction')->setName('task.new');
         // Edit Task
         $this->get('/edit/{id:[0-9]+}', 'TaskController:editAction')->setName('task.edit');
         // Complete Task
@@ -93,7 +93,7 @@ $app->group('', function () {
         // New / Start TimeTrack
         $this->get('/start/task/{id:[0-9]+}', 'TimeTrackController:startAction')->setName('timetrack.start');
         // Stop TimeTrack
-        $this->get('/stop/{id:[0-9]+}', 'TimeTrackController:stopAction')->setName('timetrack.stop');
+        $this->get('/stop', 'TimeTrackController:stopAction')->setName('timetrack.stop');
         // Modify TimeTrack
         $this->post('/modify/{id:[0-9]+}', 'TimeTrackController:modifyAction')->setName('timetrack.modify');
         // Delete TimeTrack

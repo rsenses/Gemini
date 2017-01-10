@@ -21,6 +21,11 @@ $app->add(new \App\Middlewares\OldInputMiddleware(
     $container->view
 ));
 
+$app->add(new \App\Middlewares\TimeTrackMiddleware(
+    $container->auth,
+    $container->view
+));
+
 $app->add(new \App\Middlewares\CsrfViewMiddleware(
     $container->view,
     $container->csrf

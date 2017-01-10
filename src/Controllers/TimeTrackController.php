@@ -58,7 +58,8 @@ class TimeTrackController
 
     public function stopAction(Request $request, Response $response, array $args)
     {
-        $timeTrack = TimeTrack::findOrFail($args['id']);
+        $timeTrack = TimeTrack::where('is_completed', 0)
+            ->firstOrFail();
 
         $timeTrack->is_completed = 1;
 
