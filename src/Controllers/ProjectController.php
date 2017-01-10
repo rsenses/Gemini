@@ -156,12 +156,14 @@ class ProjectController
 
         $users = User::orderBy('first_name', 'ASC')->get();
 
-        $tasks = Task::where('staff_id', $this->auth->getUserId())
+        $inProgressTasks = Task::where('staff_id', $this->auth->getUserId())
             ->whereNull('done_at')
             ->orderBy('due_at', 'ASC')
             ->get();
 
-        foreach ($tasks as $task) {
+        $project->inProgressTasksTime = 0;
+
+        foreach ($inProgressTasks as $task) {
             $totalTimeTrack = 0;
 
             foreach ($task->timetracks as $track) {
@@ -169,13 +171,35 @@ class ProjectController
             }
 
             $task->totalTimeTrack = $totalTimeTrack;
+
+            $project->inProgressTasksTime += $totalTimeTrack;
+        }
+
+        $completedTasks = Task::where('staff_id', $this->auth->getUserId())
+            ->whereNotNull('done_at')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        $project->completedTasksTime = 0;
+
+        foreach ($completedTasks as $task) {
+            $totalTimeTrack = 0;
+
+            foreach ($task->timetracks as $track) {
+                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+            }
+
+            $task->totalTimeTrack = $totalTimeTrack;
+
+            $project->completedTasksTime += $totalTimeTrack;
         }
 
         return $this->view->render($response, 'project/edit.twig', [
             'project' => $project,
             'clients' => $clients,
             'users' => $users,
-            'tasks' => $tasks,
+            'inProgressTasks' => $inProgressTasks,
+            'completedTasks' => $completedTasks,
         ]);
     }
 

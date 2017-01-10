@@ -163,41 +163,68 @@
     <hr>
     <div class="row">
         <div class="col-xs-12">
-            <section class="panel next-events">
-                <header class="panel-heading">
-                    <p><a href="{{ path_for('task.new', { 'id': project.project_id }) }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
-                </header>
-                <div class="panel-body">
-                    <table class="table table-bordered table-striped datatables">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Proyecto</th>
-                                <th>Cierre</th>
-                                <th>Tiempo</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for task in tasks %}
-                                <tr>
-                                    <td><a href="{{ path_for('task.edit', {'id': task.task_id }) }}">{{ task.name }}</a></td>
-                                    <td><a href="{{ path_for('project.edit', {'id': task.project_id }) }}">{{ task.project.name }}</a></td>
-                                    <td>{{ task.due_at }}</td>
-                                    <td>
-                                        {{ task.totalTimeTrack|date('H:i:s') }}
-                                    </td>
-                                    <td>
-                                        <a href="{{ path_for('task.edit', {'id': task.task_id }) }}">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <p><a href="{{ path_for('task.new', { 'id': project.project_id }) }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
+            <h4>Tareas pendientes</h4>
+            <p><strong>Total</strong>: {{ project.inProgressTasksTime|date('H:i:s') }}</p>
+            <table class="table table-bordered table-striped datatables">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Proyecto</th>
+                        <th>Cierre</th>
+                        <th>Tiempo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in inProgressTasks %}
+                        <tr>
+                            <td><a href="{{ path_for('task.edit', {'id': task.task_id }) }}">{{ task.name }}</a></td>
+                            <td><a href="{{ path_for('project.edit', {'id': task.project_id }) }}">{{ task.project.name }}</a></td>
+                            <td>{{ task.due_at }}</td>
+                            <td>
+                                {{ task.totalTimeTrack|date('H:i:s') }}
+                            </td>
+                            <td>
+                                <a href="{{ path_for('task.edit', {'id': task.task_id }) }}">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+            <h4>Tareas completadas</h4>
+            <p><strong>Total</strong>: {{ project.completedTasksTime|date('H:i:s') }}</p>
+            <table class="table table-bordered table-striped datatables">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Proyecto</th>
+                        <th>Cierre</th>
+                        <th>Tiempo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in completedTasks %}
+                        <tr>
+                            <td><a href="{{ path_for('task.edit', {'id': task.task_id }) }}">{{ task.name }}</a></td>
+                            <td><a href="{{ path_for('project.edit', {'id': task.project_id }) }}">{{ task.project.name }}</a></td>
+                            <td>{{ task.due_at }}</td>
+                            <td>
+                                {{ task.totalTimeTrack|date('H:i:s') }}
+                            </td>
+                            <td>
+                                <a href="{{ path_for('task.edit', {'id': task.task_id }) }}">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}
