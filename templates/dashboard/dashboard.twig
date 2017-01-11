@@ -4,12 +4,12 @@
     <div class="row">
         <div class="col-xs-12">
             <p><a href="{{ path_for('task.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
-            <table class="table table-bordered table-striped datatables">
+            <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Proyecto</th>
-                        <th>Cierre</th>
+                        <th data-field="name" data-sortable="true">Nombre</th>
+                        <th data-field="project" data-sortable="true">Proyecto</th>
+                        <th data-field="due" data-sortable="true">Cierre</th>
                         <th></th>
                     </tr>
                 </thead>

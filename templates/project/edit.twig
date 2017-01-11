@@ -219,13 +219,13 @@
             <p><a href="{{ path_for('task.new', { 'id': project.project_id }) }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
             <h4>Tareas pendientes</h4>
             <p><strong>Total</strong>: {{ project.inProgressTasksTime|date('H:i:s') }}</p>
-            <table class="table table-bordered table-striped datatables">
+            <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Proyecto</th>
-                        <th>Cierre</th>
-                        <th>Tiempo</th>
+                        <th data-field="name" data-sortable="true">Nombre</th>
+                        <th data-field="project" data-sortable="true">Proyecto</th>
+                        <th data-field="due" data-sortable="true">Cierre</th>
+                        <th data-field="time" data-sortable="true">Tiempo</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -250,13 +250,13 @@
             <hr>
             <h4>Tareas completadas</h4>
             <p><strong>Total</strong>: {{ project.completedTasksTime|date('H:i:s') }}</p>
-            <table class="table table-bordered table-striped datatables">
+            <table data-toggle="table" data-sort-name="time" data-sort-order="desc" data-search="true" data-show-columns="true">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Proyecto</th>
-                        <th>Cierre</th>
-                        <th>Tiempo</th>
+                        <th data-field="name" data-sortable="true">Nombre</th>
+                        <th data-field="project" data-sortable="true">Proyecto</th>
+                        <th data-field="due" data-sortable="true">Cierre</th>
+                        <th data-field="time" data-sortable="true">Tiempo</th>
                         <th></th>
                     </tr>
                 </thead>

@@ -10,13 +10,13 @@
                         <p><a href="{{ path_for('task.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
                     </header>
                     <div class="panel-body">
-                        <table class="table table-bordered table-striped datatables">
+                        <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Proyecto</th>
-                                    <th>Cierre</th>
-                                    <th>Tiempo</th>
+                                    <th data-field="name" data-sortable="true">Nombre</th>
+                                    <th data-field="project" data-sortable="true">Proyecto</th>
+                                    <th data-field="due" data-sortable="true">Cierre</th>
+                                    <th data-field="time" data-sortable="true">Tiempo</th>
                                     <th></th>
                                 </tr>
                             </thead>

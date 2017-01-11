@@ -20,14 +20,14 @@
                 </div>
                 <div class="clearfix"></div>
                 <hr>
-                <table class="table table-bordered table-striped datatables">
+                <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                     <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Cliente</th>
-                            <th>Nombre</th>
-                            <th>Responsable</th>
-                            <th>Cierre</th>
+                            <th data-field="id" data-sortable="true">Código</th>
+                            <th data-field="client" data-sortable="true">Cliente</th>
+                            <th data-field="name" data-sortable="true">Nombre</th>
+                            <th data-field="staff" data-sortable="true">Responsable</th>
+                            <th data-field="due" data-sortable="true">Cierre</th>
                             <th></th>
                         </tr>
                     </thead>
