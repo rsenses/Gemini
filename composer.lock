@@ -1736,26 +1736,26 @@
         },
         {
             "name": "zeuxisoo/slim-whoops",
-            "version": "0.5.1",
+            "version": "0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zeuxisoo/php-slim-whoops.git",
-                "reference": "58fdbf79a55f4b0bbbcba81b55fb8e7a7336cd3a"
+                "reference": "888bf2f6403ee9d7fac22fe52a8b4baacea72ef6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zeuxisoo/php-slim-whoops/zipball/58fdbf79a55f4b0bbbcba81b55fb8e7a7336cd3a",
-                "reference": "58fdbf79a55f4b0bbbcba81b55fb8e7a7336cd3a",
+                "url": "https://api.github.com/repos/zeuxisoo/php-slim-whoops/zipball/888bf2f6403ee9d7fac22fe52a8b4baacea72ef6",
+                "reference": "888bf2f6403ee9d7fac22fe52a8b4baacea72ef6",
                 "shasum": ""
             },
             "require": {
-                "filp/whoops": "2.*",
+                "filp/whoops": "2.1.*",
                 "php": ">=5.5.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "4.8.*",
-                "slim/slim": "3.3.*",
-                "slim/twig-view": "2.*"
+                "slim/slim": "3.6.*",
+                "slim/twig-view": "2.1.*"
             },
             "type": "library",
             "autoload": {
@@ -1783,7 +1783,7 @@
                 "slim",
                 "whoops"
             ],
-            "time": "2016-04-19 03:41:06"
+            "time": "2017-01-09 05:24:59"
         }
     ],
     "packages-dev": [

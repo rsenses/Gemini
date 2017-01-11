@@ -271,8 +271,10 @@ class ProjectController
             'description' => v::notEmpty(),
             'client' => v::notEmpty()->intVal(),
             'contact' => v::notEmpty(),
+            'bill' => v::optional(v::intVal()),
             'started_at' => v::notEmpty()->date(),
             'due_at' => v::notEmpty()->min($request->getParam('started_at'))->date(),
+            'issued_at' => v::optional(v::date()),
         ];
 
         $validation = $this->validator->validate($request, $rules);
@@ -295,7 +297,8 @@ class ProjectController
             'due_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')),
             'budget' => filter_var($request->getParam('budget'), FILTER_SANITIZE_STRING),
             'bill' => filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING),
-            'billed_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('billed_at'))
+            'issued_at' => $request->getParam('issued_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('issued_at')) : null,
+            'bill_comment' => $request->getParam('bill_comment')
         ]);
 
         foreach ($request->getParam('staff') as $id) {
@@ -318,8 +321,10 @@ class ProjectController
             'description' => v::notEmpty(),
             'client' => v::notEmpty()->intVal(),
             'contact' => v::notEmpty(),
+            'bill' => v::optional(v::intVal()),
             'started_at' => v::notEmpty()->date(),
             'due_at' => v::notEmpty()->min($request->getParam('started_at'))->date(),
+            'issued_at' => v::optional(v::date()),
         ];
 
         $validation = $this->validator->validate($request, $rules);
@@ -343,7 +348,8 @@ class ProjectController
         $project->due_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at'));
         $project->budget = filter_var($request->getParam('budget'), FILTER_SANITIZE_STRING);
         $project->bill = filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING);
-        $project->billed_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('billed_at'));
+        $project->issued_at = $request->getParam('issued_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('issued_at')) : null;
+        $project->bill_comment = $request->getParam('bill_comment');
 
         $project->save();
 

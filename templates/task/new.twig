@@ -50,7 +50,7 @@
                                 <select class="form-control select2" name="project" id="project" required>
                                     <option disabled selected value data-hidden="true">Selecciona un proyecto</option>
                                     {% for project in projects %}
-                                        <option value="{{ project.project_id }}"{{ project.project_id == projectId ? ' selected' : '' }}>{{ project.name }}</option>
+                                        <option value="{{ project.project_id }}"{{ project.project_id == projectId ? ' selected' : '' }}>{{ project.name | raw }}</option>
                                     {% endfor %}
                                 </select>
                                 {% if validation_errors.project %}
