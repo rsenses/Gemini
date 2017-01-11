@@ -3,95 +3,89 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-8">
-            <section class="panel">
-                <form class="form-horizontal" method="POST" action="{{ path_for('task.save') }}" enctype="multipart/form-data">
-                    <div class="panel-body">
-                        <div class="form-group{{ validation_errors.staff ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="staff">Responsable</label>
-                            <div class="col-md-9">
-                                <select class="form-control select2" name="staff" id="staff">
-                                    <option disabled selected value data-hidden="true">Selecciona un responsable</option>
-                                    {% for user in staff %}
-                                        <option value="{{ user.user_id }}"{{ user.user_id == auth.user.user_id ? ' selected' : '' }}>{{ user.fullName() }}</option>
-                                    {% endfor %}
-                                </select>
-                                {% if validation_errors.staff %}
-                                    <span class="help-block">
-                                        {{ validation_errors.staff | first }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                                <input class="form-control" id="name" type="text" name="name" required>
-                                {% if validation_errors.name %}
-                                    <span class="help-block">
-                                        {{ validation_errors.name | first }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                                <textarea class="form-control tinymce" rows="3" id="description" name="description"></textarea>
-                                {% if validation_errors.description %}
-                                    <span class="help-block">
-                                        {{ validation_errors.description | first }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="form-group{{ validation_errors.project ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label" for="project">Proyecto<span class="text-danger">*</span></label>
-                            <div class="col-md-6">
-                                <select class="form-control select2" name="project" id="project" required>
-                                    <option disabled selected value data-hidden="true">Selecciona un proyecto</option>
-                                    {% for project in projects %}
-                                        <option value="{{ project.project_id }}"{{ project.project_id == projectId ? ' selected' : '' }}>{{ project.name | raw }}</option>
-                                    {% endfor %}
-                                </select>
-                                {% if validation_errors.project %}
-                                    <span class="help-block">
-                                        {{ validation_errors.project | first }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                            <div class="col-md-3">
-                                <a href="{{ path_for('project.new') }}" class="btn btn-default btn-block">Nuevo <i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-
-                        <fieldset>
-                            <legend>Entrega</legend>
-                            <div class="form-group{{ validation_errors.due_at ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label">Fecha de entrega<span class="text-danger">*</span></label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm">
-                                        <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
-                                    </div>
-                                    {% if validation_errors.due_at %}
-                                        <span class="help-block">
-                                            {{ validation_errors.due_at | first }}
-                                        </span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </fieldset>
+            <form class="form-horizontal" method="POST" action="{{ path_for('task.save') }}" enctype="multipart/form-data">
+                <div class="form-group{{ validation_errors.staff ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="staff">Responsable</label>
+                    <div class="col-md-9">
+                        <select class="form-control select2" name="staff" id="staff">
+                            <option disabled selected value data-hidden="true">Selecciona un responsable</option>
+                            {% for user in staff %}
+                                <option value="{{ user.user_id }}"{{ user.user_id == auth.user.user_id ? ' selected' : '' }}>{{ user.fullName() }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if validation_errors.staff %}
+                            <span class="help-block">
+                                {{ validation_errors.staff | first }}
+                            </span>
+                        {% endif %}
                     </div>
-                    <footer class="panel-footer">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button class="btn btn-success btn-lg pull-right">Guardar</button>
-                                {{ csrf.field | raw }}
+                </div>
+                <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <input class="form-control" id="name" type="text" name="name" required>
+                        {% if validation_errors.name %}
+                            <span class="help-block">
+                                {{ validation_errors.name | first }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <textarea class="form-control tinymce" rows="3" id="description" name="description"></textarea>
+                        {% if validation_errors.description %}
+                            <span class="help-block">
+                                {{ validation_errors.description | first }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group{{ validation_errors.project ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="project">Proyecto<span class="text-danger">*</span></label>
+                    <div class="col-md-6">
+                        <select class="form-control select2" name="project" id="project" required>
+                            <option disabled selected value data-hidden="true">Selecciona un proyecto</option>
+                            {% for project in projects %}
+                                <option value="{{ project.project_id }}"{{ project.project_id == projectId ? ' selected' : '' }}>{{ project.name | raw }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if validation_errors.project %}
+                            <span class="help-block">
+                                {{ validation_errors.project | first }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ path_for('project.new') }}" class="btn btn-default btn-block">Nuevo <i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+
+                <fieldset>
+                    <legend>Entrega</legend>
+                    <div class="form-group{{ validation_errors.due_at ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">Fecha de entrega<span class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm">
+                                <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
                             </div>
+                            {% if validation_errors.due_at %}
+                                <span class="help-block">
+                                    {{ validation_errors.due_at | first }}
+                                </span>
+                            {% endif %}
                         </div>
-                    </footer>
-                </form>
-            </section>
+                    </div>
+                </fieldset>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-success btn-lg pull-right">Guardar</button>
+                        {{ csrf.field | raw }}
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

@@ -1,15 +1,3 @@
-function myImagePicker(callback, value, meta) {
-    tinymce.activeEditor.windowManager.open({
-        title: 'Subir Archivo',
-        url: '/fileupload',
-        width: 511,
-        height: 242,
-    }, {
-        oninsert: function (url, objVals) {
-            callback(url, objVals);
-        }
-    });
-}
 function notifyMe(text) {
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
@@ -35,55 +23,69 @@ function notifyMe(text) {
     // At last, if the user has denied notifications, and you
     // want to be respectful there is no need to bother them any more.
 }
-tinymce.init({
-    selector: '.tinymce',
-    height: 200,
-    menubar: false,
-    statusbar: false,
-    language: 'es',
-    language_url: '/js/vendor/tinymce.es.js',
-    plugins: [
-        'autolink link image anchor',
-        'visualblocks',
-        'paste code'
-    ],
-    // toolbar: 'undo redo | styleselect | bold italic | bullist numlist outdent indent | link image | code',
-    toolbar: 'undo redo | styleselect | bold italic | bullist numlist outdent indent | link | code',
-    style_formats: [{
-            title: 'Headers',
-            items: [
-                { title: 'h3', block: 'h3' },
-                { title: 'h4', block: 'h4' },
-                { title: 'h5', block: 'h5' },
-                { title: 'h6', block: 'h6' }
-            ]
-        },
+if ($('.tinymce').length) {
+    tinymce.init({
+        selector: '.tinymce',
+        height: 200,
+        menubar: false,
+        statusbar: false,
+        language: 'es',
+        language_url: '/js/vendor/tinymce.es.js',
+        plugins: [
+            'autolink link image anchor',
+            'visualblocks',
+            'paste code'
+        ],
+        // toolbar: 'undo redo | styleselect | bold italic | bullist numlist outdent indent | link image | code',
+        toolbar: 'undo redo | styleselect | bold italic | bullist numlist outdent indent | link | code',
+        style_formats: [{
+                title: 'Headers',
+                items: [
+                    { title: 'h3', block: 'h3' },
+                    { title: 'h4', block: 'h4' },
+                    { title: 'h5', block: 'h5' },
+                    { title: 'h6', block: 'h6' }
+                ]
+            },
 
-        {
-            title: 'Blocks',
-            items: [
-                { title: 'p', block: 'p' },
-                { title: 'div', block: 'div' },
-                { title: 'pre', block: 'pre' }
-            ]
-        },
+            {
+                title: 'Blocks',
+                items: [
+                    { title: 'p', block: 'p' },
+                    { title: 'div', block: 'div' },
+                    { title: 'pre', block: 'pre' }
+                ]
+            },
 
-        {
-            title: 'Containers',
-            items: [
-                // { title: 'section', block: 'section', wrapper: true, merge_siblings: false },
-                // { title: 'article', block: 'article', wrapper: true, merge_siblings: false },
-                { title: 'blockquote', block: 'blockquote', wrapper: true },
-                { title: 'hgroup', block: 'hgroup', wrapper: true },
-                // { title: 'aside', block: 'aside', wrapper: true },
-                { title: 'figure', block: 'figure', wrapper: true }
-            ]
+            {
+                title: 'Containers',
+                items: [
+                    // { title: 'section', block: 'section', wrapper: true, merge_siblings: false },
+                    // { title: 'article', block: 'article', wrapper: true, merge_siblings: false },
+                    { title: 'blockquote', block: 'blockquote', wrapper: true },
+                    { title: 'hgroup', block: 'hgroup', wrapper: true },
+                    // { title: 'aside', block: 'aside', wrapper: true },
+                    { title: 'figure', block: 'figure', wrapper: true }
+                ]
+            }
+        ],
+        file_picker_callback: function(callback, value, meta) {
+            // Provide file and text for the link dialog
+            myImagePicker(callback, value, meta);
+        },
+        visualblocks_default_state: true,
+        end_container_on_empty_block: true
+    });
+}
+function myImagePicker(callback, value, meta) {
+    tinymce.activeEditor.windowManager.open({
+        title: 'Subir Archivo',
+        url: '/fileupload',
+        width: 511,
+        height: 242,
+    }, {
+        oninsert: function (url, objVals) {
+            callback(url, objVals);
         }
-    ],
-    file_picker_callback: function(callback, value, meta) {
-        // Provide file and text for the link dialog
-        myImagePicker(callback, value, meta);
-    },
-    visualblocks_default_state: true,
-    end_container_on_empty_block: true
-});
+    });
+}
