@@ -114,7 +114,7 @@ class ProjectController
     public function billedAction(Request $request, Response $response, array $args)
     {
         $page = $args['page'] ?: 1;
-        $offset = 20;
+        $offset = 100;
         $url = '/project/billed/(:num)';
 
         $projects = Project::whereNotNull('bill')

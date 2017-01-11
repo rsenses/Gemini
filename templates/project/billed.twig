@@ -10,13 +10,13 @@
                         <p><a href="{{ path_for('project.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un proyecto</a></p>
                     </header>
                     <div class="panel-body">
-                        <table class="table table-bordered table-striped mb-none datatables">
+                        <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                             <thead>
                                 <tr>
-                                    <th>Código</th>
-                                    <th>Cliente</th>
-                                    <th>Nombre</th>
-                                    <th>Cierre</th>
+                                    <th data-field="id" data-sortable="true">Código</th>
+                                    <th data-field="client" data-sortable="true">Cliente</th>
+                                    <th data-field="name" data-sortable="true">Nombre</th>
+                                    <th data-field="due" data-sortable="true">Cierre</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -26,8 +26,8 @@
                                         <td>{{ project.project_id }}</td>
                                         <td>{{ project.client.name }}</td>
                                         <td><a href="{{ path_for('project.edit', {'id': project.project_id }) }}">{{ project.name | raw }}</a></td>
-                                        <td>{{ project.due_at }}</td>
-                                        <td>
+                                        <td class="text-nowrap">{{ project.due_at }}</td>
+                                        <td class="text-nowrap">
                                             <a href="{{ path_for('project.edit', {'id': project.project_id }) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>

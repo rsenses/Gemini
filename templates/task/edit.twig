@@ -112,20 +112,20 @@
                 </header>
                 <div class="panel-body">
                     <p><strong>Total</strong>: {{ totalTimeTrack|date('H:i:s') }}</p>
-                    <table class="table table-striped datatables">
+                    <table data-toggle="table" data-sort-name="day" data-sort-order="asc" data-search="true" data-show-columns="true">
                         <thead>
                             <tr>
-                                <th>Día</th>
-                                <th>Inicio</th>
-                                <th>Fin</th>
-                                <th>Total</th>
+                                <th data-field="day" data-sortable="true">Día</th>
+                                <th data-field="start" data-sortable="true">Inicio</th>
+                                <th data-field="end" data-sortable="true">Fin</th>
+                                <th data-field="total" data-sortable="true">Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for track in task.timetracks %}
                                 {% if track.is_completed %}
                                     <tr>
-                                        <td>{{ track.created_at|date('d/m') }}</td>
+                                        <td>{{ track.created_at|date('Y/m/d') }}</td>
                                         <td>{{ track.created_at|date('H:i:s') }}</td>
                                         <td>{{ track.updated_at|date('H:i:s') }}</td>
                                         <td><strong>{{ track.created_at|timediff(track.updated_at) }}</strong></td>
