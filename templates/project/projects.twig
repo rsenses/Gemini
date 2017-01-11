@@ -28,8 +28,8 @@
                                         <td>{{ project.client.name }}</td>
                                         <td><a href="{{ path_for('project.edit', {'id': project.project_id }) }}">{{ project.name | raw }}</a></td>
                                         <td>{{ project.user.fullname() }}</td>
-                                        <td nowrap>{{ project.due_at }}</td>
-                                        <td nowrap>
+                                        <td class="text-nowrap">{{ project.due_at }}</td>
+                                        <td class="text-nowrap">
                                             <a href="{{ path_for('project.edit', {'id': project.project_id }) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
