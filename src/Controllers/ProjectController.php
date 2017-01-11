@@ -307,6 +307,22 @@ class ProjectController
             $project->users()->attach($user);
         }
 
+        if ($this->auth->getUserId() !== $request->getParam('user')) {
+            $project->notifications()->create([
+                'user_id' => $request->getParam('user'),
+                'description' => 'Nuevo proyecto',
+            ]);
+        }
+
+        foreach ($request->getParam('staff') as $id) {
+            if ($this->auth->getUserId() !== $id) {
+                $project->notifications()->create([
+                    'user_id' => $id,
+                    'description' => 'Nuevo proyecto asignado',
+                ]);
+            }
+        }
+
         return $response->withRedirect($this->router->pathFor('project.edit', [
             'id' => $project->project_id,
         ]));
@@ -370,7 +386,8 @@ class ProjectController
     {
         $project = Project::findOrFail($args['id']);
 
-        Task::where('project_id', $project->project_id)->delete();
+        $project->tasks()->delete();
+        $project->notifications()->delete();
 
         $project->delete();
 

@@ -124,6 +124,14 @@ $app->group('', function () {
         $this->post('/save/project/{id:[0-9]+}', 'CommentController:saveProjectAction')->setName('comment.project.save');
     });
 
+    // Notification Group
+    $this->group('/notification', function () {
+        // All notifications
+        $this->get('/all', 'NotificationController:allAction')->setName('notification.all');
+        // Show Notification
+        $this->get('/show/{id:[0-9]+}', 'NotificationController:showAction')->setName('notification.show');
+    });
+
     // Clients Group
     $this->group('/client', function () {
         // All Clients

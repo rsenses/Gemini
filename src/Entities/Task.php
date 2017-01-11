@@ -26,6 +26,11 @@ class Task extends \Illuminate\Database\Eloquent\Model
         return $this->morphMany('App\Entities\Comment', 'commentable');
     }
 
+    public function notifications()
+    {
+        return $this->morphMany('App\Entities\Notification', 'notificable');
+    }
+
     public function project()
     {
         return $this->belongsTo('App\Entities\Project');

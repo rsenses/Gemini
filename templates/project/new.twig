@@ -164,10 +164,10 @@
                         </div>
                     </div>
                     <div class="form-group{{ validation_errors.issued_at ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Fecha de emisión<span class="text-danger">*</span></label>
+                        <label class="col-md-3 control-label">Fecha de emisión</label>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" name="issued_at" id="issued_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" required>
+                                <input type="text" name="issued_at" id="issued_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm">
                                 <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
                             </div>
                             {% if validation_errors.issued_at %}

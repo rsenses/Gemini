@@ -90,6 +90,15 @@ $container['CommentController'] =  function ($container) {
     );
 };
 
+$container['NotificationController'] =  function ($container) {
+    return new App\Controllers\NotificationController(
+        $container->view,
+        $container->logger,
+        $container->auth,
+        $container->router
+    );
+};
+
 $container['ClientController'] =  function ($container) {
     return new App\Controllers\ClientController(
         $container->view,

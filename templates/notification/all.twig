@@ -1,0 +1,10 @@
+{% if notifications %}
+    <a href="#0" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell fa-lg text-danger" aria-hidden="true"></i><span class="badge">{{ notifications | length }}</span> <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+        {% for notification in notifications %}
+            <li><a href="#0" ic-get-from="/notification/{{ notification.notification_id }}" ic-action="fadeOut;remove" ic-target="closest li">{{ notification.description }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <a href="#0"></a>
+{% endif %}

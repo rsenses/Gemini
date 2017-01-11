@@ -44,6 +44,11 @@ class Project extends \Illuminate\Database\Eloquent\Model
         return $this->hasMany('App\Entities\Expense');
     }
 
+    public function notifications()
+    {
+        return $this->morphMany('App\Entities\Notification', 'notificable');
+    }
+
     public function tasks()
     {
         return $this->hasMany('App\Entities\Task');

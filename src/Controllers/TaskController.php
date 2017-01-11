@@ -199,6 +199,13 @@ class TaskController
             'due_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')),
         ]);
 
+        if ($this->auth->getUserId() !== $request->getParam('staff')) {
+            $task->notifications()->create([
+                'user_id' => $request->getParam('staff'),
+                'description' => 'Nueva tarea',
+            ]);
+        }
+
         return $response->withRedirect($this->router->pathFor('task.edit', [
             'id' => $task->task_id,
         ]));
@@ -241,6 +248,8 @@ class TaskController
     public function deleteAction(Request $request, Response $response, array $args)
     {
         $task = Task::findOrFail($args['id']);
+
+        $task->notifications()->delete();
 
         $task->delete();
 
