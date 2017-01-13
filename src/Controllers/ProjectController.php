@@ -100,6 +100,9 @@ class ProjectController
 
         $projects = Project::whereRaw('MATCH (name, description, short_description) AGAINST (?)' , [$q])
             ->orWhere('project_id', $q)
+            ->orWhereHas('client', function ($query) use ($q) {
+                $query->where('name', 'like', '%'.$q.'%');
+            })
             ->orderByRaw('(`project`.`due_at` < CURDATE()),
                 (CASE WHEN `project`.`due_at` > CURDATE() THEN `project`.`due_at` end) ASC,
                 (CASE WHEN `project`.`due_at` < CURDATE() THEN `project`.`due_at` end) DESC')
