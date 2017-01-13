@@ -310,7 +310,7 @@ class ProjectController
             $project->users()->attach($user);
         }
 
-        if ($this->auth->getUserId() !== $request->getParam('user')) {
+        if ($this->auth->getUserId() != $request->getParam('user')) {
             $project->notifications()->create([
                 'user_id' => $request->getParam('user'),
                 'description' => 'Nuevo proyecto',
@@ -318,7 +318,7 @@ class ProjectController
         }
 
         foreach ($request->getParam('staff') as $id) {
-            if ($this->auth->getUserId() !== $id) {
+            if ($this->auth->getUserId() != $id) {
                 $project->notifications()->create([
                     'user_id' => $id,
                     'description' => 'Nuevo proyecto asignado',

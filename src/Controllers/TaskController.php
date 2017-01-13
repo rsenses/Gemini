@@ -199,7 +199,7 @@ class TaskController
             'due_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')),
         ]);
 
-        if ($this->auth->getUserId() !== $request->getParam('staff')) {
+        if ($this->auth->getUserId() != $request->getParam('staff')) {
             $task->notifications()->create([
                 'user_id' => $request->getParam('staff'),
                 'description' => 'Nueva tarea',
