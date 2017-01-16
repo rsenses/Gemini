@@ -101,6 +101,16 @@ class TaskController
             ->orderBy('due_at', 'ASC')
             ->get();
 
+        foreach ($tasks as $task) {
+            $totalTimeTrack = 0;
+
+            foreach ($task->timetracks as $track) {
+                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+            }
+
+            $task->totalTimeTrack = $totalTimeTrack;
+        }
+
         return $this->view->render($response, 'task/all.twig', [
             'tasks' => $tasks
         ]);
@@ -113,6 +123,16 @@ class TaskController
             ->whereNotNull('project_id')
             ->orderBy('due_at', 'ASC')
             ->get();
+
+        foreach ($tasks as $task) {
+            $totalTimeTrack = 0;
+
+            foreach ($task->timetracks as $track) {
+                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+            }
+
+            $task->totalTimeTrack = $totalTimeTrack;
+        }
 
         return $this->view->render($response, 'task/all.twig', [
             'tasks' => $tasks
@@ -129,6 +149,16 @@ class TaskController
             ->orderBy('due_at', 'ASC')
             ->get();
 
+        foreach ($tasks as $task) {
+            $totalTimeTrack = 0;
+
+            foreach ($task->timetracks as $track) {
+                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+            }
+
+            $task->totalTimeTrack = $totalTimeTrack;
+        }
+
         return $this->view->render($response, 'task/all.twig', [
             'tasks' => $tasks
         ]);
@@ -142,6 +172,16 @@ class TaskController
             ->orderBy('due_at', 'ASC')
             ->get();
 
+        foreach ($tasks as $task) {
+            $totalTimeTrack = 0;
+
+            foreach ($task->timetracks as $track) {
+                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+            }
+
+            $task->totalTimeTrack = $totalTimeTrack;
+        }
+
         return $this->view->render($response, 'task/all.twig', [
             'tasks' => $tasks
         ]);
@@ -154,6 +194,16 @@ class TaskController
             ->whereNull('project_id')
             ->orderBy('due_at', 'ASC')
             ->get();
+
+        foreach ($tasks as $task) {
+            $totalTimeTrack = 0;
+
+            foreach ($task->timetracks as $track) {
+                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+            }
+
+            $task->totalTimeTrack = $totalTimeTrack;
+        }
 
         return $this->view->render($response, 'task/all.twig', [
             'tasks' => $tasks
