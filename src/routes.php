@@ -74,6 +74,8 @@ $app->group('', function () {
         $this->get('/completed/project/{id:[0-9]+}', 'TaskController:completedProjectAction')->setName('task.completed.project');
         // Unassigned Tasks
         $this->get('/unnasigned', 'TaskController:unnasignedUserAction')->setName('task.unnasigned');
+        // Assigned Tasks
+        $this->get('/asigned', 'TaskController:asignedUserAction')->setName('task.asigned');
         // New Task
         $this->get('/new[/project/{id:[0-9]+}]', 'TaskController:newAction')->setName('task.new');
         // Edit Task

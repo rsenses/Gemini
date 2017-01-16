@@ -115,6 +115,19 @@ class TaskController
         ]);
     }
 
+    public function asignedUserAction(Request $request, Response $response, array $args)
+    {
+        $tasks = Task::whereNotNull('staff_id')
+            ->where('user_id', $this->auth->getUserId())
+            ->whereNull('done_at')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        return $this->view->render($response, 'task/all.twig', [
+            'tasks' => $tasks
+        ]);
+    }
+
     public function newAction(Request $request, Response $response, array $args)
     {
         $staff = User::where('email', 'LIKE', '%@expomark.es')
