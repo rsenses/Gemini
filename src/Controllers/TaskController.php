@@ -51,6 +51,7 @@ class TaskController
     {
         $tasks = Task::where('staff_id', $this->auth->getUserId())
             ->whereNull('done_at')
+            ->whereNotNull('project_id')
             ->orderBy('due_at', 'ASC')
             ->get();
 
@@ -73,6 +74,7 @@ class TaskController
     {
         $tasks = Task::where('staff_id', $this->auth->getUserId())
             ->whereNotNull('done_at')
+            ->whereNotNull('project_id')
             ->orderBy('due_at', 'DESC')
             ->get();
 
@@ -95,6 +97,7 @@ class TaskController
     {
         $tasks = Task::where('staff_id', $args['id'])
             ->whereNull('done_at')
+            ->whereNotNull('project_id')
             ->orderBy('due_at', 'ASC')
             ->get();
 
@@ -107,6 +110,7 @@ class TaskController
     {
         $tasks = Task::whereNull('staff_id')
             ->whereNull('done_at')
+            ->whereNotNull('project_id')
             ->orderBy('due_at', 'ASC')
             ->get();
 
@@ -121,6 +125,37 @@ class TaskController
             ->where('user_id', $this->auth->getUserId())
             ->where('staff_id', '!=', $this->auth->getUserId())
             ->whereNull('done_at')
+            ->whereNotNull('project_id')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        return $this->view->render($response, 'task/all.twig', [
+            'tasks' => $tasks
+        ]);
+    }
+
+    public function independentAction(Request $request, Response $response, array $args)
+    {
+        $tasks = Task::whereNotNull('staff_id')
+            ->where('user_id', $this->auth->getUserId())
+            ->where('staff_id', '!=', $this->auth->getUserId())
+            ->whereNull('done_at')
+            ->whereNull('project_id')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        return $this->view->render($response, 'task/all.twig', [
+            'tasks' => $tasks
+        ]);
+    }
+
+    public function independentCompletedAction(Request $request, Response $response, array $args)
+    {
+        $tasks = Task::whereNotNull('staff_id')
+            ->where('user_id', $this->auth->getUserId())
+            ->where('staff_id', '!=', $this->auth->getUserId())
+            ->whereNotNull('done_at')
+            ->whereNull('project_id')
             ->orderBy('due_at', 'ASC')
             ->get();
 
