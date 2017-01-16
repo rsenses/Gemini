@@ -147,56 +147,58 @@
                     </div>
                 </fieldset>
 
-                <fieldset>
-                    <legend>Facturación</legend>
-                    <div class="form-group{{ validation_errors.budget ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label" for="budget">Presupuesto</label>
-                        <div class="col-md-9">
-                            <input class="form-control" id="budget" type="text" name="budget" value="{{ project.budget }}">
-                            {% if validation_errors.budget %}
-                                <span class="help-block">
-                                    {{ validation_errors.budget | first }}
-                                </span>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="form-group{{ validation_errors.bill ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label" for="bill">Factura</label>
-                        <div class="col-md-9">
-                            <input class="form-control" id="bill" type="text" name="bill" value="{{ project.bill }}">
-                            {% if validation_errors.bill %}
-                                <span class="help-block">
-                                    {{ validation_errors.bill | first }}
-                                </span>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="form-group{{ validation_errors.issued_at ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Fecha de emisión</label>
-                        <div class="col-md-9">
-                            <div class="input-group">
-                                <input type="text" name="issued_at" id="issued_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.issued_at }}">
-                                <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
+                {% if authorization.hasPermission(['billing.save']) %}
+                    <fieldset>
+                        <legend>Facturación</legend>
+                        <div class="form-group{{ validation_errors.budget ? ' has-error' : '' }}">
+                            <label class="col-md-3 control-label" for="budget">Presupuesto</label>
+                            <div class="col-md-9">
+                                <input class="form-control" id="budget" type="text" name="budget" value="{{ project.budget }}">
+                                {% if validation_errors.budget %}
+                                    <span class="help-block">
+                                        {{ validation_errors.budget | first }}
+                                    </span>
+                                {% endif %}
                             </div>
-                            {% if validation_errors.issued_at %}
-                                <span class="help-block">
-                                    {{ validation_errors.issued_at | first }}
-                                </span>
-                            {% endif %}
                         </div>
-                    </div>
-                    <div class="form-group{{ validation_errors.bill_comment ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label" for="bill_comment">Comentarios</label>
-                        <div class="col-md-9">
-                            <textarea class="form-control tinymce" rows="3" id="bill_comment" name="bill_comment">{{ project.bill_comment | raw }}</textarea>
-                            {% if validation_errors.bill_comment %}
-                                <span class="help-block">
-                                    {{ validation_errors.bill_comment | first }}
-                                </span>
-                            {% endif %}
+                        <div class="form-group{{ validation_errors.bill ? ' has-error' : '' }}">
+                            <label class="col-md-3 control-label" for="bill">Factura</label>
+                            <div class="col-md-9">
+                                <input class="form-control" id="bill" type="text" name="bill" value="{{ project.bill }}">
+                                {% if validation_errors.bill %}
+                                    <span class="help-block">
+                                        {{ validation_errors.bill | first }}
+                                    </span>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
+                        <div class="form-group{{ validation_errors.issued_at ? ' has-error' : '' }}">
+                            <label class="col-md-3 control-label">Fecha de emisión</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" name="issued_at" id="issued_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.issued_at }}">
+                                    <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
+                                </div>
+                                {% if validation_errors.issued_at %}
+                                    <span class="help-block">
+                                        {{ validation_errors.issued_at | first }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group{{ validation_errors.bill_comment ? ' has-error' : '' }}">
+                            <label class="col-md-3 control-label" for="bill_comment">Comentarios</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control tinymce" rows="3" id="bill_comment" name="bill_comment">{{ project.bill_comment | raw }}</textarea>
+                                {% if validation_errors.bill_comment %}
+                                    <span class="help-block">
+                                        {{ validation_errors.bill_comment | first }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </fieldset>
+                {% endif %}
                 <div class="row">
                     <div class="col-sm-12">
                         <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-lg btn-delete">Borrar</a>

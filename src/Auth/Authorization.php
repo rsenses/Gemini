@@ -3,7 +3,7 @@
 namespace App\Auth;
 
 use InvalidArgumentException;
-use Aura\Auth\Auth;
+use App\Auth\AuraAuth;
 use App\Entities\User;
 
 class Authorization
@@ -11,9 +11,10 @@ class Authorization
     private $auth;
     private $user;
 
-    public function __construct(Auth $auth)
+    public function __construct(AuraAuth $auth)
     {
         $this->auth = $auth;
+
         if ($this->auth->getStatus() === 'VALID') {
             $this->user = User::with('roles')
                 ->findOrFail($this->auth->getUserId());
@@ -23,11 +24,10 @@ class Authorization
 
     public function hasPermission($permissions)
     {
-        $roles = $this->user->roles;
-        foreach ($roles as $role) {
+        foreach ($this->user->roles as $role) {
             if (is_array($permissions)) {
                 foreach ($permissions as $key => $permission) {
-                    if (in_array($permission, $role->permissions)) {
+                    if (in_array($permission, json_decode($role->permissions, true))) {
                         return true;
                     }
                 }

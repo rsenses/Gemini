@@ -78,15 +78,17 @@
                             <a href="{{ path_for('project.all') }}"><i class="fa fa-square" aria-hidden="true"></i> Todos los proyectos</a>
                         </li>
                     </ul>
-                    <hr>
-                    <ul class="nav nav-sidebar">
-                        <li>
-                            <a href="{{ path_for('project.completed') }}"><i class="fa fa-check-square-o" aria-hidden="true"></i> Proyectos finalizados</a>
-                        </li>
-                        <li>
-                            <a href="{{ path_for('project.billed') }}"><i class="fa fa-money" aria-hidden="true"></i> Proyectos facturados</a>
-                        </li>
-                    </ul>
+                    {% if authorization.hasPermission(['billing.view']) %}
+                        <hr>
+                        <ul class="nav nav-sidebar">
+                            <li>
+                                <a href="{{ path_for('project.completed') }}"><i class="fa fa-check-square-o" aria-hidden="true"></i> Proyectos finalizados</a>
+                            </li>
+                            <li>
+                                <a href="{{ path_for('project.billed') }}"><i class="fa fa-money" aria-hidden="true"></i> Proyectos facturados</a>
+                            </li>
+                        </ul>
+                    {% endif %}
                     <hr>
                     <ul class="nav nav-sidebar">
                         <li>

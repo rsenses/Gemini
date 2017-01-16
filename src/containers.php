@@ -43,8 +43,9 @@ $container['view'] = function ($container) {
 
     $view->getEnvironment()->addGlobal('auth', [
         'status' => $container->auth->getStatus(),
-        'user' => $container->auth->getUserData()
+        'user' => $container->auth->getUserData(),
     ]);
+    $view->getEnvironment()->addGlobal('authorization', $container->authorization);
     $view->getEnvironment()->addGlobal('flash', $container->flash);
     $view->getEnvironment()->addFilter($diff);
 
