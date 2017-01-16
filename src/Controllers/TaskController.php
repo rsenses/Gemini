@@ -119,6 +119,7 @@ class TaskController
     {
         $tasks = Task::whereNotNull('staff_id')
             ->where('user_id', $this->auth->getUserId())
+            ->where('staff_id', '!=', $this->auth->getUserId())
             ->whereNull('done_at')
             ->orderBy('due_at', 'ASC')
             ->get();
