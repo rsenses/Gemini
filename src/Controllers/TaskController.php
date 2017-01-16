@@ -56,13 +56,7 @@ class TaskController
             ->get();
 
         foreach ($tasks as $task) {
-            $totalTimeTrack = 0;
-
-            foreach ($task->timetracks as $track) {
-                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
-            }
-
-            $task->totalTimeTrack = $totalTimeTrack;
+            $task->totalTimeTrack = $this->totalTimeTrack($task);
         }
 
         return $this->view->render($response, 'task/all.twig', [
@@ -79,13 +73,7 @@ class TaskController
             ->get();
 
         foreach ($tasks as $task) {
-            $totalTimeTrack = 0;
-
-            foreach ($task->timetracks as $track) {
-                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
-            }
-
-            $task->totalTimeTrack = $totalTimeTrack;
+            $task->totalTimeTrack = $this->totalTimeTrack($task);
         }
 
         return $this->view->render($response, 'task/all.twig', [
@@ -102,13 +90,7 @@ class TaskController
             ->get();
 
         foreach ($tasks as $task) {
-            $totalTimeTrack = 0;
-
-            foreach ($task->timetracks as $track) {
-                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
-            }
-
-            $task->totalTimeTrack = $totalTimeTrack;
+            $task->totalTimeTrack = $this->totalTimeTrack($task);
         }
 
         return $this->view->render($response, 'task/all.twig', [
@@ -125,13 +107,7 @@ class TaskController
             ->get();
 
         foreach ($tasks as $task) {
-            $totalTimeTrack = 0;
-
-            foreach ($task->timetracks as $track) {
-                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
-            }
-
-            $task->totalTimeTrack = $totalTimeTrack;
+            $task->totalTimeTrack = $this->totalTimeTrack($task);
         }
 
         return $this->view->render($response, 'task/all.twig', [
@@ -150,13 +126,7 @@ class TaskController
             ->get();
 
         foreach ($tasks as $task) {
-            $totalTimeTrack = 0;
-
-            foreach ($task->timetracks as $track) {
-                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
-            }
-
-            $task->totalTimeTrack = $totalTimeTrack;
+            $task->totalTimeTrack = $this->totalTimeTrack($task);
         }
 
         return $this->view->render($response, 'task/all.twig', [
@@ -173,13 +143,7 @@ class TaskController
             ->get();
 
         foreach ($tasks as $task) {
-            $totalTimeTrack = 0;
-
-            foreach ($task->timetracks as $track) {
-                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
-            }
-
-            $task->totalTimeTrack = $totalTimeTrack;
+            $task->totalTimeTrack = $this->totalTimeTrack($task);
         }
 
         return $this->view->render($response, 'task/all.twig', [
@@ -196,13 +160,7 @@ class TaskController
             ->get();
 
         foreach ($tasks as $task) {
-            $totalTimeTrack = 0;
-
-            foreach ($task->timetracks as $track) {
-                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
-            }
-
-            $task->totalTimeTrack = $totalTimeTrack;
+            $task->totalTimeTrack = $this->totalTimeTrack($task);
         }
 
         return $this->view->render($response, 'task/all.twig', [
@@ -359,5 +317,16 @@ class TaskController
         $task->delete();
 
         return $response->withRedirect($this->router->pathFor('task.inprogress'));
+    }
+
+    private function totalTimeTrack($task)
+    {
+        $totalTimeTrack = 0;
+
+        foreach ($task->timetracks as $track) {
+            $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+        }
+
+        return $totalTimeTrack;
     }
 }
