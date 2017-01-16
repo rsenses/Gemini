@@ -116,24 +116,17 @@ class ProjectController
 
     public function billedAction(Request $request, Response $response, array $args)
     {
-        $page = $args['page'] ?: 1;
-        $offset = 100;
-        $url = '/project/billed/(:num)';
+        $page = isset($args['page']) ? $args['page'] : 1;
 
         $projects = Project::whereNotNull('bill')
             ->whereNotNull('done_at')
-            ->orderBy('project_id', 'DESC')
-            ->take($offset)
-            ->skip($offset * ($page - 1))
+            // ->orderBy('project_id', 'DESC')
+            // ->take($offset)
+            // ->skip($offset * ($page - 1))
             ->get();
 
-        $total = Project::whereNotNull('bill')
-            ->whereNotNull('done_at')
-            ->count();
-
         return $this->view->render($response, 'project/billed.twig', [
-            'projects' => $projects,
-            'pagination' => new Paginator($total, $offset, $page, $url),
+            'projects' => $projects
         ]);
     }
 
