@@ -202,7 +202,7 @@ class TaskController
         $rules = [
             'name' => v::notEmpty(),
             'description' => v::notEmpty(),
-            'project' => v::notEmpty()->intVal(),
+            'project' => v::optional(v::intVal()),
             'due_at' => v::notEmpty()->min($request->getParam('started_at'))->date(),
         ];
 
@@ -219,7 +219,7 @@ class TaskController
             'staff_id' => $request->getParam('staff') ? filter_var($request->getParam('staff'), FILTER_SANITIZE_NUMBER_INT) : null,
             'name' => filter_var($request->getParam('name'), FILTER_SANITIZE_STRING),
             'description' => $request->getParam('description'),
-            'project_id' => filter_var($request->getParam('project'), FILTER_SANITIZE_NUMBER_INT),
+            'project_id' => $request->getParam('project') ? filter_var($request->getParam('project'), FILTER_SANITIZE_NUMBER_INT) : null,
             'due_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')),
         ]);
 
@@ -240,7 +240,7 @@ class TaskController
         $rules = [
             'name' => v::notEmpty(),
             'description' => v::notEmpty(),
-            'project' => v::notEmpty()->intVal(),
+            'project' => v::optional(v::intVal()),
             'due_at' => v::notEmpty()->min($request->getParam('started_at'))->date(),
         ];
 
@@ -259,7 +259,7 @@ class TaskController
         $task->staff_id = $request->getParam('staff') ? filter_var($request->getParam('staff'), FILTER_SANITIZE_NUMBER_INT) : null;
         $task->name = filter_var($request->getParam('name'), FILTER_SANITIZE_STRING);
         $task->description = $request->getParam('description');
-        $task->project_id = filter_var($request->getParam('project'), FILTER_SANITIZE_NUMBER_INT);
+        $task->project_id = $request->getParam('project') ? filter_var($request->getParam('project'), FILTER_SANITIZE_NUMBER_INT) : null;
         $task->due_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at'));
 
         $task->save();

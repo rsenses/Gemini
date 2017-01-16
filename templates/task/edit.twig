@@ -44,9 +44,9 @@
                     </div>
                 </div>
                 <div class="form-group{{ validation_errors.project ? ' has-error' : '' }}">
-                    <label class="col-md-3 control-label" for="project">Proyecto<span class="text-danger">*</span></label>
+                    <label class="col-md-3 control-label" for="project">Proyecto</label>
                     <div class="col-md-6">
-                        <select class="form-control select2" name="project" id="project" required>
+                        <select class="form-control select2" name="project" id="project">
                             <option disabled selected value data-hidden="true">Selecciona un proyecto</option>
                             {% for newProject in projects %}
                                 <option value="{{ newProject.project_id }}"{{ newProject.project_id == task.project_id ? ' selected' : '' }}>{{ newProject.name | raw }}</option>
