@@ -122,9 +122,9 @@ class ProjectController
 
         $projects = Project::whereNotNull('bill')
             ->whereNotNull('done_at')
-            ->orderBy('due_at', 'DESC')
+            ->orderBy('project_id', 'DESC')
             ->take($offset)
-            ->skip($offset * $page)
+            ->skip($offset * ($page - 1))
             ->get();
 
         $total = Project::whereNotNull('bill')
