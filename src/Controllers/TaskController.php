@@ -103,7 +103,7 @@ class TaskController
         ]);
     }
 
-    public function unnasignedUserAction(Request $request, Response $response, array $args)
+    public function unnassignedUserAction(Request $request, Response $response, array $args)
     {
         $tasks = Task::whereNull('staff_id')
             ->whereNull('done_at')
@@ -115,7 +115,7 @@ class TaskController
         ]);
     }
 
-    public function asignedUserAction(Request $request, Response $response, array $args)
+    public function assignedUserAction(Request $request, Response $response, array $args)
     {
         $tasks = Task::whereNotNull('staff_id')
             ->where('user_id', $this->auth->getUserId())

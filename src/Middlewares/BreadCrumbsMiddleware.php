@@ -135,8 +135,16 @@ class BreadCrumbsMiddleware
                     'url' => $this->getUrl($request, $routeName)
                 ];
                 break;
-            case 'task.unnasigned':
+            case 'task.unnassigned':
                 $breadcrumbs['current'] = 'Tareas sin asignar';
+                $breadcrumbs['routes'][] = [
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
+            case 'task.assigned':
+                $breadcrumbs['current'] = 'Tareas asignadas';
                 $breadcrumbs['routes'][] = [
                     'name' => $breadcrumbs['current'],
                     'route' => $routeName,
