@@ -136,9 +136,7 @@ class TaskController
 
     public function independentAction(Request $request, Response $response, array $args)
     {
-        $tasks = Task::whereNotNull('staff_id')
-            ->where('user_id', $this->auth->getUserId())
-            ->where('staff_id', '!=', $this->auth->getUserId())
+        $tasks = Task::where('staff_id', $this->auth->getUserId())
             ->whereNull('done_at')
             ->whereNull('project_id')
             ->orderBy('due_at', 'ASC')
@@ -151,9 +149,7 @@ class TaskController
 
     public function independentCompletedAction(Request $request, Response $response, array $args)
     {
-        $tasks = Task::whereNotNull('staff_id')
-            ->where('user_id', $this->auth->getUserId())
-            ->where('staff_id', '!=', $this->auth->getUserId())
+        $tasks = Task::where('staff_id', $this->auth->getUserId())
             ->whereNotNull('done_at')
             ->whereNull('project_id')
             ->orderBy('due_at', 'ASC')
