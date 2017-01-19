@@ -33,7 +33,7 @@ if ($('.tinymce').length) {
         language_url: '/js/vendor/tinymce.es.js',
         plugins: [
             'autolink link image anchor',
-            'visualblocks',
+            'visualblocks lists',
             'paste code'
         ],
         // toolbar: 'undo redo | styleselect | bold italic | bullist numlist outdent indent | link image | code',
@@ -47,7 +47,6 @@ if ($('.tinymce').length) {
                     { title: 'h6', block: 'h6' }
                 ]
             },
-
             {
                 title: 'Blocks',
                 items: [
