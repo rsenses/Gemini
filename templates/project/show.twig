@@ -9,7 +9,7 @@
                         <i class="fa fa-trash" aria-hidden="true"></i> Borrar
                     </a>
                     {% if project.done_at == null %}
-                        <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-warning">
+                        <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-success">
                             <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
                         </a>
                     {% else %}
@@ -136,7 +136,7 @@
                         <i class="fa fa-trash" aria-hidden="true"></i> Borrar
                     </a>
                     {% if project.done_at == null %}
-                        <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-warning">
+                        <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-success">
                             <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
                         </a>
                     {% else %}
