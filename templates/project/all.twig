@@ -40,9 +40,6 @@
                                 <td>{{ project.user.fullName() }}</td>
                                 <td class="text-nowrap">{{ project.due_at }}</td>
                                 <td class="text-nowrap text-center">
-                                    <a href="{{ path_for('project.show', {'id': project.project_id }) }}">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </a>
                                     {% if project.is_printed == 0 %}
                                         <a href="{{ path_for('project.print', {'id': project.project_id }) }}" target="_blank">
                                             <i class="fa fa-print" aria-hidden="true"></i>
