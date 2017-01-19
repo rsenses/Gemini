@@ -119,6 +119,19 @@ class BreadCrumbsMiddleware
                     'url' => $this->getUrl($request, $routeName)
                 ];
                 break;
+            case 'project.show':
+                $breadcrumbs['current'] = 'Ver Proyecto';
+                $breadcrumbs['routes'][] = [
+                    'name' => 'Todos los proyectos',
+                    'route' => 'project.all',
+                    'url' => $this->getUrl($request, 'project.all')
+                ];
+                $breadcrumbs['routes'][] = [
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
             case 'task.inprogress':
                 $breadcrumbs['current'] = 'Mis tareas';
                 $breadcrumbs['routes'][] = [
@@ -192,6 +205,19 @@ class BreadCrumbsMiddleware
                 break;
             case 'task.edit':
                 $breadcrumbs['current'] = 'Editar Tarea';
+                $breadcrumbs['routes'][] = [
+                    'name' => 'Mis Tareas',
+                    'route' => 'task.inprogress',
+                    'url' => $this->getUrl($request, 'task.inprogress')
+                ];
+                $breadcrumbs['routes'][] = [
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
+            case 'task.show':
+                $breadcrumbs['current'] = 'Ver Tarea';
                 $breadcrumbs['routes'][] = [
                     'name' => 'Mis Tareas',
                     'route' => 'task.inprogress',
