@@ -48,6 +48,8 @@ $app->group('', function () {
         $this->get('/print/{id:[0-9]+}', 'ProjectController:printAction')->setName('project.print');
         // New Project
         $this->get('/new', 'ProjectController:newAction')->setName('project.new');
+        // Show Project
+        $this->get('/show/{id:[0-9]+}', 'ProjectController:showAction')->setName('project.show');
         // Edit Project
         $this->get('/edit/{id:[0-9]+}', 'ProjectController:editAction')->setName('project.edit');
         // Complete Project
@@ -82,6 +84,8 @@ $app->group('', function () {
         $this->get('/independent/completed', 'TaskController:independentCompletedAction')->setName('task.independent.completed');
         // New Task
         $this->get('/new[/project/{id:[0-9]+}]', 'TaskController:newAction')->setName('task.new');
+        // Show Task
+        $this->get('/show/{id:[0-9]+}', 'TaskController:showAction')->setName('task.show');
         // Edit Task
         $this->get('/edit/{id:[0-9]+}', 'TaskController:editAction')->setName('task.edit');
         // Complete Task

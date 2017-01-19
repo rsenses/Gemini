@@ -185,6 +185,21 @@ class TaskController
         ]);
     }
 
+    public function showAction(Request $request, Response $response, array $args)
+    {
+        $task = Task::findOrFail($args['id']);
+
+        $totalTimeTrack = 0;
+        foreach ($task->timetracks as $track) {
+            $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+        }
+
+        return $this->view->render($response, 'task/show.twig', [
+            'task' => $task,
+            'totalTimeTrack' => $totalTimeTrack,
+        ]);
+    }
+
     public function editAction(Request $request, Response $response, array $args)
     {
         $task = Task::findOrFail($args['id']);
@@ -269,7 +284,7 @@ class TaskController
             ]);
         }
 
-        return $response->withRedirect($this->router->pathFor('task.edit', [
+        return $response->withRedirect($this->router->pathFor('task.show', [
             'id' => $task->task_id,
         ]));
     }
@@ -303,7 +318,7 @@ class TaskController
 
         $task->save();
 
-        return $response->withRedirect($this->router->pathFor('task.edit', [
+        return $response->withRedirect($this->router->pathFor('task.show', [
             'id' => $task->task_id,
         ]));
     }

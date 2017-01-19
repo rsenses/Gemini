@@ -23,7 +23,7 @@
                 <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                     <thead>
                         <tr>
-                            <th data-field="id" data-sortable="true">Código</th>
+                            <th data-field="id" data-sortable="true">Cód.</th>
                             <th data-field="client" data-sortable="true">Cliente</th>
                             <th data-field="name" data-sortable="true">Nombre</th>
                             <th data-field="staff" data-sortable="true">Responsable</th>
@@ -33,20 +33,25 @@
                     </thead>
                     <tbody>
                         {% for project in projects %}
-                            <tr class="gradeX">
-                                <td>{{ project.project_id }}</td>
+                            <tr>
+                                <td class="text-center">{{ project.project_id }}</td>
                                 <td>{{ project.client.name }}</td>
-                                <td><a href="{{ path_for('project.edit', {'id': project.project_id }) }}">{{ project.name | raw }}</a></td>
+                                <td><a href="{{ path_for('project.show', {'id': project.project_id }) }}">{{ project.name | raw }}</a></td>
                                 <td>{{ project.user.fullName() }}</td>
                                 <td class="text-nowrap">{{ project.due_at }}</td>
-                                <td class="text-nowrap">
-                                    <a href="{{ path_for('project.edit', {'id': project.project_id }) }}">
+                                <td class="text-nowrap text-center">
+                                    <a href="{{ path_for('project.show', {'id': project.project_id }) }}">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </a>
                                     {% if project.is_printed == 0 %}
                                         <a href="{{ path_for('project.print', {'id': project.project_id }) }}" target="_blank">
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </a>
+                                    {% endif %}
+                                    {% if project.due_at < "now" | date_modify("-1 week") | date("Y-m-d H:i:s") %}
+                                        <abbr title="¡Proyecto caducado!">
+                                            <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+                                        </abbr>
                                     {% endif %}
                                 </td>
                             </tr>

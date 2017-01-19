@@ -83,59 +83,12 @@
                 {% if task.staff_id == auth.user.user_id %}
                     <div class="row">
                         <div class="col-sm-12">
-                            <a href="{{ path_for('task.delete', { 'id': task.task_id }) }}" class="btn btn-danger btn-lg btn-delete">Borrar</a>
-                            {% if task.done_at == null %}
-                                <a href="{{ path_for('task.complete', { 'id': task.task_id }) }}" class="btn btn-warning btn-lg">Completar</a>
-                            {% else %}
-                                <a href="{{ path_for('task.reopen', { 'id': task.task_id }) }}" class="btn btn-warning btn-lg">Reabrir</a>
-                            {% endif %}
-                            <button class="btn btn-success btn-lg pull-right">Guardar</button>
+                            <button class="btn btn-success pull-right">Guardar</button>
                             {{ csrf.field | raw }}
                         </div>
                     </div>
                 {% endif %}
             </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <section class="panel next-events">
-                <header class="panel-heading">
-                    {% if active_timetrack == 0 %}
-                        {% if task.staff_id == auth.user.user_id %}
-                            <p><a href="{{ path_for('timetrack.start', { 'id': task.task_id }) }}" class="btn btn-primary"><i class="fa fa-play" aria-hidden="true"></i> Iniciar contador</a></p>
-                        {% endif %}
-                    {% else %}
-                        <p><a href="{{ path_for('timetrack.stop') }}" class="btn btn-danger"><i class="fa fa-stop" aria-hidden="true"></i> Detener contador</a></p>
-                    {% endif %}
-                    <h2>Contador</h2>
-                </header>
-                <div class="panel-body">
-                    <p><strong>Total</strong>: {{ totalTimeTrack|date('H:i:s') }}</p>
-                    <table data-toggle="table" data-sort-name="day" data-sort-order="asc" data-search="true" data-show-columns="true">
-                        <thead>
-                            <tr>
-                                <th data-field="day" data-sortable="true">Día</th>
-                                <th data-field="start" data-sortable="true">Inicio</th>
-                                <th data-field="end" data-sortable="true">Fin</th>
-                                <th data-field="total" data-sortable="true">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for track in task.timetracks %}
-                                {% if track.is_completed %}
-                                    <tr>
-                                        <td>{{ track.created_at|date('Y/m/d') }}</td>
-                                        <td>{{ track.created_at|date('H:i:s') }}</td>
-                                        <td>{{ track.updated_at|date('H:i:s') }}</td>
-                                        <td><strong>{{ track.created_at|timediff(track.updated_at) }}</strong></td>
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </section>
         </div>
     </div>
 {% endblock %}

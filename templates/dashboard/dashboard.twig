@@ -15,12 +15,12 @@
                 </thead>
                 <tbody>
                     {% for task in tasks %}
-                        <tr class="gradeX">
-                            <td><a href="{{ path_for('task.edit', {'id': task.task_id }) }}">{{ task.name | raw }}</a></td>
-                            <td><a href="{{ path_for('project.edit', {'id': task.project_id }) }}">{{ task.project.name | raw }}</a></td>
+                        <tr>
+                            <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name | raw }}</a></td>
+                            <td><a href="{{ path_for('project.show', {'id': task.project_id }) }}">{{ task.project.name | raw }}</a></td>
                             <td>{{ task.due_at }}</td>
                             <td>
-                                <a href="{{ path_for('task.edit', {'id': task.task_id }) }}">
+                                <a href="{{ path_for('task.show', {'id': task.task_id }) }}">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 </a>
                             </td>

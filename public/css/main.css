@@ -152,6 +152,3 @@ aside {
 .assigned {
     opacity: .7;
 }
-.assigned td:first-child {
-    background-color: #cceeff;
-}

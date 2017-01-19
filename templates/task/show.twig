@@ -1,0 +1,172 @@
+{% extends 'layouts/private.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% if task.staff_id == auth.user.user_id %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="{{ path_for('task.delete', { 'id': task.task_id }) }}" class="btn btn-danger btn-delete">
+                            <i class="fa fa-trash" aria-hidden="true"></i> Borrar
+                        </a>
+                        {% if task.done_at == null %}
+                            <a href="{{ path_for('task.complete', { 'id': task.task_id }) }}" class="btn btn-warning">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
+                            </a>
+                        {% else %}
+                            <a href="{{ path_for('task.reopen', { 'id': task.task_id }) }}" class="btn btn-warning">
+                                <i class="fa fa-square-o" aria-hidden="true"></i> Reabrir
+                            </a>
+                        {% endif %}
+                        <a href="{{ path_for('task.edit', { 'id': task.task_id }) }}" class="btn btn-primary pull-right">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                        </a>
+                    </div>
+                </div>
+                <hr>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Responsable</strong></p>
+                </div>
+                <div class="col-md-9">
+                    <p>{{ task.user.fullName() }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Tarea</strong></p>
+                </div>
+                <div class="col-md-9">
+                    <p>{{ task.name }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Descripción</strong></p>
+                </div>
+                <div class="col-md-9">
+                    <p>{{ task.description | raw }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Proyecto</strong></p>
+                </div>
+                <div class="col-md-9">
+                    <p>
+                        <a href="{{ path_for('project.show', {'id': task.project_id }) }}">{{ task.project.name | raw }}</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Fecha de entrega</strong></p>
+                </div>
+                <div class="col-md-9">
+                    <p>{{ task.due_at }}</p>
+                </div>
+            </div>
+            {% if task.staff_id == auth.user.user_id %}
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="{{ path_for('task.delete', { 'id': task.task_id }) }}" class="btn btn-danger btn-delete">
+                            <i class="fa fa-trash" aria-hidden="true"></i> Borrar
+                        </a>
+                        {% if task.done_at == null %}
+                            <a href="{{ path_for('task.complete', { 'id': task.task_id }) }}" class="btn btn-warning">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
+                            </a>
+                        {% else %}
+                            <a href="{{ path_for('task.reopen', { 'id': task.task_id }) }}" class="btn btn-warning">
+                                <i class="fa fa-square-o" aria-hidden="true"></i> Reabrir
+                            </a>
+                        {% endif %}
+                        <a href="{{ path_for('task.edit', { 'id': task.task_id }) }}" class="btn btn-primary pull-right">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <section class="panel next-events">
+                <header class="panel-heading">
+                    {% if active_timetrack == 0 %}
+                        {% if task.staff_id == auth.user.user_id %}
+                            <p><a href="{{ path_for('timetrack.start', { 'id': task.task_id }) }}" class="btn btn-primary"><i class="fa fa-play" aria-hidden="true"></i> Iniciar contador</a></p>
+                        {% endif %}
+                    {% else %}
+                        <p><a href="{{ path_for('timetrack.stop') }}" class="btn btn-danger"><i class="fa fa-stop" aria-hidden="true"></i> Detener contador</a></p>
+                    {% endif %}
+                    <h2>Contador</h2>
+                </header>
+                <div class="panel-body">
+                    <p><strong>Total</strong>: {{ totalTimeTrack|date('H:i:s') }}</p>
+                    <table data-toggle="table" data-sort-name="day" data-sort-order="asc" data-search="true" data-show-columns="true">
+                        <thead>
+                            <tr>
+                                <th data-field="day" data-sortable="true">Día</th>
+                                <th data-field="start" data-sortable="true">Inicio</th>
+                                <th data-field="end" data-sortable="true">Fin</th>
+                                <th data-field="total" data-sortable="true">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for track in task.timetracks %}
+                                {% if track.is_completed %}
+                                    <tr>
+                                        <td>{{ track.created_at|date('Y/m/d') }}</td>
+                                        <td>{{ track.created_at|date('H:i:s') }}</td>
+                                        <td>{{ track.updated_at|date('H:i:s') }}</td>
+                                        <td><strong>{{ track.created_at|timediff(track.updated_at) }}</strong></td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{ base_url() }}/js/vendor/datetimepicker.es.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.3/js/bootstrap-dialog.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".select2").select2();
+            $('.datetimepicker').datetimepicker({
+                locale: 'es'
+            });
+        });
+        $('.btn-delete').click(function(e) {
+            e.preventDefault();
+            var button = $(this);
+            BootstrapDialog.confirm({
+                title: 'Cuidado!!',
+                message: '¿Seguro que quieres borrar esta tarea?',
+                type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                closable: true, // <-- Default value is false
+                draggable: true, // <-- Default value is false
+                btnCancelLabel: '¡Mejor No!', // <-- Default value is 'Cancel',
+                btnOKLabel: '¡Bórrala!', // <-- Default value is 'OK',
+                btnOKClass: 'btn-danger', // <-- If you didn't specify it, dialog type will be used,
+                callback: function(result) {
+                    if (result) {
+                        window.location = button.attr('href')
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+{% endblock %}

@@ -22,7 +22,7 @@
                             </thead>
                             <tbody>
                                 {% for user in users %}
-                                    <tr class="gradeX">
+                                    <tr>
                                         <td>
                                             <img src="{{ user.avatar }}" alt="{{ user.first_name~' '~user.last_name }}">
                                             <span class="sr_only">{{ user.first_name~' '~user.last_name }}</span>

@@ -175,6 +175,55 @@ class ProjectController
         ]);
     }
 
+    public function showAction(Request $request, Response $response, array $args)
+    {
+        $project = Project::findOrFail($args['id']);
+
+        $inProgressTasks = Task::where('project_id', $project->project_id)
+            ->whereNull('done_at')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        $project->inProgressTasksTime = 0;
+
+        foreach ($inProgressTasks as $task) {
+            $totalTimeTrack = 0;
+
+            foreach ($task->timetracks as $track) {
+                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+            }
+
+            $task->totalTimeTrack = $totalTimeTrack;
+
+            $project->inProgressTasksTime += $totalTimeTrack;
+        }
+
+        $completedTasks = Task::where('project_id', $project->project_id)
+            ->whereNotNull('done_at')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        $project->completedTasksTime = 0;
+
+        foreach ($completedTasks as $task) {
+            $totalTimeTrack = 0;
+
+            foreach ($task->timetracks as $track) {
+                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+            }
+
+            $task->totalTimeTrack = $totalTimeTrack;
+
+            $project->completedTasksTime += $totalTimeTrack;
+        }
+
+        return $this->view->render($response, 'project/show.twig', [
+            'project' => $project,
+            'inProgressTasks' => $inProgressTasks,
+            'completedTasks' => $completedTasks,
+        ]);
+    }
+
     public function editAction(Request $request, Response $response, array $args)
     {
         $project = Project::findOrFail($args['id']);
@@ -267,7 +316,6 @@ class ProjectController
             'description' => v::notEmpty(),
             'client' => v::notEmpty()->intVal(),
             'contact' => v::notEmpty(),
-            'bill' => v::optional(v::intVal()),
             'started_at' => v::notEmpty()->date(),
             'due_at' => v::notEmpty()->min($request->getParam('started_at'))->date(),
             'issued_at' => v::optional(v::date()),
@@ -319,7 +367,7 @@ class ProjectController
             }
         }
 
-        return $response->withRedirect($this->router->pathFor('project.edit', [
+        return $response->withRedirect($this->router->pathFor('project.show', [
             'id' => $project->project_id,
         ]));
     }
@@ -333,7 +381,6 @@ class ProjectController
             'description' => v::notEmpty(),
             'client' => v::notEmpty()->intVal(),
             'contact' => v::notEmpty(),
-            'bill' => v::optional(v::intVal()),
             'started_at' => v::notEmpty()->date(),
             'due_at' => v::notEmpty()->min($request->getParam('started_at'))->date(),
             'issued_at' => v::optional(v::date()),
@@ -373,7 +420,7 @@ class ProjectController
             $project->users()->attach($user);
         }
 
-        return $response->withRedirect($this->router->pathFor('project.edit', [
+        return $response->withRedirect($this->router->pathFor('project.show', [
             'id' => $project->project_id,
         ]));
     }

@@ -1,0 +1,263 @@
+{% extends 'layouts/private.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-delete">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Borrar
+                    </a>
+                    {% if project.done_at == null %}
+                        <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-warning">
+                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
+                        </a>
+                    {% else %}
+                        <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning">
+                            <i class="fa fa-square-o" aria-hidden="true"></i> Reabrir
+                        </a>
+                    {% endif %}
+                    <a href="{{ path_for('project.print', { 'id': project.project_id }) }}" target="_blank" class="btn btn-info">
+                        <i class="fa fa-print" aria-hidden="true"></i> Imprimir
+                    </a>
+                    <a href="{{ path_for('project.edit', { 'id': project.project_id }) }}" class="btn btn-primary pull-right">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Código</strong></p>
+                </div>
+                <div class="col-md-9">
+                    <p>{{ project.project_id }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Nombre</strong></p>
+                </div>
+                <div class="col-md-9">
+                    <p>{{ project.name | raw }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Descripción breve</strong></p>
+                </div>
+                <div class="col-md-9">
+                    <p>{{ project.short_description }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Descripción</strong></p>
+                </div>
+                <div class="col-md-9">
+                    {{ project.description | raw }}
+                </div>
+            </div>
+            <h5>Equipo</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Responsable</strong></p>
+                </div>
+                <div class="col-md-9">
+                    {{ project.user.fullName() }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Asignados</strong></p>
+                </div>
+                <div class="col-md-9">
+                    {% for user in project.users %}
+                        {{ user.fullName() }}<br>
+                    {% endfor %}
+                </div>
+            </div>
+            <h5>Cliente</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Cliente</strong></p>
+                </div>
+                <div class="col-md-9">
+                    {{ project.client.name }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Contacto</strong></p>
+                </div>
+                <div class="col-md-9">
+                    {{ project.contact }}
+                </div>
+            </div>
+            <h5>Entrega</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Fecha de inicio</strong></p>
+                </div>
+                <div class="col-md-9">
+                    {{ project.started_at | date('d-m-Y H:i:s') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Fecha de entrega</strong></p>
+                </div>
+                <div class="col-md-9">
+                    {{ project.due_at | date('d-m-Y H:i:s') }}
+                </div>
+            </div>
+            <h5>Facturación</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Factura</strong></p>
+                </div>
+                <div class="col-md-9">
+                    {{ project.bill }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="text-right"><strong>Fecha de emisión</strong></p>
+                </div>
+                <div class="col-md-9">
+                    {{ project.issued_at | date('d-m-Y H:i:s') }}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-delete">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Borrar
+                    </a>
+                    {% if project.done_at == null %}
+                        <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-warning">
+                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
+                        </a>
+                    {% else %}
+                        <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning">
+                            <i class="fa fa-square-o" aria-hidden="true"></i> Reabrir
+                        </a>
+                    {% endif %}
+                    <a href="{{ path_for('project.print', { 'id': project.project_id }) }}" target="_blank" class="btn btn-info">
+                        <i class="fa fa-print" aria-hidden="true"></i> Imprimir
+                    </a>
+                    <a href="{{ path_for('project.edit', { 'id': project.project_id }) }}" class="btn btn-primary pull-right">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <p><a href="{{ path_for('task.new', { 'id': project.project_id }) }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
+            <h4>Tareas pendientes</h4>
+            <p><strong>Total</strong>: {{ project.inProgressTasksTime|date('H:i:s') }}</p>
+            <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
+                <thead>
+                    <tr>
+                        <th data-field="name" data-sortable="true">Nombre</th>
+                        <th data-field="user" data-sortable="true">Encargado</th>
+                        <th data-field="due" data-sortable="true">Cierre</th>
+                        <th data-field="time" data-sortable="true">Tiempo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in inProgressTasks %}
+                        <tr>
+                            <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name }}</a></td>
+                            <td>{{ task.user.fullName() }}</td>
+                            <td>{{ task.due_at }}</td>
+                            <td>
+                                {{ task.totalTimeTrack|date('H:i:s') }}
+                            </td>
+                            <td>
+                                <a href="{{ path_for('task.show', {'id': task.task_id }) }}">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+            <h4>Tareas completadas</h4>
+            <p><strong>Total</strong>: {{ project.completedTasksTime|date('H:i:s') }}</p>
+            <table data-toggle="table" data-sort-name="time" data-sort-order="desc" data-search="true" data-show-columns="true">
+                <thead>
+                    <tr>
+                        <th data-field="name" data-sortable="true">Nombre</th>
+                        <th data-field="user" data-sortable="true">Encargado</th>
+                        <th data-field="due" data-sortable="true">Cierre</th>
+                        <th data-field="time" data-sortable="true">Tiempo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in completedTasks %}
+                        <tr>
+                            <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name }}</a></td>
+                            <td>{{ task.user.fullName() }}</td>
+                            <td>{{ task.due_at }}</td>
+                            <td>
+                                {{ task.totalTimeTrack|date('H:i:s') }}
+                            </td>
+                            <td>
+                                <a href="{{ path_for('task.show', {'id': task.task_id }) }}">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{ base_url() }}/js/vendor/datetimepicker.es.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.3/js/bootstrap-dialog.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".select2").select2();
+            $('.datetimepicker').datetimepicker({
+                locale: 'es'
+            });
+        });
+        $('.btn-delete').click(function(e) {
+            e.preventDefault();
+            var button = $(this);
+            BootstrapDialog.confirm({
+                title: 'Cuidado!!',
+                message: '¿Seguro que quieres borrar este proyecto? Se borrarán también todas las tareas asociadas.',
+                type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                closable: true, // <-- Default value is false
+                draggable: true, // <-- Default value is false
+                btnCancelLabel: '¡Mejor No!', // <-- Default value is 'Cancel',
+                btnOKLabel: '¡Bórralo!', // <-- Default value is 'OK',
+                btnOKClass: 'btn-danger', // <-- If you didn't specify it, dialog type will be used,
+                callback: function(result) {
+                    if (result) {
+                        window.location = button.attr('href')
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+{% endblock %}

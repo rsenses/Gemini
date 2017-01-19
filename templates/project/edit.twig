@@ -201,85 +201,11 @@
                 {% endif %}
                 <div class="row">
                     <div class="col-sm-12">
-                        <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-lg btn-delete">Borrar</a>
-                        {% if project.done_at == null %}
-                            <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-warning btn-lg">Completar</a>
-                        {% else %}
-                            <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning btn-lg">Reabrir</a>
-                        {% endif %}
-                        <a href="{{ path_for('project.print', { 'id': project.project_id }) }}" target="_blank" class="btn btn-info btn-lg">Imprimir</a>
-                        <button class="btn btn-success btn-lg pull-right">Guardar</button>
+                        <button class="btn btn-success pull-right">Guardar</button>
                         {{ csrf.field | raw }}
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-xs-12">
-            <p><a href="{{ path_for('task.new', { 'id': project.project_id }) }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
-            <h4>Tareas pendientes</h4>
-            <p><strong>Total</strong>: {{ project.inProgressTasksTime|date('H:i:s') }}</p>
-            <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
-                <thead>
-                    <tr>
-                        <th data-field="name" data-sortable="true">Nombre</th>
-                        <th data-field="project" data-sortable="true">Proyecto</th>
-                        <th data-field="due" data-sortable="true">Cierre</th>
-                        <th data-field="time" data-sortable="true">Tiempo</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for task in inProgressTasks %}
-                        <tr>
-                            <td><a href="{{ path_for('task.edit', {'id': task.task_id }) }}">{{ task.name }}</a></td>
-                            <td><a href="{{ path_for('project.edit', {'id': task.project_id }) }}">{{ task.project.name | raw }}</a></td>
-                            <td>{{ task.due_at }}</td>
-                            <td>
-                                {{ task.totalTimeTrack|date('H:i:s') }}
-                            </td>
-                            <td>
-                                <a href="{{ path_for('task.edit', {'id': task.task_id }) }}">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <hr>
-            <h4>Tareas completadas</h4>
-            <p><strong>Total</strong>: {{ project.completedTasksTime|date('H:i:s') }}</p>
-            <table data-toggle="table" data-sort-name="time" data-sort-order="desc" data-search="true" data-show-columns="true">
-                <thead>
-                    <tr>
-                        <th data-field="name" data-sortable="true">Nombre</th>
-                        <th data-field="project" data-sortable="true">Proyecto</th>
-                        <th data-field="due" data-sortable="true">Cierre</th>
-                        <th data-field="time" data-sortable="true">Tiempo</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for task in completedTasks %}
-                        <tr>
-                            <td><a href="{{ path_for('task.edit', {'id': task.task_id }) }}">{{ task.name }}</a></td>
-                            <td><a href="{{ path_for('project.edit', {'id': task.project_id }) }}">{{ task.project.name | raw }}</a></td>
-                            <td>{{ task.due_at }}</td>
-                            <td>
-                                {{ task.totalTimeTrack|date('H:i:s') }}
-                            </td>
-                            <td>
-                                <a href="{{ path_for('task.edit', {'id': task.task_id }) }}">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         </div>
     </div>
 {% endblock %}
