@@ -27,19 +27,16 @@
             </div>
             <hr>
             <div class="row">
+                <div class="col-xs-12">
+                    <h2>{{ project.name | raw }}</h2>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-3">
                     <p class="text-right"><strong>Código</strong></p>
                 </div>
                 <div class="col-md-9">
                     <p>{{ project.project_id }}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <p class="text-right"><strong>Nombre</strong></p>
-                </div>
-                <div class="col-md-9">
-                    <p>{{ project.name | raw }}</p>
                 </div>
             </div>
             <div class="row">
