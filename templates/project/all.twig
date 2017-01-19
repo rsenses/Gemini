@@ -41,7 +41,7 @@
                                 <td class="text-nowrap">{{ project.due_at }}</td>
                                 <td class="text-nowrap text-center">
                                     {% if project.is_printed == 0 %}
-                                        <a href="{{ path_for('project.print', {'id': project.project_id }) }}" target="_blank">
+                                        <a href="{{ path_for('project.print', {'id': project.project_id }) }}" target="_blank" class="text-warning">
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </a>
                                     {% endif %}
