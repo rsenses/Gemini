@@ -5,53 +5,49 @@
         <div class="row">
             <div class="col-xs-12">
                 <!-- start: page -->
-                <section class="panel next-events">
-                    <div class="panel-body">
-                        <table class="table table-bordered table-striped mb-none datatables">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Nombre</th>
-                                    <th>Apellidos</th>
-                                    <th>Email</th>
-                                    <th>Teléfono</th>
-                                    <th width="20">Admin</th>
-                                    <th width="20"></th>
-                                    <th width="20"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for user in users %}
-                                    <tr>
-                                        <td>
-                                            <img src="{{ user.avatar }}" alt="{{ user.first_name~' '~user.last_name }}">
-                                            <span class="sr_only">{{ user.first_name~' '~user.last_name }}</span>
-                                        </td>
-                                        <td>{{ user.first_name }}</td>
-                                        <td>{{ user.last_name }}</td>
-                                        <td>{{ user.email }}</td>
-                                        <td>{{ user.phone }}</td>
-                                        <td class="text-center">
-                                            {% if user.is_admin %}
-                                                <i class="fa fa-unlock text-success" aria-hidden="true" title="Administrador"></i>
-                                            {% else %}
-                                                <i class="fa fa-lock text-danger" aria-hidden="true" title="Staff"></i>
-                                            {% endif %}
-                                        </td>
-                                        <td class="text-center">
-                                            {% if user.is_active %}
-                                                <i class="fa fa-thumbs-up text-success" aria-hidden="true" title="Activo"></i>
-                                            {% else %}
-                                                <i class="fa fa-thumbs-down text-danger" aria-hidden="true" title="No activo"></i>
-                                            {% endif %}
-                                        </td>
-                                        <td class="text-center"><a href="{{ path_for('user.edit', {'id': user.user_id }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+                <table class="table table-bordered table-striped mb-none datatables">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th width="20">Admin</th>
+                            <th width="20"></th>
+                            <th width="20"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>
+                                    <img src="{{ user.avatar }}" alt="{{ user.first_name~' '~user.last_name }}">
+                                    <span class="sr_only">{{ user.first_name~' '~user.last_name }}</span>
+                                </td>
+                                <td>{{ user.first_name }}</td>
+                                <td>{{ user.last_name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone }}</td>
+                                <td class="text-center">
+                                    {% if user.is_admin %}
+                                        <i class="fa fa-unlock text-success" aria-hidden="true" title="Administrador"></i>
+                                    {% else %}
+                                        <i class="fa fa-lock text-danger" aria-hidden="true" title="Staff"></i>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if user.is_active %}
+                                        <i class="fa fa-thumbs-up text-success" aria-hidden="true" title="Activo"></i>
+                                    {% else %}
+                                        <i class="fa fa-thumbs-down text-danger" aria-hidden="true" title="No activo"></i>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center"><a href="{{ path_for('user.edit', {'id': user.user_id }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     {% else %}

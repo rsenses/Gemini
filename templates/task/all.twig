@@ -5,38 +5,32 @@
         <div class="row">
             <div class="col-xs-12">
                 <!-- start: page -->
-                <section class="panel next-events">
-                    <header class="panel-heading">
-                        <p>
-                            <a href="{{ path_for('task.inprogress.calendar') }}" class="btn btn-info"><i class="fa fa-calendar" aria-hidden="true"></i></a>
-                            <a href="{{ path_for('task.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a>
-                        </p>
-                    </header>
-                    <div class="panel-body">
-                        <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
-                            <thead>
-                                <tr>
-                                    <th data-field="name" data-sortable="true">Nombre</th>
-                                    <th data-field="project" data-sortable="true">Proyecto</th>
-                                    <th data-field="due" data-sortable="true">Cierre</th>
-                                    <th data-field="time" data-sortable="true">Tiempo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for task in tasks %}
-                                    <tr>
-                                        <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name | raw }}</a></td>
-                                        <td>{{ task.project.name | raw }}</td>
-                                        <td>{{ task.due_at }}</td>
-                                        <td>
-                                            {{ task.totalTimeTrack|date('H:i:s') }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+                <p>
+                    <a href="{{ path_for('task.inprogress.calendar') }}" class="btn btn-info"><i class="fa fa-calendar" aria-hidden="true"></i></a>
+                    <a href="{{ path_for('task.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a>
+                </p>
+                <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
+                    <thead>
+                        <tr>
+                            <th data-field="name" data-sortable="true">Nombre</th>
+                            <th data-field="project" data-sortable="true">Proyecto</th>
+                            <th data-field="due" data-sortable="true">Cierre</th>
+                            <th data-field="time" data-sortable="true">Tiempo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                            <tr>
+                                <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name | raw }}</a></td>
+                                <td>{{ task.project.name | raw }}</td>
+                                <td>{{ task.due_at }}</td>
+                                <td>
+                                    {{ task.totalTimeTrack|date('H:i:s') }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     {% else %}
