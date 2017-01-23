@@ -69,6 +69,19 @@ class BreadCrumbsMiddleware
                     'url' => $this->getUrl($request, $routeName)
                 ];
                 break;
+            case 'project.inprogress.calendar':
+                $breadcrumbs['current'] = 'Calendario';
+                $breadcrumbs['routes'][] = [
+                    'name' => 'Mis proyectos',
+                    'route' => 'project.inprogress',
+                    'url' => $this->getUrl($request, 'project.inprogress')
+                ];
+                $breadcrumbs['routes'][] = [
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
             case 'project.completed':
                 $breadcrumbs['current'] = 'Proyectos completados';
                 $breadcrumbs['routes'][] = [

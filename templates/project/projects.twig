@@ -7,7 +7,10 @@
                 <!-- start: page -->
                 <section class="panel next-events">
                     <header class="panel-heading">
-                        <p><a href="{{ path_for('project.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un proyecto</a></p>
+                        <p>
+                            <a href="{{ path_for('project.inprogress.calendar') }}" class="btn btn-info"><i class="fa fa-calendar" aria-hidden="true"></i></a>
+                            <a href="{{ path_for('project.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un proyecto</a>
+                        </p>
                     </header>
                     <div class="panel-body">
                         <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
@@ -65,8 +68,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
     <script src="{{ base_url() }}/assets/javascripts/theme.events.js"></script>
 {% endblock %}

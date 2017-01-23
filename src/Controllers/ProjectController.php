@@ -82,6 +82,41 @@ class ProjectController
         ]);
     }
 
+    public function inProgressCalendarAction(Request $request, Response $response, array $args)
+    {
+        return $this->view->render($response, 'project/calendar.twig');
+    }
+
+    public function inProgressCalendarJsonAction(Request $request, Response $response, array $args)
+    {
+        $staffId = $this->auth->getUserId();
+
+        $projects = Project::whereNull('done_at')
+            ->whereNotNull('started_at')
+            ->whereNotNull('due_at')
+            ->where(function($q) use($staffId) {
+                $q->where('project.user_id', $staffId);
+                $q->orWhereHas('users', function($q) use ($staffId) {
+                    $q->where('user.user_id', $staffId);
+                });
+            })
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        $data = [];
+        foreach ($projects as $project) {
+            $data[] = [
+                'title' => $project->name,
+                'start' => $project->started_at->toDateString(),
+                'end' => $project->due_at->toDateString(),
+                'color' => $project->color,
+                'url' => '/project/show/'.$project->project_id,
+            ];
+        }
+
+        return $response->withJson($data);
+    }
+
     public function completedAction(Request $request, Response $response, array $args)
     {
         $projects = Project::whereNull('bill')
