@@ -153,6 +153,19 @@ class BreadCrumbsMiddleware
                     'url' => $this->getUrl($request, $routeName)
                 ];
                 break;
+            case 'task.inprogress.calendar':
+                $breadcrumbs['current'] = 'Calendario';
+                $breadcrumbs['routes'][] = [
+                    'name' => 'Mis tareas',
+                    'route' => 'task.inprogress',
+                    'url' => $this->getUrl($request, 'task.inprogress')
+                ];
+                $breadcrumbs['routes'][] = [
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
             case 'task.completed':
                 $breadcrumbs['current'] = 'Completadas';
                 $breadcrumbs['routes'][] = [

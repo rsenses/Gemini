@@ -64,6 +64,33 @@ class TaskController
         ]);
     }
 
+    public function inProgressCalendarAction(Request $request, Response $response, array $args)
+    {
+        return $this->view->render($response, 'task/calendar.twig');
+    }
+
+    public function inProgressCalendarJsonAction(Request $request, Response $response, array $args)
+    {
+        $tasks = Task::where('staff_id', $this->auth->getUserId())
+            ->whereNull('done_at')
+            ->whereNotNull('project_id')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        $data = [];
+        foreach ($tasks as $task) {
+            $data[] = [
+                'title' => $task->name,
+                'start' => $task->created_at->toDateString(),
+                'end' => $task->due_at->toDateString(),
+                'color' => $task->project->color,
+                'url' => '/task/show/'.$task->task_id,
+            ];
+        }
+
+        return $response->withJson($data);
+    }
+
     public function completedUserAction(Request $request, Response $response, array $args)
     {
         $tasks = Task::where('staff_id', $this->auth->getUserId())

@@ -72,6 +72,10 @@ $app->group('', function () {
     $this->group('/task', function () {
         // User Tasks
         $this->get('/all', 'TaskController:inProgressAction')->setName('task.inprogress');
+        // In Progress Calendar Tasks
+        $this->get('/inprogress/calendar', 'TaskController:inProgressCalendarAction')->setName('task.inprogress.calendar');
+        // In Progress Calendar Tasks
+        $this->get('/inprogress/calendar/json', 'TaskController:inProgressCalendarJsonAction')->setName('task.inprogress.calendar.json');
         // Completed User Tasks
         $this->get('/completed', 'TaskController:completedUserAction')->setName('task.completed');
         // Project Tasks

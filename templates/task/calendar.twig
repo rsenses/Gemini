@@ -1,0 +1,29 @@
+{% extends 'layouts/private.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12" id="dates"></div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.0/lang/es.js"></script>
+    <script src="{{ base_url() }}/assets/javascripts/theme.events.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#dates').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek'
+                },
+                lang: 'es',
+                editable: false,
+                eventLimit: true, // allow "more" link when too many events
+                events: '/task/inprogress/calendar/json'
+            });
+        });
+    </script>
+{% endblock %}
