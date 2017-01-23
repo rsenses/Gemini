@@ -208,8 +208,7 @@ class TaskController
             ->orderBy('first_name', 'ASC')
             ->get();
 
-        $projects = Project::whereNull('done_at')
-            ->orderBy('name', 'ASC')
+        $projects = Project::orderBy('name', 'ASC')
             ->get();
 
         $totalTimeTrack = 0;

@@ -51,7 +51,7 @@ class TimeTrackController
             'is_completed' => 0,
         ]);
 
-        return $response->withRedirect($this->router->pathFor('task.edit', [
+        return $response->withRedirect($this->router->pathFor('task.show', [
             'id' => $args['id'],
         ]));
     }
@@ -65,7 +65,7 @@ class TimeTrackController
 
         $timeTrack->save();
 
-        return $response->withRedirect($this->router->pathFor('task.edit', [
+        return $response->withRedirect($this->router->pathFor('task.show', [
             'id' => $timeTrack->task_id,
         ]));
     }
@@ -84,7 +84,7 @@ class TimeTrackController
         if ($validation->failed()) {
             $this->flash->addMessage('danger', 'Tu contador no ha sido guardada, revisa los errores en el formulario.');
 
-            return $response->withRedirect($this->router->pathFor('task.edit', [
+            return $response->withRedirect($this->router->pathFor('task.show', [
                 'id' => $timeTrack->task_id,
             ]));
         }
@@ -95,7 +95,7 @@ class TimeTrackController
 
         $timeTrack->save();
 
-        return $response->withRedirect($this->router->pathFor('task.edit', [
+        return $response->withRedirect($this->router->pathFor('task.show', [
             'id' => $timeTrack->task_id,
         ]));
     }
@@ -108,7 +108,7 @@ class TimeTrackController
 
         $timeTrack->delete();
 
-        return $response->withRedirect($this->router->pathFor('task.edit', [
+        return $response->withRedirect($this->router->pathFor('task.show', [
             'id' => $task_id,
         ]));
     }
