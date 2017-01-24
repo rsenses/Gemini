@@ -371,6 +371,7 @@ class ProjectController
         $rules = [
             'user' => v::notEmpty()->intVal(),
             'name' => v::notEmpty(),
+            'color' => v::optional(v::hexRgbColor()),
             'tags' => v::notEmpty(),
             'short_description' => v::notEmpty(),
             'description' => v::notEmpty(),
@@ -394,7 +395,7 @@ class ProjectController
             'name' => filter_var($request->getParam('name'), FILTER_SANITIZE_STRING),
             'short_description' => filter_var($request->getParam('short_description'), FILTER_SANITIZE_STRING),
             'description' => $request->getParam('description'),
-            'color' => $this->colorPicker(),
+            'color' => $request->getParam('color') ? filter_var($request->getParam('color'), FILTER_SANITIZE_STRING) : $this->colorPicker(),
             'client_id' => filter_var($request->getParam('client'), FILTER_SANITIZE_NUMBER_INT),
             'contact' => filter_var($request->getParam('contact'), FILTER_SANITIZE_STRING),
             'started_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('started_at')),
@@ -439,6 +440,7 @@ class ProjectController
         $rules = [
             'user' => v::notEmpty()->intVal(),
             'name' => v::notEmpty(),
+            'color' => v::notEmpty()->hexRgbColor(),
             'tags' => v::notEmpty(),
             'short_description' => v::notEmpty(),
             'description' => v::notEmpty(),
@@ -463,6 +465,7 @@ class ProjectController
 
         $project->user_id = filter_var($request->getParam('user'), FILTER_SANITIZE_NUMBER_INT);
         $project->name = filter_var($request->getParam('name'), FILTER_SANITIZE_STRING);
+        $project->color = filter_var($request->getParam('color'), FILTER_SANITIZE_STRING);
         $project->short_description = filter_var($request->getParam('short_description'), FILTER_SANITIZE_STRING);
         $project->description = $request->getParam('description');
         $project->client_id = filter_var($request->getParam('client'), FILTER_SANITIZE_NUMBER_INT);
