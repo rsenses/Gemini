@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="staff">Filtrar por responsable</label>
                     <div class="col-md-9">
-                        <select class="form-control select2" id="user-filter">
+                        <select class="form-control select2 filter" data-type="user">
                             <option disabled selected value data-hidden="true">Selecciona un responsable</option>
                             {% for user in staff %}
                                 <option value="{{ user.user_id }}"{{ user.user_id == userId ? ' selected' : '' }}>{{ user.fullName() }}</option>
@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="staff">Filtrar por etiqueta</label>
                     <div class="col-md-9">
-                        <select class="form-control select2" id="tag-filter">
+                        <select class="form-control select2 filter" data-type="tag">
                             <option disabled selected value data-hidden="true">Selecciona una etiqueta</option>
                             {% for tag in tags %}
                                 <option value="{{ tag.tag_id }}"{{ tag.tag_id == tagId ? ' selected' : '' }}>{{ tag.name }}</option>
@@ -85,14 +85,10 @@
     <script src="{{ base_url() }}/assets/javascripts/theme.events.js"></script>
     <script>
         $(document).ready(function() {
-            $('#user-filter').on('change', function () {
-                var user = $(this).val(); // get selected value
-                window.location = '/project/user/'+user; // redirect
-                return false;
-            });
-            $('#tag-filter').on('change', function () {
-                var tag = $(this).val(); // get selected value
-                window.location = '/project/tag/'+tag; // redirect
+            $('.filter').on('change', function () {
+                var type = $(this).data('type'); // get selected value
+                var value = $(this).val(); // get selected value
+                window.location = '/project/'+type+'/'+value; // redirect
                 return false;
             });
         });

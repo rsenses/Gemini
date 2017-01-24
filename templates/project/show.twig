@@ -32,7 +32,7 @@
                         {{ project.name | raw }}<br>
                         <small>
                             {% for tag in project.tags %}
-                                <span class="label label-default">{{ tag.name }}</span>
+                                <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}" class="label label-default">{{ tag.name }}</a>
                             {% endfor %}
                         </small>
                     </h2>

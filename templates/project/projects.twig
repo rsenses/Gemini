@@ -25,10 +25,14 @@
                         {% for project in projects %}
                             <tr class="{{ project.user_id != auth.user.user_id ? 'assigned' : '' }}">
                                 <td class="text-center">{{ project.project_id }}</td>
-                                <td>{{ project.client.name }}</td>
+                                <td><a href="{{ path_for('project.client', {'id': project.client_id }) }}">{{ project.client.name }}</a></td>
                                 <td><a href="{{ path_for('project.show', {'id': project.project_id }) }}">{{ project.name | raw }}</a></td>
-                                <td>{{ project.user.fullname() }}</td>
-                                <td>{{ project.tags.pluck('name') | join(',') }}</td>
+                                <td>
+                                    {% for tag in project.tags %}
+                                        <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}">{{ tag.name }}</a>{% if loop.last == false %},{% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td><a href="{{ path_for('project.client', {'id': project.user_id }) }}">{{ project.user.fullname() }}</a></td>
                                 <td class="text-nowrap">{{ project.due_at | date("Y-m-d") }}</td>
                                 <td class="text-nowrap text-center">
                                     {% if project.is_printed == 0 %}

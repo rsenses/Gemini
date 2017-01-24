@@ -54,16 +54,8 @@ class ProjectController
             ->orderBy('due_at', 'ASC')
             ->get();
 
-        $staff = User::where('email', 'LIKE', '%@expomark.es')
-            ->orderBy('first_name', 'ASC')
-            ->get();
-
-        $tags = Tag::orderBy('slug', 'ASC')->get();
-
-        return $this->view->render($response, 'project/all.twig', [
+        return $this->view->render($response, 'project/projects.twig', [
             'projects' => $projects,
-            'staff' => $staff,
-            'tags' => $tags,
         ]);
     }
 
@@ -159,9 +151,6 @@ class ProjectController
 
         $projects = Project::whereNotNull('bill')
             ->whereNotNull('done_at')
-            // ->orderBy('project_id', 'DESC')
-            // ->take($offset)
-            // ->skip($offset * ($page - 1))
             ->get();
 
         return $this->view->render($response, 'project/billed.twig', [
@@ -176,17 +165,20 @@ class ProjectController
             ->orderBy('due_at', 'ASC')
             ->get();
 
-        $staff = User::where('email', 'LIKE', '%@expomark.es')
-            ->orderBy('first_name', 'ASC')
+        return $this->view->render($response, 'project/projects.twig', [
+            'projects' => $projects,
+        ]);
+    }
+
+    public function clientAction(Request $request, Response $response, array $args)
+    {
+        $projects = Project::where('client_id', $args['id'])
+            ->whereNull('done_at')
+            ->orderBy('due_at', 'ASC')
             ->get();
 
-        $tags = Tag::orderBy('slug', 'ASC')->get();
-
-        return $this->view->render($response, 'project/all.twig', [
-            'projects' => $projects,
-            'staff' => $staff,
-            'tags' => $tags,
-            'userId' => $args['id'],
+        return $this->view->render($response, 'project/projects.twig', [
+            'projects' => $projects
         ]);
     }
 
@@ -201,17 +193,8 @@ class ProjectController
             ->orderBy('due_at', 'ASC')
             ->get();
 
-        $staff = User::where('email', 'LIKE', '%@expomark.es')
-            ->orderBy('first_name', 'ASC')
-            ->get();
-
-        $tags = Tag::orderBy('slug', 'ASC')->get();
-
-        return $this->view->render($response, 'project/all.twig', [
-            'projects' => $projects,
-            'staff' => $staff,
-            'tags' => $tags,
-            'tagId' => $tagId,
+        return $this->view->render($response, 'project/projects.twig', [
+            'projects' => $projects
         ]);
     }
 
