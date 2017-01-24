@@ -17,8 +17,20 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="staff">Filtrar por etiqueta</label>
+                    <div class="col-md-9">
+                        <select class="form-control select2" id="tag-filter">
+                            <option disabled selected value data-hidden="true">Selecciona una etiqueta</option>
+                            {% for tag in tags %}
+                                <option value="{{ tag.tag_id }}"{{ tag.tag_id == tagId ? ' selected' : '' }}>{{ tag.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
                 <hr>
                 <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                     <thead>
@@ -72,10 +84,15 @@
 {% block scripts %}
     <script src="{{ base_url() }}/assets/javascripts/theme.events.js"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#user-filter').on('change', function () {
                 var user = $(this).val(); // get selected value
                 window.location = '/project/user/'+user; // redirect
+                return false;
+            });
+            $('#tag-filter').on('change', function () {
+                var tag = $(this).val(); // get selected value
+                window.location = '/project/tag/'+tag; // redirect
                 return false;
             });
         });

@@ -58,9 +58,12 @@ class ProjectController
             ->orderBy('first_name', 'ASC')
             ->get();
 
+        $tags = Tag::orderBy('slug', 'ASC')->get();
+
         return $this->view->render($response, 'project/all.twig', [
             'projects' => $projects,
             'staff' => $staff,
+            'tags' => $tags,
         ]);
     }
 
@@ -177,10 +180,38 @@ class ProjectController
             ->orderBy('first_name', 'ASC')
             ->get();
 
+        $tags = Tag::orderBy('slug', 'ASC')->get();
+
         return $this->view->render($response, 'project/all.twig', [
             'projects' => $projects,
             'staff' => $staff,
+            'tags' => $tags,
             'userId' => $args['id'],
+        ]);
+    }
+
+    public function tagAction(Request $request, Response $response, array $args)
+    {
+        $tagId = $args['id'];
+
+        $projects = Project::whereHas('tags', function ($query) use ($tagId) {
+                $query->where('tag.tag_id', $tagId);
+            })
+            ->whereNull('done_at')
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        $staff = User::where('email', 'LIKE', '%@expomark.es')
+            ->orderBy('first_name', 'ASC')
+            ->get();
+
+        $tags = Tag::orderBy('slug', 'ASC')->get();
+
+        return $this->view->render($response, 'project/all.twig', [
+            'projects' => $projects,
+            'staff' => $staff,
+            'tags' => $tags,
+            'tagId' => $tagId,
         ]);
     }
 

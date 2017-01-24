@@ -46,6 +46,8 @@ $app->group('', function () {
         $this->get('/billed[/{page:[0-9]+}]', 'ProjectController:billedAction')->setName('project.billed');
         // User Projects
         $this->get('/user/{id:[0-9]+}', 'ProjectController:userAction')->setName('project.user');
+        // Tag Projects
+        $this->get('/tag/{id:[0-9]+}', 'ProjectController:tagAction')->setName('project.tag');
         // Search Projects
         $this->get('/search', 'ProjectController:searchAction')->setName('project.search');
         // Print Project
