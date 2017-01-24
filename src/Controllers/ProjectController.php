@@ -206,9 +206,12 @@ class ProjectController
             ->orderBy('first_name', 'ASC')
             ->get();
 
+        $tags = Tag::orderBy('slug', 'ASC')->get();
+
         return $this->view->render($response, 'project/new.twig', [
             'clients' => $clients,
             'staff' => $staff,
+            'tags' => $tags,
         ]);
     }
 
