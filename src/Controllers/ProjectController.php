@@ -507,7 +507,7 @@ class ProjectController
             '#ff4000',
             '#ff8000',
             '#ffbf00',
-            '#ffff00',
+            '#cccc00',
             '#bfff00',
             '#80ff00',
             '#40ff00',

@@ -23,6 +23,17 @@
                         {% endif %}
                     </div>
                 </div>
+                <div class="form-group{{ validation_errors.color ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="name">Color</label>
+                    <div class="col-md-9">
+                        <input class="form-control" id="color" type="text" name="color" value="{{ project.color }}" required>
+                        {% if validation_errors.color %}
+                            <span class="help-block">
+                                {{ validation_errors.color | first }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
                 <div class="form-group{{ validation_errors.tags ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="tags">Etiquetas<span class="text-danger">*</span></label>
                     <div class="col-md-9">
@@ -231,9 +242,11 @@
     <script src="{{ base_url() }}/js/vendor/datetimepicker.es.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.3/js/bootstrap-dialog.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.4.0/js/bootstrap-colorpicker.min.js"></script>
     <script>
         $(document).ready(function() {
-            $(".select2").select2();
+            $('#color').colorpicker();
+            $('.select2').select2();
             $('.datetimepicker').datetimepicker({
                 locale: 'es'
             });
