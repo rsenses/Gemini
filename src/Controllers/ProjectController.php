@@ -402,9 +402,13 @@ class ProjectController
             'bill_comment' => $request->getParam('bill_comment')
         ]);
 
-        $project->users()->sync($request->getParam('staff'));
+        if (!empty($request->getParam('staff'))) {
+            $project->users()->sync($request->getParam('staff'));
+        }
 
-        $project->tags()->sync($request->getParam('tags'));
+        if (!empty($request->getParam('tags'))) {
+            $project->tags()->sync($request->getParam('tags'));
+        }
 
         if ($this->auth->getUserId() != $request->getParam('user')) {
             $project->notifications()->create([
@@ -468,11 +472,13 @@ class ProjectController
 
         $project->save();
 
-        $project->users()->detach();
+        if (!empty($request->getParam('staff'))) {
+            $project->users()->sync($request->getParam('staff'));
+        }
 
-        $project->users()->sync($request->getParam('staff'));
-
-        $project->tags()->sync($request->getParam('tags'));
+        if (!empty($request->getParam('tags'))) {
+            $project->tags()->sync($request->getParam('tags'));
+        }
 
         return $response->withRedirect($this->router->pathFor('project.show', [
             'id' => $project->project_id,
