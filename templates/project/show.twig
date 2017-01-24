@@ -28,9 +28,17 @@
             <hr>
             <div class="row">
                 <div class="col-xs-12">
-                    <h2>{{ project.name | raw }}</h2>
+                    <h2>
+                        {{ project.name | raw }}<br>
+                        <small>
+                            {% for tag in project.tags %}
+                                <span class="label label-default">{{ tag.name }}</span>
+                            {% endfor %}
+                        </small>
+                    </h2>
                 </div>
             </div>
+            <hr>
             <div class="row">
                 <div class="col-md-3">
                     <p class="text-right"><strong>Código</strong></p>

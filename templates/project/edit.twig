@@ -23,6 +23,21 @@
                         {% endif %}
                     </div>
                 </div>
+                <div class="form-group{{ validation_errors.tags ? ' has-error' : '' }}">
+                    <label class="col-md-3 control-label" for="tags">Etiquetas<span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <select class="form-control select2" name="tags[]" id="tags" required multiple>
+                            {% for tag in tags %}
+                                <option value="{{ tag.tag_id }}"{{ tag.tag_id in project.tags.pluck('tag_id') ? ' selected' : '' }}>{{ tag.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if validation_errors.tags %}
+                            <span class="help-block">
+                                {{ validation_errors.tags | first }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
                 <div class="form-group{{ validation_errors.short_description ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="short_description">Descripción breve<span class="text-danger">*</span></label>
                     <div class="col-md-9">

@@ -26,6 +26,7 @@
                             <th data-field="id" data-sortable="true">Cód.</th>
                             <th data-field="client" data-sortable="true">Cliente</th>
                             <th data-field="name" data-sortable="true">Nombre</th>
+                            <th data-field="tags" data-sortable="true">Etiquetas</th>
                             <th data-field="staff" data-sortable="true">Responsable</th>
                             <th data-field="due" data-sortable="true">Cierre</th>
                             <th></th>
@@ -37,6 +38,7 @@
                                 <td class="text-center">{{ project.project_id }}</td>
                                 <td>{{ project.client.name }}</td>
                                 <td><a href="{{ path_for('project.show', {'id': project.project_id }) }}">{{ project.name | raw }}</a></td>
+                                <td>{{ project.tags.pluck('name') | join(',') }}</td>
                                 <td>{{ project.user.fullName() }}</td>
                                 <td class="text-nowrap">{{ project.due_at }}</td>
                                 <td class="text-nowrap text-center">

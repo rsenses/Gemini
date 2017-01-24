@@ -49,6 +49,11 @@ class Project extends \Illuminate\Database\Eloquent\Model
         return $this->morphMany('App\Entities\Notification', 'notificable');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany('App\Entities\Tag');
+    }
+
     public function tasks()
     {
         return $this->hasMany('App\Entities\Task');

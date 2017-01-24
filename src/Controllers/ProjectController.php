@@ -20,6 +20,7 @@ use JasonGrimes\Paginator;
 
 use App\Entities\Client;
 use App\Entities\Project;
+use App\Entities\Tag;
 use App\Entities\Task;
 use App\Entities\User;
 
@@ -265,6 +266,8 @@ class ProjectController
 
         $clients = Client::orderBy('name', 'ASC')->get();
 
+        $tags = Tag::orderBy('slug', 'ASC')->get();
+
         $staff = User::where('email', 'LIKE', '%@expomark.es')
             ->orderBy('first_name', 'ASC')
             ->get();
@@ -310,6 +313,7 @@ class ProjectController
         return $this->view->render($response, 'project/edit.twig', [
             'project' => $project,
             'clients' => $clients,
+            'tags' => $tags,
             'staff' => $staff,
             'inProgressTasks' => $inProgressTasks,
             'completedTasks' => $completedTasks,
@@ -347,6 +351,7 @@ class ProjectController
         $rules = [
             'user' => v::notEmpty()->intVal(),
             'name' => v::notEmpty(),
+            'tags' => v::notEmpty(),
             'short_description' => v::notEmpty(),
             'description' => v::notEmpty(),
             'client' => v::notEmpty()->intVal(),
@@ -380,11 +385,9 @@ class ProjectController
             'bill_comment' => $request->getParam('bill_comment')
         ]);
 
-        foreach ($request->getParam('staff') as $id) {
-            $user = User::find($id);
+        $project->users()->sync($request->getParam('staff'));
 
-            $project->users()->attach($user);
-        }
+        $project->tags()->sync($request->getParam('tags'));
 
         if ($this->auth->getUserId() != $request->getParam('user')) {
             $project->notifications()->create([
@@ -412,6 +415,7 @@ class ProjectController
         $rules = [
             'user' => v::notEmpty()->intVal(),
             'name' => v::notEmpty(),
+            'tags' => v::notEmpty(),
             'short_description' => v::notEmpty(),
             'description' => v::notEmpty(),
             'client' => v::notEmpty()->intVal(),
@@ -449,11 +453,9 @@ class ProjectController
 
         $project->users()->detach();
 
-        foreach ($request->getParam('staff') as $id) {
-            $user = User::find($id);
+        $project->users()->sync($request->getParam('staff'));
 
-            $project->users()->attach($user);
-        }
+        $project->tags()->sync($request->getParam('tags'));
 
         return $response->withRedirect($this->router->pathFor('project.show', [
             'id' => $project->project_id,
