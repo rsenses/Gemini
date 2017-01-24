@@ -96,6 +96,9 @@ class ProjectController
                     $q->where('user.user_id', $staffId);
                 });
             })
+            ->whereDoesntHave('tags', function($query) {
+                $query->where('tag.slug', '=', 'mantenimiento');
+            })
             ->orderBy('due_at', 'ASC')
             ->get();
 
