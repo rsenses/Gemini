@@ -58,7 +58,12 @@ class TimeTrackController
 
     public function stopAction(Request $request, Response $response, array $args)
     {
+        $userId = $this->auth->getUserId();
+
         $timeTrack = TimeTrack::where('is_completed', 0)
+            ->whereHas('task', function ($query) use ($userId) {
+                $query->where('task.staff_id', $userId);
+            })
             ->firstOrFail();
 
         $timeTrack->is_completed = 1;

@@ -259,7 +259,7 @@ class TaskController
 
         $task->save();
 
-        return $response->withRedirect($this->router->pathFor('task.edit', [
+        return $response->withRedirect($this->router->pathFor('task.show', [
             'id' => $args['id'],
         ]));
     }
@@ -272,7 +272,7 @@ class TaskController
 
         $task->save();
 
-        return $response->withRedirect($this->router->pathFor('task.edit', [
+        return $response->withRedirect($this->router->pathFor('task.show', [
             'id' => $args['id'],
         ]));
     }
