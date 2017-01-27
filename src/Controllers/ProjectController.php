@@ -98,6 +98,7 @@ class ProjectController
             })
             ->whereDoesntHave('tags', function($query) {
                 $query->where('tag.slug', '=', 'mantenimiento');
+                $query->where('tag.slug', '=', 'contenidos');
             })
             ->orderBy('due_at', 'ASC')
             ->get();

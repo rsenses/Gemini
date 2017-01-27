@@ -36,6 +36,7 @@ if ($('.tinymce').length) {
             'visualblocks lists',
             'paste code'
         ],
+        paste_as_text: true,
         // toolbar: 'undo redo | styleselect | bold italic | bullist numlist outdent indent | link image | code',
         toolbar: 'undo redo | styleselect | bold italic | bullist numlist outdent indent | link | code',
         style_formats: [{
