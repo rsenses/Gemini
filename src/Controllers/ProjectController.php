@@ -98,7 +98,8 @@ class ProjectController
             })
             ->whereDoesntHave('tags', function($query) {
                 $query->where('tag.slug', '=', 'mantenimiento')
-                    ->orWhere('tag.slug', '=', 'contenidos');
+                    ->orWhere('tag.slug', '=', 'contenidos')
+                    ->orWhere('tag.slug', '=', 'colaboradores');
             })
             ->orderBy('due_at', 'ASC')
             ->get();
