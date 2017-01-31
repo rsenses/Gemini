@@ -20,11 +20,11 @@
                     /
                     {% if project.is_active %}
                         <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-warning">
-                            <i class="fa fa-steam-square" aria-hidden="true"></i> Desactivar
+                            <i class="fa fa-steam-square" aria-hidden="true"></i> Limbo
                         </a>
                     {% else %}
                         <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-success">
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Activar
+                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Resucitar
                         </a>
                     {% endif %}
                     <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-delete">
@@ -151,9 +151,6 @@
             <hr>
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-delete">
-                        <i class="fa fa-trash" aria-hidden="true"></i> Borrar
-                    </a>
                     {% if project.done_at == null %}
                         <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-success">
                             <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
@@ -166,6 +163,20 @@
                     <a href="{{ path_for('project.print', { 'id': project.project_id }) }}" target="_blank" class="btn btn-info">
                         <i class="fa fa-print" aria-hidden="true"></i> Imprimir
                     </a>
+                    /
+                    {% if project.is_active %}
+                        <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-warning">
+                            <i class="fa fa-steam-square" aria-hidden="true"></i> Limbo
+                        </a>
+                    {% else %}
+                        <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-success">
+                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Resucitar
+                        </a>
+                    {% endif %}
+                    <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-delete">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Borrar
+                    </a>
+
                     <a href="{{ path_for('project.edit', { 'id': project.project_id }) }}" class="btn btn-primary pull-right">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
                     </a>
