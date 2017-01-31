@@ -82,6 +82,9 @@
                         <li>
                             <a href="{{ path_for('project.all') }}"><i class="fa fa-square" aria-hidden="true"></i> Todos los proyectos</a>
                         </li>
+                        <li>
+                            <a href="{{ path_for('project.limbo') }}"><i class="fa fa-steam-square" aria-hidden="true"></i> Limbo</a>
+                        </li>
                     </ul>
                     {% if authorization.hasPermission(['billing.view']) %}
                         <hr>

@@ -36,6 +36,8 @@ $app->group('', function () {
         $this->get('/all', 'ProjectController:inProgressAllUsersAction')->setName('project.all');
         // In Progress Projects
         $this->get('/inprogress', 'ProjectController:inProgressAction')->setName('project.inprogress');
+        // In Progress Projects
+        $this->get('/limbo', 'ProjectController:limboAction')->setName('project.limbo');
         // In Progress Calendar Projects
         $this->get('/inprogress/calendar', 'ProjectController:inProgressCalendarAction')->setName('project.inprogress.calendar');
         // In Progress Calendar Projects
@@ -64,6 +66,8 @@ $app->group('', function () {
         $this->get('/complete/{id:[0-9]+}', 'ProjectController:completeAction')->setName('project.complete');
         // Reopen Project
         $this->get('/reopen/{id:[0-9]+}', 'ProjectController:reopenAction')->setName('project.reopen');
+        // Toggle Active Project
+        $this->get('/toggle/{id:[0-9]+}', 'ProjectController:toggleActiveAction')->setName('project.toggle');
         // Save Project
         $this->post('/save', 'ProjectController:saveAction')->setName('project.save');
         // Modify Project

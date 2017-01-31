@@ -51,6 +51,7 @@ class ProjectController
     public function inProgressAllUsersAction(Request $request, Response $response, array $args)
     {
         $projects = Project::whereNull('done_at')
+            ->where('is_active', 1)
             ->orderBy('due_at', 'ASC')
             ->get();
 
@@ -64,6 +65,27 @@ class ProjectController
         $staffId = $this->auth->getUserId();
 
         $projects = Project::whereNull('done_at')
+            ->where('is_active', 1)
+            ->where(function($q) use($staffId) {
+                $q->where('project.user_id', $staffId);
+                $q->orWhereHas('users', function($q) use ($staffId) {
+                    $q->where('user.user_id', $staffId);
+                });
+            })
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        return $this->view->render($response, 'project/projects.twig', [
+            'projects' => $projects
+        ]);
+    }
+
+    public function limboAction(Request $request, Response $response, array $args)
+    {
+        $staffId = $this->auth->getUserId();
+
+        $projects = Project::whereNull('done_at')
+            ->where('is_active', 0)
             ->where(function($q) use($staffId) {
                 $q->where('project.user_id', $staffId);
                 $q->orWhereHas('users', function($q) use ($staffId) {
@@ -90,6 +112,7 @@ class ProjectController
         $projects = Project::whereNull('done_at')
             ->whereNotNull('started_at')
             ->whereNotNull('due_at')
+            ->where('is_active', 1)
             ->where(function($q) use($staffId) {
                 $q->where('project.user_id', $staffId);
                 $q->orWhereHas('users', function($q) use ($staffId) {
@@ -342,6 +365,19 @@ class ProjectController
         ]);
     }
 
+    public function toggleActiveAction(Request $request, Response $response, array $args)
+    {
+        $project = Project::findOrFail($args['id']);
+
+        $project->is_active = !$project->is_active;
+
+        $project->save();
+
+        return $response->withRedirect($this->router->pathFor('project.show', [
+            'id' => $args['id'],
+        ]));
+    }
+
     public function completeAction(Request $request, Response $response, array $args)
     {
         $project = Project::findOrFail($args['id']);
@@ -350,7 +386,7 @@ class ProjectController
 
         $project->save();
 
-        return $response->withRedirect($this->router->pathFor('project.edit', [
+        return $response->withRedirect($this->router->pathFor('project.show', [
             'id' => $args['id'],
         ]));
     }
@@ -363,7 +399,7 @@ class ProjectController
 
         $project->save();
 
-        return $response->withRedirect($this->router->pathFor('project.edit', [
+        return $response->withRedirect($this->router->pathFor('project.show', [
             'id' => $args['id'],
         ]));
     }
