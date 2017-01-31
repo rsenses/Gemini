@@ -12,7 +12,7 @@
                     {% elseif route_name == 'task.completed' or route_name == 'task.assigned' %}
                         <a href="{{ path_for('task.inprogress') }}" class="btn btn-info"><i class="fa fa-gg-circle" aria-hidden="true"></i> Tareas pendientes</a>
                     {% elseif route_name == 'task.independent' %}
-                        <a href="{{ path_for('task.independent.completed') }}" class="btn btn-info"><i class="fa fa-circle-thin" aria-hidden="true"></i> Tareas sin proyecto completadas</a>
+                        <a href="{{ path_for('task.independent.completed') }}" class="btn btn-info"><i class="fa fa-circle-thin" aria-hidden="true"></i> Completadas</a>
                     {% endif %}
                     <a href="{{ path_for('task.inprogress.calendar') }}" class="btn btn-info"><i class="fa fa-calendar" aria-hidden="true"></i></a>
                     <a href="{{ path_for('task.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a>
