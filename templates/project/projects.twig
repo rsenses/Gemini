@@ -40,16 +40,14 @@
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </a>
                                     {% endif %}
-                                    {% if project.user_id != auth.user.user_id %}
-                                        <abbr title="El encargado es {{ project.user.fullname() }}">
-                                            <i class="fa fa-info-circle text-info" aria-hidden="true"></i>
-                                        </abbr>
-                                    {% endif %}
                                     {% if project.due_at < "now" | date_modify("-1 week") | date("Y-m-d H:i:s") %}
                                         <abbr title="¡Proyecto caducado!">
                                             <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
                                         </abbr>
                                     {% endif %}
+                                    <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="Información" data-content="{% if project.is_active == 0 %}Proyecto en el Limbo<br>{% else %}Proyecto activo<br>{% endif %}El encargado es {{ project.user.fullname() }}<br>{% if project.bill %}Facturado: {{ project.bill }} {% endif %}" data-placement="left">
+                                        <i class="fa fa-info-circle text-info" aria-hidden="true"></i>
+                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -69,4 +67,11 @@
 
 {% block scripts %}
     <script src="{{ base_url() }}/assets/javascripts/theme.events.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("[data-toggle=popover]").popover({
+                html: true
+            });
+        });
+    </script>
 {% endblock %}
