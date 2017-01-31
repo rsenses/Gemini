@@ -3,7 +3,7 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12">
-            {% if task.staff_id == auth.user.user_id %}
+            {% if task.staff_id == auth.user.user_id or task.user_id == auth.user.user_id %}
                 <div class="row">
                     <div class="col-sm-12">
                         <a href="{{ path_for('task.delete', { 'id': task.task_id }) }}" class="btn btn-danger btn-delete">
@@ -35,7 +35,7 @@
                     <p class="text-right"><strong>Responsable</strong></p>
                 </div>
                 <div class="col-md-9">
-                    <p>{{ task.user.fullName() }}</p>
+                    <p>{{ task.staff.fullName() }}</p>
                 </div>
             </div>
             <div class="row">

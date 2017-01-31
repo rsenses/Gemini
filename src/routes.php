@@ -36,8 +36,10 @@ $app->group('', function () {
         $this->get('/all', 'ProjectController:inProgressAllUsersAction')->setName('project.all');
         // In Progress Projects
         $this->get('/inprogress', 'ProjectController:inProgressAction')->setName('project.inprogress');
-        // In Progress Projects
+        // Limbo Projects
         $this->get('/limbo', 'ProjectController:limboAction')->setName('project.limbo');
+        // All Limbo Projects
+        $this->get('/limbo/all', 'ProjectController:limboAllUsersAction')->setName('project.limbo.all');
         // In Progress Calendar Projects
         $this->get('/inprogress/calendar', 'ProjectController:inProgressCalendarAction')->setName('project.inprogress.calendar');
         // In Progress Calendar Projects

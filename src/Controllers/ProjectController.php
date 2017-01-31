@@ -100,6 +100,20 @@ class ProjectController
         ]);
     }
 
+    public function limboAllUsersAction(Request $request, Response $response, array $args)
+    {
+        $staffId = $this->auth->getUserId();
+
+        $projects = Project::whereNull('done_at')
+            ->where('is_active', 0)
+            ->orderBy('due_at', 'ASC')
+            ->get();
+
+        return $this->view->render($response, 'project/projects.twig', [
+            'projects' => $projects
+        ]);
+    }
+
     public function inProgressCalendarAction(Request $request, Response $response, array $args)
     {
         return $this->view->render($response, 'project/calendar.twig');

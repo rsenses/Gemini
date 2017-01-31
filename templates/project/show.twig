@@ -204,7 +204,7 @@
                     {% for task in inProgressTasks %}
                         <tr>
                             <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name }}</a></td>
-                            <td>{{ task.user.fullName() }}</td>
+                            <td>{{ task.staff.fullName() }}</td>
                             <td>{{ task.due_at }}</td>
                             <td>
                                 {{ task.totalTimeTrack|date('H:i:s') }}
@@ -235,7 +235,7 @@
                     {% for task in completedTasks %}
                         <tr>
                             <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name }}</a></td>
-                            <td>{{ task.user.fullName() }}</td>
+                            <td>{{ task.staff.fullName() }}</td>
                             <td>{{ task.due_at }}</td>
                             <td>
                                 {{ task.totalTimeTrack|date('H:i:s') }}
