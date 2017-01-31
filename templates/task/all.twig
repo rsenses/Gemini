@@ -8,7 +8,7 @@
                 <p>
                     {% if route_name == 'task.inprogress' %}
                         <a href="{{ path_for('task.completed') }}" class="btn btn-info"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Completadas</a>
-                        <a href="{{ path_for('task.completed') }}" class="btn btn-info"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Tareas que has asignado</a>
+                        <a href="{{ path_for('task.assigned') }}" class="btn btn-info"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Tareas que has asignado</a>
                     {% elseif route_name == 'task.completed' or route_name == 'task.assigned' %}
                         <a href="{{ path_for('task.inprogress') }}" class="btn btn-info"><i class="fa fa-gg-circle" aria-hidden="true"></i> Tareas pendientes</a>
                     {% elseif route_name == 'task.independent' %}
