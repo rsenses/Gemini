@@ -64,7 +64,7 @@ class NotificationController
 
         $notification->save();
 
-        $route = $notification->notificable_type === 'App\Entities\Task' ? 'task.edit' : 'project.edit';
+        $route = $notification->notificable_type === 'App\Entities\Task' ? 'task.show' : 'project.show';
 
         return $response->withRedirect($this->router->pathFor($route, [
             'id' => $notification->notificable_id
