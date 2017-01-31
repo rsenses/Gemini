@@ -200,6 +200,19 @@ class BreadCrumbsMiddleware
                     'url' => $this->getUrl($request, $routeName)
                 ];
                 break;
+            case 'task.assigned':
+                $breadcrumbs['current'] = 'Asignadas';
+                $breadcrumbs['routes'][] = [
+                    'name' => 'Mis tareas',
+                    'route' => 'task.inprogress',
+                    'url' => $this->getUrl($request, 'task.inprogress')
+                ];
+                $breadcrumbs['routes'][] = [
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
             case 'task.independent':
                 $breadcrumbs['current'] = 'Tareas sin proyecto';
                 $breadcrumbs['routes'][] = [
@@ -223,14 +236,6 @@ class BreadCrumbsMiddleware
                 break;
             case 'task.unnassigned':
                 $breadcrumbs['current'] = 'Tareas sin asignar';
-                $breadcrumbs['routes'][] = [
-                    'name' => $breadcrumbs['current'],
-                    'route' => $routeName,
-                    'url' => $this->getUrl($request, $routeName)
-                ];
-                break;
-            case 'task.assigned':
-                $breadcrumbs['current'] = 'Tareas asignadas';
                 $breadcrumbs['routes'][] = [
                     'name' => $breadcrumbs['current'],
                     'route' => $routeName,
