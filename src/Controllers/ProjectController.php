@@ -453,7 +453,7 @@ class ProjectController
             'started_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('started_at')),
             'due_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')),
             'budget' => filter_var($request->getParam('budget'), FILTER_SANITIZE_STRING),
-            'bill' => filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING),
+            'bill' => $request->getParam('bill') ? filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING) : null,
             'issued_at' => $request->getParam('issued_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('issued_at')) : null,
             'bill_comment' => $request->getParam('bill_comment')
         ]);
@@ -524,7 +524,7 @@ class ProjectController
         $project->started_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('started_at'));
         $project->due_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at'));
         $project->budget = filter_var($request->getParam('budget'), FILTER_SANITIZE_STRING);
-        $project->bill = filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING);
+        $project->bill = $request->getParam('bill') ? filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING) : null;
         $project->issued_at = $request->getParam('issued_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('issued_at')) : null;
         $project->bill_comment = $request->getParam('bill_comment');
 
