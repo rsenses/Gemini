@@ -20,10 +20,14 @@
                 <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                     <thead>
                         <tr>
-                            <th data-field="code" data-sortable="true">Código</th>
+                            {% if route_name != 'task.independent' and route_name != 'task.independent.completed' %}
+                                <th data-field="code" data-sortable="true">Código</th>
+                            {% endif %}
                             <th data-field="name" data-sortable="true">Tarea</th>
-                            <th data-field="client" data-sortable="true">Cliente</th>
-                            <th data-field="project" data-sortable="true">Proyecto</th>
+                            {% if route_name != 'task.independent' and route_name != 'task.independent.completed' %}
+                                <th data-field="client" data-sortable="true">Cliente</th>
+                                <th data-field="project" data-sortable="true">Proyecto</th>
+                            {% endif %}
                             <th data-field="due" data-sortable="true">Cierre</th>
                             <th data-field="time" data-sortable="true">Tiempo</th>
                         </tr>
@@ -31,14 +35,18 @@
                     <tbody>
                         {% for task in tasks %}
                             <tr>
-                                <td>{{ task.project.project_id }}-{{ task.task_id }}</td>
+                                {% if route_name != 'task.independent' and route_name != 'task.independent.completed' %}
+                                    <td>{{ task.project.project_id }}-{{ task.task_id }}</td>
+                                {% endif %}
                                 <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name | raw }}</a></td>
-                                <td>
-                                    <a href="{{ path_for('project.client', {'id': task.project.client_id }) }}">{{ task.project.client.name }}</a>
-                                </td>
-                                <td>
-                                    <a href="{{ path_for('project.show', {'id': task.project.project_id }) }}">{{ task.project.name | raw }}</a>
-                                </td>
+                                {% if route_name != 'task.independent' and route_name != 'task.independent.completed' %}
+                                    <td>
+                                        <a href="{{ path_for('project.client', {'id': task.project.client_id }) }}">{{ task.project.client.name }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path_for('project.show', {'id': task.project.project_id }) }}">{{ task.project.name | raw }}</a>
+                                    </td>
+                                {% endif %}
                                 <td>{{ task.due_at }}</td>
                                 <td>
                                     {{ task.totalTimeTrack|date('H:i:s') }}
