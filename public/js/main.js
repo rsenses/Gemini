@@ -1,3 +1,13 @@
+$(document).ready(function() {
+    $('body').on('toggle.timetrack', function(e, action, task) {
+        if (action === 'start') {
+            $('#task-name').text(task);
+            $('.timetracker').addClass('active');
+        } else {
+            $('.timetracker').removeClass('active');
+        }
+    });
+});
 function notifyMe(text) {
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {

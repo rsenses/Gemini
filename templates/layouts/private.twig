@@ -72,6 +72,19 @@
             </div>
         </nav>
 
+        <div class="timetracker navbar navbar-fixed-bottom">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>
+                            <strong id="task-name"></strong>
+                            <a href="{{ path_for('timetrack.stop') }}"><i class="fa fa-stop" aria-hidden="true"></i> stop</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container-fluid">
             <div class="row">
                 <aside class="col-sm-3 col-md-2 sidebar">

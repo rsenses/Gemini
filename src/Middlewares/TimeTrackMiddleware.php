@@ -29,9 +29,24 @@ class TimeTrackMiddleware
                 $q->where('task.staff_id', $staffId);
             })
             ->where('is_completed', 0)
-            ->count();
+            ->first();
 
-         $this->view->getEnvironment()->addGlobal('active_timetrack', $activeTimeTrack);
+         $this->view->getEnvironment()->addGlobal('active_timetrack', ($activeTimeTrack ? true :  false));
+
+        if ($activeTimeTrack) {
+            $response = $response->withHeader('X-IC-Trigger', json_encode([
+                'toggle.timetrack' => [
+                    'start',
+                    $activeTimeTrack->task->name
+                ]
+            ]));
+        } else {
+            $response = $response->withHeader('X-IC-Trigger', json_encode([
+                'toggle.timetrack' => [
+                    'stop'
+                ]
+            ]));
+        }
 
         return $next($request, $response);
     }

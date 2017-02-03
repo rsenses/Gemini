@@ -19,6 +19,7 @@ use Slim\Csrf\Guard;
 use JasonGrimes\Paginator;
 
 use App\Entities\TimeTrack;
+use App\Entities\Task;
 
 /**
  *
@@ -50,6 +51,8 @@ class TimeTrackController
             'task_id' => $args['id'],
             'is_completed' => 0,
         ]);
+
+        $task = Task::findOrFail($args['id']);
 
         return $response->withRedirect($this->router->pathFor('task.show', [
             'id' => $args['id'],
