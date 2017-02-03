@@ -58,6 +58,16 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
+                    <p class="text-right"><strong>Cliente</strong></p>
+                </div>
+                <div class="col-md-9">
+                    <p>
+                        <a href="{{ path_for('project.client', {'id': task.project.client_id }) }}">{{ task.project.client.name }}</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
                     <p class="text-right"><strong>Fecha de entrega</strong></p>
                 </div>
                 <div class="col-md-9">
