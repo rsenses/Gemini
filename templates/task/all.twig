@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th data-field="name" data-sortable="true">Tarea</th>
+                            <th data-field="client" data-sortable="true">Cliente</th>
                             <th data-field="project" data-sortable="true">Proyecto</th>
                             <th data-field="due" data-sortable="true">Cierre</th>
                             <th data-field="time" data-sortable="true">Tiempo</th>
@@ -30,7 +31,12 @@
                         {% for task in tasks %}
                             <tr>
                                 <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name | raw }}</a></td>
-                                <td>{{ task.project.name | raw }}</td>
+                                <td>
+                                    <a href="{{ path_for('project.client', {'id': task.project.client_id }) }}">{{ task.project.client.name }}</a>
+                                </td>
+                                <td>
+                                    <a href="{{ path_for('project.show', {'id': task.project.project_id }) }}">{{ task.project.name | raw }}</a>
+                                </td>
                                 <td>{{ task.due_at }}</td>
                                 <td>
                                     {{ task.totalTimeTrack|date('H:i:s') }}

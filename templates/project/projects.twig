@@ -31,8 +31,12 @@
                         {% for project in projects %}
                             <tr class="{{ project.user_id != auth.user.user_id ? 'assigned' : '' }}">
                                 <td class="text-center">{{ project.project_id }}</td>
-                                <td><a href="{{ path_for('project.client', {'id': project.client_id }) }}">{{ project.client.name }}</a></td>
-                                <td><a href="{{ path_for('project.show', {'id': project.project_id }) }}">{{ project.name | raw }}</a></td>
+                                <td>
+                                    <a href="{{ path_for('project.client', {'id': project.client_id }) }}">{{ project.client.name }}</a>
+                                </td>
+                                <td>
+                                    <a href="{{ path_for('project.show', {'id': project.project_id }) }}">{{ project.name | raw }}</a>
+                                </td>
                                 <td>
                                     {% for tag in project.tags %}
                                         <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}">{{ tag.name }}</a>{% if loop.last == false %},{% endif %}

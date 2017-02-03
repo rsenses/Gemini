@@ -103,10 +103,13 @@
                             <a href="{{ path_for('task.inprogress') }}"><i class="fa fa-gg-circle" aria-hidden="true"></i> Tareas pendientes</a>
                         </li>
                         <li>
-                            <a href="{{ path_for('task.independent') }}"><i class="fa fa-circle-o-notch" aria-hidden="true"></i> Tareas sin proyecto</a>
-                        </li>
-                        <li>
                             <a href="{{ path_for('task.unnassigned') }}"><i class="fa fa-user-circle" aria-hidden="true"></i> Tareas sin asignar</a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav nav-sidebar">
+                        <li>
+                            <a href="{{ path_for('task.independent') }}"><i class="fa fa-circle-o-notch" aria-hidden="true"></i> Todo</a>
                         </li>
                     </ul>
                 </aside>

@@ -214,7 +214,7 @@ class BreadCrumbsMiddleware
                 ];
                 break;
             case 'task.independent':
-                $breadcrumbs['current'] = 'Tareas sin proyecto';
+                $breadcrumbs['current'] = 'Todo';
                 $breadcrumbs['routes'][] = [
                     'name' => $breadcrumbs['current'],
                     'route' => $routeName,
@@ -224,7 +224,7 @@ class BreadCrumbsMiddleware
             case 'task.independent.completed':
                 $breadcrumbs['current'] = 'Completadas';
                 $breadcrumbs['routes'][] = [
-                    'name' => 'Tareas sin proyecto',
+                    'name' => 'Todo',
                     'route' => 'task.independent',
                     'url' => $this->getUrl($request, 'task.independent')
                 ];
