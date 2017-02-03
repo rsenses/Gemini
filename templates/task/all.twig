@@ -20,6 +20,7 @@
                 <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                     <thead>
                         <tr>
+                            <th data-field="code" data-sortable="true">Código</th>
                             <th data-field="name" data-sortable="true">Tarea</th>
                             <th data-field="client" data-sortable="true">Cliente</th>
                             <th data-field="project" data-sortable="true">Proyecto</th>
@@ -30,6 +31,7 @@
                     <tbody>
                         {% for task in tasks %}
                             <tr>
+                                <td>{{ task.project.project_id }}-{{ task.task_id }}</td>
                                 <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name | raw }}</a></td>
                                 <td>
                                     <a href="{{ path_for('project.client', {'id': task.project.client_id }) }}">{{ task.project.client.name }}</a>

@@ -193,26 +193,24 @@
             <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                 <thead>
                     <tr>
+                        <th data-field="code" data-sortable="true">Código</th>
                         <th data-field="name" data-sortable="true">Nombre</th>
                         <th data-field="user" data-sortable="true">Encargado</th>
                         <th data-field="due" data-sortable="true">Cierre</th>
                         <th data-field="time" data-sortable="true">Tiempo</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for task in inProgressTasks %}
                         <tr>
-                            <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name }}</a></td>
+                            <td>{{ project.project_id }}-{{ task.task_id }}</td>
+                            <td>
+                                <a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name }}</a>
+                            </td>
                             <td>{{ task.staff.fullName() }}</td>
                             <td>{{ task.due_at }}</td>
                             <td>
                                 {{ task.totalTimeTrack|date('H:i:s') }}
-                            </td>
-                            <td>
-                                <a href="{{ path_for('task.show', {'id': task.task_id }) }}">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                </a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -224,26 +222,24 @@
             <table data-toggle="table" data-sort-name="time" data-sort-order="desc" data-search="true" data-show-columns="true">
                 <thead>
                     <tr>
+                        <th data-field="code" data-sortable="true">Código</th>
                         <th data-field="name" data-sortable="true">Nombre</th>
                         <th data-field="user" data-sortable="true">Encargado</th>
                         <th data-field="due" data-sortable="true">Cierre</th>
                         <th data-field="time" data-sortable="true">Tiempo</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for task in completedTasks %}
                         <tr>
-                            <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name }}</a></td>
+                            <td>{{ project.project_id }}-{{ task.task_id }}</td>
+                            <td>
+                                <a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name }}</a>
+                            </td>
                             <td>{{ task.staff.fullName() }}</td>
                             <td>{{ task.due_at }}</td>
                             <td>
                                 {{ task.totalTimeTrack|date('H:i:s') }}
-                            </td>
-                            <td>
-                                <a href="{{ path_for('task.show', {'id': task.task_id }) }}">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                </a>
                             </td>
                         </tr>
                     {% endfor %}

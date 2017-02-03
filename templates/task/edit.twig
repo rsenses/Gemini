@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </fieldset>
-                {% if task.staff_id == auth.user.user_id %}
+                {% if task.staff_id == auth.user.user_id or task.user_id == auth.user.user_id %}
                     <div class="row">
                         <div class="col-sm-12">
                             <button class="btn btn-success pull-right">Guardar</button>
