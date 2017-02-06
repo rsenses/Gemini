@@ -198,6 +198,7 @@ class TaskController
     public function newAction(Request $request, Response $response, array $args)
     {
         $staff = User::where('email', 'LIKE', '%@expomark.es')
+            ->orWhere('email', 'LIKE', '%@metech.es')
             ->orderBy('first_name', 'ASC')
             ->get();
 
@@ -232,6 +233,7 @@ class TaskController
         $task = Task::findOrFail($args['id']);
 
         $staff = User::where('email', 'LIKE', '%@expomark.es')
+            ->orWhere('email', 'LIKE', '%@metech.es')
             ->orderBy('first_name', 'ASC')
             ->get();
 

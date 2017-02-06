@@ -25,19 +25,20 @@ class TimeTrackMiddleware
     {
         $staffId = $this->auth->getUserId();
 
-        $activeTimeTrack = TimeTrack::whereHas('task', function($q) use ($staffId) {
+        $timeTrack = TimeTrack::whereHas('task', function($q) use ($staffId) {
                 $q->where('task.staff_id', $staffId);
             })
             ->where('is_completed', 0)
             ->first();
 
-         $this->view->getEnvironment()->addGlobal('active_timetrack', ($activeTimeTrack ? true :  false));
+         $this->view->getEnvironment()->addGlobal('active_timetrack', ($timeTrack ? true :  false));
 
-        if ($activeTimeTrack) {
+        if ($timeTrack) {
             $response = $response->withHeader('X-IC-Trigger', json_encode([
                 'toggle.timetrack' => [
                     'start',
-                    $activeTimeTrack->task->name
+                    $timeTrack->task->name,
+                    $timeTrack->created_at
                 ]
             ]));
         } else {

@@ -245,6 +245,7 @@ class ProjectController
         $clients = Client::orderBy('name', 'ASC')->get();
 
         $staff = User::where('email', 'LIKE', '%@expomark.es')
+            ->orWhere('email', 'LIKE', '%@metech.es')
             ->orderBy('first_name', 'ASC')
             ->get();
 
@@ -328,6 +329,7 @@ class ProjectController
         $tags = Tag::orderBy('slug', 'ASC')->get();
 
         $staff = User::where('email', 'LIKE', '%@expomark.es')
+            ->orWhere('email', 'LIKE', '%@metech.es')
             ->orderBy('first_name', 'ASC')
             ->get();
 
