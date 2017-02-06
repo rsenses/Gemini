@@ -7,7 +7,7 @@
                 <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <input class="form-control" id="name" type="text" name="name" required>
+                        <input class="form-control" id="name" type="text" name="name" required value="{{ old_input.name }}">
                         {% if validation_errors.name %}
                             <span class="help-block">
                                 {{ validation_errors.name | first }}
@@ -34,7 +34,7 @@
                 <div class="form-group{{ validation_errors.short_description ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="short_description">Descripción breve<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <input class="form-control" id="short_description" type="text" name="short_description" required>
+                        <input class="form-control" id="short_description" type="text" name="short_description" required value="{{ old_input.short_description }}">
                         {% if validation_errors.short_description %}
                             <span class="help-block">
                                 {{ validation_errors.short_description | first }}
@@ -45,7 +45,7 @@
                 <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <textarea class="form-control tinymce" rows="3" id="description" name="description"></textarea>
+                        <textarea class="form-control tinymce" rows="3" id="description" name="description">{{ old_input.description }}</textarea>
                         {% if validation_errors.description %}
                             <span class="help-block">
                                 {{ validation_errors.description | first }}
@@ -62,7 +62,7 @@
                             <select class="form-control select2" name="user" id="user" required>
                                 <option disabled selected value data-hidden="true">Selecciona un responsable</option>
                                 {% for user in staff %}
-                                    <option value="{{ user.user_id }}">{{ user.fullName() }}</option>
+                                    <option value="{{ user.user_id }}"{{ user.user_id == old_input.user ? ' selected' : '' }}>{{ user.fullName() }}</option>
                                 {% endfor %}
                             </select>
                             {% if validation_errors.user %}
@@ -113,7 +113,7 @@
                     <div class="form-group{{ validation_errors.contact ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label" for="contact">Contacto<span class="text-danger">*</span></label>
                         <div class="col-md-9">
-                            <input class="form-control" id="contact" type="text" name="contact" required>
+                            <input class="form-control" id="contact" type="text" name="contact" required value="{{ old_input.contact }}">
                             {% if validation_errors.contact %}
                                 <span class="help-block">
                                     {{ validation_errors.contact | first }}
@@ -129,7 +129,7 @@
                         <label class="col-md-3 control-label">Fecha de inicio<span class="text-danger">*</span></label>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" required>
+                                <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" required value="{{ old_input.started_at }}">
                                 <span class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                             </div>
                             {% if validation_errors.started_at %}
@@ -143,7 +143,7 @@
                         <label class="col-md-3 control-label">Fecha de entrega<span class="text-danger">*</span></label>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" required>
+                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" required value="{{ old_input.due_at }}">
                                 <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
                             </div>
                             {% if validation_errors.due_at %}
@@ -161,7 +161,7 @@
                         <div class="form-group{{ validation_errors.budget ? ' has-error' : '' }}">
                             <label class="col-md-3 control-label" for="budget">Presupuesto</label>
                             <div class="col-md-9">
-                                <input class="form-control" id="budget" type="text" name="budget">
+                                <input class="form-control" id="budget" type="text" name="budget" value="{{ old_input.budget }}">
                                 {% if validation_errors.budget %}
                                     <span class="help-block">
                                         {{ validation_errors.budget | first }}
@@ -172,7 +172,7 @@
                         <div class="form-group{{ validation_errors.bill ? ' has-error' : '' }}">
                             <label class="col-md-3 control-label" for="bill">Factura</label>
                             <div class="col-md-9">
-                                <input class="form-control" id="bill" type="text" name="bill">
+                                <input class="form-control" id="bill" type="text" name="bill" value="{{ old_input.bill }}">
                                 {% if validation_errors.bill %}
                                     <span class="help-block">
                                         {{ validation_errors.bill | first }}
@@ -184,7 +184,7 @@
                             <label class="col-md-3 control-label">Fecha de emisión</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" name="issued_at" id="issued_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm">
+                                    <input type="text" name="issued_at" id="issued_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ old_input.issued_at }}">
                                     <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
                                 </div>
                                 {% if validation_errors.issued_at %}
@@ -197,7 +197,7 @@
                         <div class="form-group{{ validation_errors.bill_comment ? ' has-error' : '' }}">
                             <label class="col-md-3 control-label" for="bill_comment">Comentarios</label>
                             <div class="col-md-9">
-                                <textarea class="form-control tinymce" rows="3" id="bill_comment" name="bill_comment"></textarea>
+                                <textarea class="form-control tinymce" rows="3" id="bill_comment" name="bill_comment">{{ old_input.bill_comment }}</textarea>
                                 {% if validation_errors.bill_comment %}
                                     <span class="help-block">
                                         {{ validation_errors.bill_comment | first }}

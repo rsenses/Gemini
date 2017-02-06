@@ -10,7 +10,7 @@
                         <select class="form-control select2" name="staff" id="staff">
                             <option disabled selected value data-hidden="true">Selecciona un responsable</option>
                             {% for user in staff %}
-                                <option value="{{ user.user_id }}"{{ user.user_id == auth.user.user_id ? ' selected' : '' }}>{{ user.fullName() }}</option>
+                                <option value="{{ user.user_id }}"{{ user.user_id == auth.user.user_id or user.user_id == old_input.staff ? ' selected' : '' }}>{{ user.fullName() }}</option>
                             {% endfor %}
                         </select>
                         {% if validation_errors.staff %}
@@ -23,7 +23,7 @@
                 <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <input class="form-control" id="name" type="text" name="name" required>
+                        <input class="form-control" id="name" type="text" name="name" required value="{{ old_input.name }}">
                         {% if validation_errors.name %}
                             <span class="help-block">
                                 {{ validation_errors.name | first }}
@@ -34,7 +34,7 @@
                 <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <textarea class="form-control tinymce" rows="3" id="description" name="description"></textarea>
+                        <textarea class="form-control tinymce" rows="3" id="description" name="description">{{ old_input.descriotion }}</textarea>
                         {% if validation_errors.description %}
                             <span class="help-block">
                                 {{ validation_errors.description | first }}
@@ -48,7 +48,7 @@
                         <select class="form-control select2" name="project" id="project">
                             <option disabled selected value data-hidden="true">Selecciona un proyecto</option>
                             {% for project in projects %}
-                                <option value="{{ project.project_id }}"{{ project.project_id == projectId ? ' selected' : '' }}>{{ project.name | raw }}</option>
+                                <option value="{{ project.project_id }}"{{ project.project_id == projectId or project.project_id == old_input.project ? ' selected' : '' }}>{{ project.name | raw }}</option>
                             {% endfor %}
                         </select>
                         {% if validation_errors.project %}
@@ -68,7 +68,7 @@
                         <label class="col-md-3 control-label">Fecha de entrega<span class="text-danger">*</span></label>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm">
+                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ old_input.due_at }}">
                                 <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
                             </div>
                             {% if validation_errors.due_at %}

@@ -15,7 +15,7 @@
                 <div class="form-group{{ validation_errors.name ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="name">Nombre<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <input class="form-control" id="name" type="text" name="name" value="{{ project.name | raw }}" required>
+                        <input class="form-control" id="name" type="text" name="name" value="{{ old_input.name ?? project.name | raw }}" required>
                         {% if validation_errors.name %}
                             <span class="help-block">
                                 {{ validation_errors.name | first }}
@@ -26,7 +26,7 @@
                 <div class="form-group{{ validation_errors.color ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="name">Color</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="color" type="text" name="color" value="{{ project.color }}" required>
+                        <input class="form-control" id="color" type="text" name="color" value="{{ old_input.color ?? project.color }}" required>
                         {% if validation_errors.color %}
                             <span class="help-block">
                                 {{ validation_errors.color | first }}
@@ -52,7 +52,7 @@
                 <div class="form-group{{ validation_errors.short_description ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="short_description">Descripción breve<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <input class="form-control" id="short_description" type="text" name="short_description" value="{{ project.short_description | raw }}" required>
+                        <input class="form-control" id="short_description" type="text" name="short_description" value="{{ old_input.short_description ?? project.short_description | raw }}" required>
                         {% if validation_errors.short_description %}
                             <span class="help-block">
                                 {{ validation_errors.short_description | first }}
@@ -63,7 +63,7 @@
                 <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <textarea class="form-control tinymce" rows="3" id="description" name="description">{{ project.description }}</textarea>
+                        <textarea class="form-control tinymce" rows="3" id="description" name="description">{{ old_input.description ?? project.description }}</textarea>
                         {% if validation_errors.description %}
                             <span class="help-block">
                                 {{ validation_errors.description | first }}
@@ -80,7 +80,7 @@
                             <select class="form-control select2" name="user" id="user" required>
                                 <option disabled selected value data-hidden="true">Selecciona un responsable</option>
                                 {% for user in staff %}
-                                    <option value="{{ user.user_id }}"{{ user.user_id == project.user_id ? ' selected' : '' }}>{{ user.fullName() }}</option>
+                                    <option value="{{ user.user_id }}"{{ user.user_id == project.user_id ? or user.user_id == old_input.user ' selected' : '' }}>{{ user.fullName() }}</option>
                                 {% endfor %}
                             </select>
                             {% if validation_errors.user %}
@@ -115,7 +115,7 @@
                             <select class="form-control select2" name="client" id="client" required>
                                 <option disabled selected value data-hidden="true">Selecciona un cliente</option>
                                 {% for client in clients %}
-                                    <option value="{{ client.client_id }}"{{ client.client_id == project.client_id ? ' selected' : '' }}>{{ client.name }}</option>
+                                    <option value="{{ client.client_id }}"{{ client.client_id == project.client_id or client.client_id == old_input.client ? ' selected' : '' }}>{{ client.name }}</option>
                                 {% endfor %}
                             </select>
                             {% if validation_errors.client %}
@@ -131,7 +131,7 @@
                     <div class="form-group{{ validation_errors.contact ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label" for="contact">Contacto<span class="text-danger">*</span></label>
                         <div class="col-md-9">
-                            <input class="form-control" id="contact" type="text" name="contact" value="{{ project.contact }}" required>
+                            <input class="form-control" id="contact" type="text" name="contact" value="{{ old_input.contact ?? project.contact }}" required>
                             {% if validation_errors.contact %}
                                 <span class="help-block">
                                     {{ validation_errors.contact | first }}
@@ -147,7 +147,7 @@
                         <label class="col-md-3 control-label">Fecha de inicio<span class="text-danger">*</span></label>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.started_at }}" required>
+                                <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ old_input.started_at ?? project.started_at }}" required>
                                 <span class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                             </div>
                             {% if validation_errors.started_at %}
@@ -161,7 +161,7 @@
                         <label class="col-md-3 control-label">Fecha de entrega<span class="text-danger">*</span></label>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.due_at }}" required>
+                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ old_input.due_at ?? project.due_at }}" required>
                                 <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
                             </div>
                             {% if validation_errors.due_at %}
@@ -179,7 +179,7 @@
                         <div class="form-group{{ validation_errors.budget ? ' has-error' : '' }}">
                             <label class="col-md-3 control-label" for="budget">Presupuesto</label>
                             <div class="col-md-9">
-                                <input class="form-control" id="budget" type="text" name="budget" value="{{ project.budget }}">
+                                <input class="form-control" id="budget" type="text" name="budget" value="{{ old_input.budget ?? project.budget }}">
                                 {% if validation_errors.budget %}
                                     <span class="help-block">
                                         {{ validation_errors.budget | first }}
@@ -190,7 +190,7 @@
                         <div class="form-group{{ validation_errors.bill ? ' has-error' : '' }}">
                             <label class="col-md-3 control-label" for="bill">Factura</label>
                             <div class="col-md-9">
-                                <input class="form-control" id="bill" type="text" name="bill" value="{{ project.bill }}">
+                                <input class="form-control" id="bill" type="text" name="bill" value="{{ old_input.bill ?? project.bill }}">
                                 {% if validation_errors.bill %}
                                     <span class="help-block">
                                         {{ validation_errors.bill | first }}
@@ -202,7 +202,7 @@
                             <label class="col-md-3 control-label">Fecha de emisión</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" name="issued_at" id="issued_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ project.issued_at }}">
+                                    <input type="text" name="issued_at" id="issued_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ old_input.issued_at ?? project.issued_at }}">
                                     <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
                                 </div>
                                 {% if validation_errors.issued_at %}
@@ -215,7 +215,7 @@
                         <div class="form-group{{ validation_errors.bill_comment ? ' has-error' : '' }}">
                             <label class="col-md-3 control-label" for="bill_comment">Comentarios</label>
                             <div class="col-md-9">
-                                <textarea class="form-control tinymce" rows="3" id="bill_comment" name="bill_comment">{{ project.bill_comment | raw }}</textarea>
+                                <textarea class="form-control tinymce" rows="3" id="bill_comment" name="bill_comment">{{ old_input.bill_comment ?? project.bill_comment | raw }}</textarea>
                                 {% if validation_errors.bill_comment %}
                                     <span class="help-block">
                                         {{ validation_errors.bill_comment | first }}
