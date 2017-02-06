@@ -31,7 +31,7 @@ class TimeTrackMiddleware
             ->where('is_completed', 0)
             ->first();
 
-         $this->view->getEnvironment()->addGlobal('active_timetrack', ($timeTrack ? true :  false));
+        $this->view->getEnvironment()->addGlobal('active_timetrack', ($timeTrack ? true :  false));
 
         if ($timeTrack) {
             $response = $response->withHeader('X-IC-Trigger', json_encode([

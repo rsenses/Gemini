@@ -175,3 +175,7 @@ aside {
     color: #fff;
     text-decoration: none;
 }
+#datetime {
+    font-size: 18px;
+    margin-right: 15px;
+}
