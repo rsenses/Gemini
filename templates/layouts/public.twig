@@ -55,6 +55,8 @@
         <div class="container">
             <div class="row">
                 <main class="col-xs-12 col-sm-6 col-sm-offset-3">
+                    {% include 'partials/flash.twig' %}
+
                     {% block content %}{% endblock %}
                 </main>
             </div>

@@ -27,6 +27,8 @@ $(document).ready(function() {
         } else {
             $('.timetracker').removeClass('active');
         }
+    }).on('user.invalid', function(e) {
+        window.location = '/auth/signin';
     });
 });
 function notifyMe(text) {

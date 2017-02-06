@@ -24,9 +24,11 @@ class AuthenticatedMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         if ($this->auth->getStatus() !== 'VALID') {
-            $this->flash->addMessage('warning', 'Please sign in before going to your control panel.');
+            $this->flash->addMessage('danger', 'Please sign in before going to your control panel.');
 
-            return $response->withRedirect($this->router->pathFor('auth.signin'));
+            $response = $response->withHeader('X-IC-Trigger', json_encode([
+                'user.invalid' => ''
+            ]));
         }
 
         return $next($request, $response);
