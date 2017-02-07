@@ -179,3 +179,7 @@ aside {
     font-size: 18px;
     margin-right: 15px;
 }
+.timetracker-table .fixed-table-body {
+    overflow-y: visible;
+    overflow-x: visible;
+}

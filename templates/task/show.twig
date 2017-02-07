@@ -118,28 +118,43 @@
             {% endif %}
             <h2>Contador</h2>
             <p><strong>Total</strong>: {{ totalTimeTrack|date('H:i:s') }}</p>
-            <table data-toggle="table" data-sort-name="day" data-sort-order="asc" data-search="true" data-show-columns="true">
-                <thead>
-                    <tr>
-                        <th data-field="day" data-sortable="true">Día</th>
-                        <th data-field="start" data-sortable="true">Inicio</th>
-                        <th data-field="end" data-sortable="true">Fin</th>
-                        <th data-field="total" data-sortable="true">Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for track in task.timetracks %}
-                        {% if track.is_completed %}
-                            <tr>
-                                <td>{{ track.created_at|date('Y/m/d') }}</td>
-                                <td>{{ track.created_at|date('H:i:s') }}</td>
-                                <td>{{ track.updated_at|date('H:i:s') }}</td>
-                                <td><strong>{{ track.created_at|timediff(track.updated_at) }}</strong></td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="timetracker-table">
+                <table data-toggle="table" data-sort-name="day" data-sort-order="asc" data-search="true" data-show-columns="true">
+                    <thead>
+                        <tr>
+                            <th data-field="day" data-sortable="true">Día</th>
+                            <th data-field="start" data-sortable="true">Inicio</th>
+                            <th data-field="end" data-sortable="true">Fin</th>
+                            <th data-field="total" data-sortable="true">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for track in task.timetracks %}
+                            {% if track.is_completed %}
+                                <tr>
+                                    <td>{{ track.created_at|date('Y/m/d') }}</td>
+                                    <td>{{ track.created_at|date('H:i:s') }}</td>
+                                    <td>
+                                        <div class="editdate">
+                                            {{ track.updated_at|date('H:i:s') }}
+                                        </div>
+                                        <form action="{{ path_for('timetrack.modify', { 'id': track.time_track_id }) }}" ic-post-to="{{ path_for('timetrack.modify', { 'id': track.time_track_id }) }}" ic-target="closest td" method="post">
+                                            <div class="input-group datetimepicker hidden">
+                                                <input type="text" name="updated_at" class="form-control" data-date-format="YYYY-MM-DD HH:mm:ss" value="{{ track.updated_at }}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
+                                            </div>
+                                            {{ csrf.field | raw }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <strong>{{ track.created_at|timediff(track.updated_at) }}</strong>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -153,8 +168,20 @@
     <script>
         $(document).ready(function() {
             $(".select2").select2();
+
+            $('.editdate').click(function(e) {
+                e.preventDefault();
+                $(this).addClass('hidden');
+                $(this).next('form').children('.datetimepicker').removeClass('hidden');
+            });
+
             $('.datetimepicker').datetimepicker({
                 locale: 'es'
+            });
+
+            $('body').on('dp.hide', function(e) {
+                Intercooler.triggerRequest($(e.target).parent('form'));
+                // $(e.target).addClass('hidden').prev('.editdate').removeClass('hidden');
             });
         });
         $('.btn-delete').click(function(e) {

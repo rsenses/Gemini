@@ -82,28 +82,28 @@ class TimeTrackController
     {
         $timeTrack = TimeTrack::findOrFail($args['id']);
 
-        $rules = [
-            'created_at' => v::notEmpty()->min($request->getParam('started_at'))->date(),
-            'updated_at' => v::notEmpty()->min($request->getParam('started_at'))->date(),
-        ];
+        // $rules = [
+            // 'created_at' => v::notEmpty()->min($request->getParam('created_at'))->date(),
+            // 'updated_at' => v::notEmpty()->min($request->getParam('updated_at'))->date(),
+        // ];
 
-        $validation = $this->validator->validate($request, $rules);
+        // $validation = $this->validator->validate($request, $rules);
 
-        if ($validation->failed()) {
-            $this->flash->addMessage('danger', 'Tu contador no ha sido guardada, revisa los errores en el formulario.');
+        // if ($validation->failed()) {
+        //     $this->flash->addMessage('danger', 'Tu contador no ha sido guardada, revisa los errores en el formulario.');
 
-            return $response->withRedirect($this->router->pathFor('task.show', [
-                'id' => $timeTrack->task_id,
-            ]));
-        }
+        //     return $response->withRedirect($this->router->pathFor('task.show', [
+        //         'id' => $timeTrack->task_id,
+        //     ]));
+        // }
 
 
-        $timeTrack->created_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at'));
-        $timeTrack->updated_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at'));
+        // $timeTrack->created_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('created_at'));
+        $timeTrack->updated_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->getParam('updated_at'));
 
         $timeTrack->save();
 
-        return $response->withRedirect($this->router->pathFor('task.show', [
+        return $response->withHeader('X-IC-Redirect', $this->router->pathFor('task.show', [
             'id' => $timeTrack->task_id,
         ]));
     }
