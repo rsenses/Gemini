@@ -119,7 +119,7 @@
                     <p class="text-right"><strong>Fecha de inicio</strong></p>
                 </div>
                 <div class="col-md-9">
-                    {{ project.started_at | date('d-m-Y H:i:s') }}
+                    {{ project.started_at | date('d-m-Y H:i:s', 'Europe/Madrid') }}
                 </div>
             </div>
             <div class="row">
@@ -127,7 +127,7 @@
                     <p class="text-right"><strong>Fecha de entrega</strong></p>
                 </div>
                 <div class="col-md-9">
-                    {{ project.due_at | date('d-m-Y H:i:s') }}
+                    {{ project.due_at | date('d-m-Y H:i:s', 'Europe/Madrid') }}
                 </div>
             </div>
             <h5>Facturación</h5>
@@ -145,7 +145,7 @@
                     <p class="text-right"><strong>Fecha de emisión</strong></p>
                 </div>
                 <div class="col-md-9">
-                    {{ project.issued_at | date('d-m-Y H:i:s') }}
+                    {{ project.issued_at | date('d-m-Y H:i:s', 'Europe/Madrid') }}
                 </div>
             </div>
             <hr>
@@ -250,7 +250,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
     <script src="{{ base_url() }}/js/vendor/datetimepicker.es.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>

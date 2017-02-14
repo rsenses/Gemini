@@ -133,10 +133,10 @@
                             {% if track.is_completed %}
                                 <tr>
                                     <td>{{ track.created_at|date('Y/m/d') }}</td>
-                                    <td>{{ track.created_at|date('H:i:s') }}</td>
+                                    <td>{{ track.created_at|date('H:i:s', 'Europe/Madrid') }}</td>
                                     <td>
                                         <div class="editdate">
-                                            {{ track.updated_at|date('H:i:s') }}
+                                            {{ track.updated_at|date('H:i:s', 'Europe/Madrid') }}
                                         </div>
                                         <form action="{{ path_for('timetrack.modify', { 'id': track.time_track_id }) }}" ic-post-to="{{ path_for('timetrack.modify', { 'id': track.time_track_id }) }}" ic-target="closest td" method="post">
                                             <div class="input-group datetimepicker hidden">
@@ -160,7 +160,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
     <script src="{{ base_url() }}/js/vendor/datetimepicker.es.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
