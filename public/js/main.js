@@ -29,6 +29,18 @@ $(document).ready(function() {
         }
     }).on('user.invalid', function(e) {
         window.location = '/auth/signin';
+    }).on('show.alert', function(e, type, msg) {
+        $('.alert-javascript').addClass('in').removeClass('alert-info alert-success alert-danger alert-warning').addClass(type).html(msg);
+        setTimeout(function() {
+            $('.alert-javascript').removeClass('in');
+        }, 3000);
+    }).on('show.alert.modal', function(e, type, msg) {
+        $('.alert-modal').addClass('in').removeClass('alert-info alert-success alert-danger alert-warning').addClass(type).html(msg);
+        setTimeout(function() {
+            $('.alert-modal').removeClass('in');
+        }, 3000);
+    }).on('close.bs.modal', function() {
+        $('.modal').modal('hide');
     });
 });
 function notifyMe(text) {
