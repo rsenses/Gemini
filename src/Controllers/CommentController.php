@@ -72,7 +72,7 @@ class CommentController
         if ($this->auth->getUserId() != $task->user->user_id) {
             $notification = $task->notifications()
                 ->where('user_id', $task->user->user_id)
-                ->where('is_readed', 1)
+                ->where('is_readed', 0)
                 ->count();
 
             if (!$notification) {
@@ -87,7 +87,7 @@ class CommentController
             if ($this->auth->getUserId() != $user->user_id) {
                 $notification = $task->notifications()
                     ->where('user_id', $user->user_id)
-                    ->where('is_readed', 1)
+                    ->where('is_readed', 0)
                     ->count();
 
                 if (!$notification) {
@@ -139,7 +139,7 @@ class CommentController
         if ($this->auth->getUserId() != $project->user->user_id) {
             $notification = $project->notifications()
                 ->where('user_id', $project->user->user_id)
-                ->where('is_readed', 1)
+                ->where('is_readed', 0)
                 ->count();
 
             if (!$notification) {
@@ -154,7 +154,7 @@ class CommentController
             if ($this->auth->getUserId() != $user->user_id) {
                 $notification = $project->notifications()
                     ->where('user_id', $user->user_id)
-                    ->where('is_readed', 1)
+                    ->where('is_readed', 0)
                     ->count();
 
                 if (!$notification) {
