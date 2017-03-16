@@ -134,3 +134,6 @@ function myImagePicker(callback, value, meta) {
         }
     });
 }
+$('.btn-comment').click(function () {
+    tinymce.triggerSave();
+});

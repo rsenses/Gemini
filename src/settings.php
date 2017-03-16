@@ -10,7 +10,7 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'slim-app',
-            'path' => __DIR__.'/../storage/logs/app.log',
+            'path' => __DIR__.getenv('PATH_LOGGER'),
             'level' => \Monolog\Logger::DEBUG,
         ],
         'allowedLocales' => [
@@ -36,33 +36,33 @@ return [
          * Envirement Settings, change on server
          */
         'upload_path' => [
-            'images' => __DIR__.'/../public/uploads/images/',
-            'files' => __DIR__.'/../public/uploads/files/',
+            'images' => __DIR__.getenv('PATH_UPLOADS').'images/',
+            'files' => __DIR__.getenv('PATH_UPLOADS').'files/',
         ],
         'upload_url' => [
             'images' => 'https://gemini.expomark.es/uploads/images/',
             'files' => 'https://gemini.expomark.es/uploads/files/',
         ],
-        'displayErrorDetails' => true, // set to false in production
-        'debug' => true, // set to false in production
+        'displayErrorDetails' => (bool) getenv('DISPLAY_ERRORS'), // set to false in production
+        'debug' => (bool) getenv('DISPLAY_ERRORS'), // set to false in production
         'whoops.editor' => 'sublime', // Support click to open editor
         // Renderer Settings
         'view' => [
-            'template_path' => __DIR__.'/../templates/',
+            'template_path' => __DIR__.getenv('PATH_TEMPLATES'),
             'twig' => [
-                'cache' => __DIR__.'/../storage/cache/twig',
+                'cache' => __DIR__.getenv('PATH_TWIG'),
                 'debug' => true, // set to false in production
                 'auto_reload' => true,
             ],
         ],
         // DB Settings
         'db' => [
-            'driver' => 'mysql',
-            'host' => 'exlocalhost',
-            'port' => '3306',
-            'database' => 'gemini',
-            'username' => 'root',
-            'password' => '*Med1aS*',
+            'driver' => getenv('DB_DRIVER'),
+            'host' => getenv('DB_HOST'),
+            'port' => (int) getenv('DB_PORT'),
+            'database' => getenv('DB_NAME'),
+            'username' => getenv('DB_USER'),
+            'password' => getenv('DB_PASSWORD'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

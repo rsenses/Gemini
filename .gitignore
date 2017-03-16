@@ -3,3 +3,4 @@
 .htaccess
 .DS_Store
 composer.phar
+.env

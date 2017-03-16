@@ -19,6 +19,11 @@ class User extends \Illuminate\Database\Eloquent\Model
         return $this->belongsTo('App\Entities\Client');
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Entities\Comment');
+    }
+
     public function notifications()
     {
         return $this->hasMany('App\Entities\Notification');

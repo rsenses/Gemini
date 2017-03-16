@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-xs-12">
                     {% if project.done_at == null %}
                         <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-success">
                             <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
@@ -150,7 +150,7 @@
             </div>
             <hr>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-xs-12">
                     {% if project.done_at == null %}
                         <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-success">
                             <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
@@ -245,6 +245,44 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form action="{{ path_for('comment.project.save', { 'id': project.project_id }) }}" class="form" method="post">
+                        <div class="form-group">
+                            <textarea name="description" class="tinymce form-control" placeholder="Añade un comentario"></textarea>
+                        </div>
+                        <button name="Submit" type="submit" class="btn btn-info btn-comment"><i class="fa fa-commenting" aria-hidden="true"></i> Comentar</button>
+                        {{ csrf.field | raw }}
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">Comentarios</h4>
+                        </div>
+                        <div class="panel-collapse">
+                            {% for comment in project.comments().orderBy('created_at', 'DESC').get() %}
+                                <div class="panel-body">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h4 class="media-heading">{{ comment.user().first().fullName() }} <small class="text-info">{{ comment.created_at.formatLocalized('%d de %B de %Y - %H:%M') }}</small></h4>
+                                            {{ comment.description | raw }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
