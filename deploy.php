@@ -39,7 +39,7 @@ server('scl-prs3', 'scl.prs3.expomark.es', 22)
 set('repository', 'git@bitbucket.org:expomark/gemini.git');
 
 set('shared_dirs', ['storage']);
-set('shared_files', ['src/settings.php', '.env']);
+set('shared_files', ['src/.env']);
 
 set('http_user', 'www-data');
 
