@@ -58,6 +58,8 @@ $app->group('', function () {
         $this->get('/search', 'ProjectController:searchAction')->setName('project.search');
         // Print Project
         $this->get('/print/{id:[0-9]+}', 'ProjectController:printAction')->setName('project.print');
+        // Print Project
+        $this->get('/print/tag/{id:[0-9]+}', 'ProjectController:printTagAction')->setName('project.print.tag');
         // New Project
         $this->get('/new', 'ProjectController:newAction')->setName('project.new');
         // Show Project

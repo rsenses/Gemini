@@ -171,7 +171,7 @@ class ProjectController
     {
         $q = $request->getQueryParam('q');
 
-        $projects = Project::whereRaw('MATCH (name, description, short_description) AGAINST (?)' , [$q])
+        $projects = Project::whereRaw('MATCH (name, description, short_description) AGAINST (?)', [$q])
             ->orWhere('project_id', $q)
             ->orWhereHas('client', function ($query) use ($q) {
                 $query->where('name', 'like', '%'.$q.'%');
@@ -262,11 +262,20 @@ class ProjectController
     {
         $project = Project::findOrFail($args['id']);
 
+        return $this->view->render($response, 'project/print/all.twig', [
+            'project' => $project
+        ]);
+    }
+
+    public function printTagAction(Request $request, Response $response, array $args)
+    {
+        $project = Project::findOrFail($args['id']);
+
         $project->is_printed = 1;
 
         $project->save();
 
-        return $this->view->render($response, 'project/print.twig', [
+        return $this->view->render($response, 'project/print/tag.twig', [
             'project' => $project
         ]);
     }

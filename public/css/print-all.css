@@ -1,0 +1,38 @@
+body {
+    color: #444;
+    margin: 0;
+}
+html {
+    line-height: 2em;
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    margin: 0;
+    padding: 0;
+}
+h4 {
+    font-weight: 400;
+}
+
+td {
+    vertical-align: top;
+}
+tr td:first-child {
+    padding-right: 20px;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
