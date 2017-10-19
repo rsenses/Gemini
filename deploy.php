@@ -26,9 +26,8 @@ after('deploy', 'success');
 
 // Define a server for deployment.
 // Let's name it "prod" and use port 22.
-server('scl-prs3', 'scl.prs3.expomark.es', 22)
+host('scl.prs3.expomark.es')
     ->user('root')
-    ->forwardAgent() // You can use identity key, ssh config, or username/password to auth on the server.
     ->stage('production')
     ->set('deploy_path', '/var/www/gemini.expomark.es'); // Define the base path to deploy your project to.
 
