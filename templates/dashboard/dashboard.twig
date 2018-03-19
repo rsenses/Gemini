@@ -3,21 +3,21 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12">
-            <p><a href="{{ path_for('task.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
+            <p><a href="{{ path_for('project.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un proyecto</a></p>
             <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true">
                 <thead>
                     <tr>
                         <th data-field="name" data-sortable="true">Nombre</th>
-                        <th data-field="project" data-sortable="true">Proyecto</th>
+                        <th data-field="client" data-sortable="true">Cliente</th>
                         <th data-field="due_at" data-sortable="true">Cierre</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for task in tasks %}
+                    {% for project in projects %}
                         <tr>
-                            <td><a href="{{ path_for('task.show', {'id': task.task_id }) }}">{{ task.name | raw }}</a></td>
-                            <td><a href="{{ path_for('project.show', {'id': task.project_id }) }}">{{ task.project.name | raw }}</a></td>
-                            <td class="text-nowrap">{{ task.due_at }}</td>
+                            <td><a href="{{ path_for('project.show', {'id': project.project_id }) }}">{{ project.name | raw }}</a></td>
+                            <td>{{ project.client.name }}</a></td>
+                            <td class="text-nowrap">{{ project.due_at }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

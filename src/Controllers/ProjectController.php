@@ -303,6 +303,15 @@ class ProjectController
             $project->inProgressTasksTime += $totalTimeTrack;
         }
 
+        $seconds = $project->inProgressTasksTime;
+
+        $hours = floor($seconds / 3600);
+        $seconds -= $hours * 3600;
+        $minutes = floor($seconds / 60);
+        $seconds -= $minutes * 60;
+
+        $project->inProgressTasksTime = "$hours:$minutes:$seconds";
+
         $completedTasks = Task::where('project_id', $project->project_id)
             ->whereNotNull('done_at')
             ->orderBy('due_at', 'ASC')
@@ -314,13 +323,22 @@ class ProjectController
             $totalTimeTrack = 0;
 
             foreach ($task->timetracks as $track) {
-                $totalTimeTrack += (strtotime($track->updated_at) - strtotime($track->created_at));
+                $totalTimeTrack += strtotime($track->updated_at) - strtotime($track->created_at);
             }
 
             $task->totalTimeTrack = $totalTimeTrack;
 
             $project->completedTasksTime += $totalTimeTrack;
         }
+
+        $seconds = $project->completedTasksTime;
+
+        $hours = floor($seconds / 3600);
+        $seconds -= $hours * 3600;
+        $minutes = floor($seconds / 60);
+        $seconds -= $minutes * 60;
+
+        $project->completedTasksTime = "$hours:$minutes:$seconds";
 
         return $this->view->render($response, 'project/show.twig', [
             'project' => $project,

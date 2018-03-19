@@ -20,10 +20,18 @@ $container['authorization'] = function ($container) {
 // Twig
 $container['view'] = function ($container) {
     $settings = $container->get('settings')['view'];
+
     $view = new Slim\Views\Twig(
         $settings['template_path'],
         $settings['twig']
     );
+
+    // Add filter
+    // $gmdate = new Twig_Filter('gmdate', function ($string) {
+    //     return gmdate('H:i:s', $string);
+    // });
+    //
+    // $view->addFilter($gmdate);
 
     // Add extensions
     $view->addExtension(new Slim\Views\TwigExtension(

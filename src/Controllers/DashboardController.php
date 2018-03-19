@@ -31,13 +31,13 @@ class DashboardController
 
     public function indexAction(Request $request, Response $response, array $args)
     {
-        $tasks = Task::where('staff_id', $this->auth->getUserId())
+        $projects = Project::where('user_id', $this->auth->getUserId())
             ->whereNull('done_at')
             ->orderBy('due_at', 'ASC')
             ->get();
 
         return $this->view->render($response, 'dashboard/dashboard.twig', [
-            'tasks' => $tasks
+            'projects' => $projects
         ]);
     }
 }
