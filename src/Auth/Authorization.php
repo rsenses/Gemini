@@ -21,7 +21,6 @@ class Authorization
         }
     }
 
-
     public function hasPermission($permissions)
     {
         foreach ($this->user->roles as $role) {
@@ -39,9 +38,27 @@ class Authorization
         return false;
     }
 
+    public function hasNotPermission($permissions)
+    {
+        foreach ($this->user->roles as $role) {
+            if (is_array($permissions)) {
+                foreach ($permissions as $key => $permission) {
+                    if (in_array($permission, json_decode($role->permissions, true))) {
+                        return false;
+                    }
+                }
+            } else {
+                throw new InvalidArgumentException('Los permisos deben ser un array, string entregado', 1);
+            }
+        }
+
+        return true;
+    }
+
     public function hasRole($roles)
     {
         $userRoles = $this->user->roles;
+
         foreach ($userRoles as $userRole) {
             if (is_array($roles)) {
                 if (in_array($userRole->name, $roles)) {
@@ -53,6 +70,23 @@ class Authorization
         }
 
         return false;
+    }
+
+    public function hasNotRole($roles)
+    {
+        $userRoles = $this->user->roles;
+
+        foreach ($userRoles as $userRole) {
+            if (is_array($roles)) {
+                if (in_array($userRole->name, $roles)) {
+                    return false;
+                }
+            } else {
+                throw new InvalidArgumentException('Los permisos deben ser un array, string entregado', 1);
+            }
+        }
+
+        return true;
     }
 
     public function getStatus()

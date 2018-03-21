@@ -43,6 +43,11 @@ class User extends \Illuminate\Database\Eloquent\Model
     {
         return $this->belongsToMany('App\Entities\Role');
     }
+    
+    public function tags()
+    {
+        return $this->belongsToMany('App\Entities\Tag');
+    }
 
     public function fullName()
     {

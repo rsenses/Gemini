@@ -122,3 +122,16 @@ $container['UserController'] =  function ($container) {
         $container->csrf
     );
 };
+
+
+$container['ClientProjectController'] =  function ($container) {
+    return new App\Controllers\Client\ProjectController(
+        $container->view,
+        $container->logger,
+        $container->auth,
+        $container->flash,
+        $container->validator,
+        $container->router,
+        $container->csrf
+    );
+};

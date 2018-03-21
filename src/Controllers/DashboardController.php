@@ -31,10 +31,26 @@ class DashboardController
 
     public function indexAction(Request $request, Response $response, array $args)
     {
-        $projects = Project::where('user_id', $this->auth->getUserId())
-            ->whereNull('done_at')
-            ->orderBy('due_at', 'ASC')
-            ->get();
+        $client = $this->auth->getClientId();
+
+        if ($client) {
+            $tags = $this->auth->getTags();
+
+            $projects = Project::where('client_id', $client)
+                ->where('is_active', 1)
+                ->whereNull('done_at')
+                ->whereHas('tags', function ($query) use ($tags) {
+                    $query->whereIn('project_tag.tag_id', $tags);
+                })
+                ->orderBy('due_at', 'ASC')
+                ->get();
+        } else {
+            $projects = Project::where('user_id', $this->auth->getUserId())
+                ->where('is_active', 1)
+                ->whereNull('done_at')
+                ->orderBy('due_at', 'ASC')
+                ->get();
+        }
 
         return $this->view->render($response, 'dashboard/dashboard.twig', [
             'projects' => $projects

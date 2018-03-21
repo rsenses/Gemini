@@ -15,4 +15,9 @@ class Tag extends \Illuminate\Database\Eloquent\Model
     {
         return $this->belongsToMany('App\Entities\Project');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Entities\User');
+    }
 }

@@ -34,6 +34,8 @@ $app->group('', function () {
     $this->group('/project', function () {
         // All Projects
         $this->get('/all', 'ProjectController:inProgressAllUsersAction')->setName('project.all');
+        // Client Projects
+        $this->get('/client', 'ClientProjectController:inProgressAction')->setName('project.client.user');
         // In Progress Projects
         $this->get('/inprogress', 'ProjectController:inProgressAction')->setName('project.inprogress');
         // Limbo Projects

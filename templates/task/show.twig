@@ -3,7 +3,7 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12">
-            {% if task.staff_id == auth.user.user_id or task.user_id == auth.user.user_id %}
+            {% if authorization.hasPermission(['project.view']) and (task.staff_id == auth.user.user_id or task.user_id == auth.user.user_id) %}
                 <div class="row">
                     <div class="col-sm-12">
                         <a href="{{ path_for('task.delete', { 'id': task.task_id }) }}" class="btn btn-danger btn-delete">
@@ -70,7 +70,15 @@
                 </div>
                 <div class="col-md-9">
                     <p>
-                        <a href="{{ path_for('project.client', {'id': task.project.client_id }) }}">{{ task.project.client.name }}</a>
+                        {% if authorization.hasPermission(['project.view']) %}
+                            <a href="{{ path_for('project.client', {'id': task.project.client_id }) }}">
+                        {% endif %}
+
+                        {{ task.project.client.name }}
+
+                        {% if authorization.hasPermission(['project.view']) %}
+                            </a>
+                        {% endif %}
                     </p>
                 </div>
             </div>
@@ -157,44 +165,46 @@
             </div>
         </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="row">
-                <div class="col-xs-12">
-                    <form action="{{ path_for('comment.task.save', { 'id': task.task_id }) }}" class="form" method="post">
-                        <div class="form-group">
-                            <textarea name="description" class="tinymce form-control" placeholder="Añade un comentario"></textarea>
-                        </div>
-                        <button name="Submit" type="submit" class="btn btn-info btn-comment"><i class="fa fa-commenting" aria-hidden="true"></i> Comentar</button>
-                        {{ csrf.field | raw }}
-                    </form>
+    {% if authorization.hasPermission(['project.view']) %}
+        <hr>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form action="{{ path_for('comment.task.save', { 'id': task.task_id }) }}" class="form" method="post">
+                            <div class="form-group">
+                                <textarea name="description" class="tinymce form-control" placeholder="Añade un comentario"></textarea>
+                            </div>
+                            <button name="Submit" type="submit" class="btn btn-info btn-comment"><i class="fa fa-commenting" aria-hidden="true"></i> Comentar</button>
+                            {{ csrf.field | raw }}
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">Comentarios</h4>
-                        </div>
-                        <div class="panel-collapse">
-                            {% for comment in task.comments().orderBy('created_at', 'DESC').get() %}
-                                <div class="panel-body">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <h4 class="media-heading">{{ comment.user().first().fullName() }} <small class="text-info">{{ comment.created_at.formatLocalized('%d de %B de %Y - %H:%M') }}</small></h4>
-                                            {{ comment.description | raw }}
+                <hr>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">Comentarios</h4>
+                            </div>
+                            <div class="panel-collapse">
+                                {% for comment in task.comments().orderBy('created_at', 'DESC').get() %}
+                                    <div class="panel-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">{{ comment.user().first().fullName() }} <small class="text-info">{{ comment.created_at.formatLocalized('%d de %B de %Y - %H:%M') }}</small></h4>
+                                                {{ comment.description | raw }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}

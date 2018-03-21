@@ -103,6 +103,15 @@ class AuraAuth
         return null;
     }
 
+    public function getTags()
+    {
+        if ($this->getUserId()) {
+            return User::find($this->getUserId())->tags()->get()->pluck('tag_id')->toArray();
+        }
+
+        return null;
+    }
+
     public function getUserName()
     {
         return $this->auth->getUserName();

@@ -3,61 +3,75 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12">
-            <div class="row">
-                <div class="col-xs-12">
-                    {% if project.done_at == null %}
-                        <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-success">
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
+            {% if authorization.hasPermission(['project.view']) %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% if project.done_at == null %}
+                            <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-success">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
+                            </a>
+                        {% else %}
+                            <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning">
+                                <i class="fa fa-square-o" aria-hidden="true"></i> Reabrir
+                            </a>
+                        {% endif %}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print" aria-hidden="true"></i> Imprimir <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path_for('project.print.tag', { 'id': project.project_id }) }}" target="_blank">
+                                         Etiqueta
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path_for('project.print', { 'id': project.project_id }) }}" target="_blank">
+                                        Completo
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        /
+                        {% if project.is_active %}
+                            <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-warning">
+                                <i class="fa fa-steam-square" aria-hidden="true"></i> Limbo
+                            </a>
+                        {% else %}
+                            <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-success">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Resucitar
+                            </a>
+                        {% endif %}
+                        <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-delete">
+                            <i class="fa fa-trash" aria-hidden="true"></i> Borrar
                         </a>
-                    {% else %}
-                        <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning">
-                            <i class="fa fa-square-o" aria-hidden="true"></i> Reabrir
-                        </a>
-                    {% endif %}
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-print" aria-hidden="true"></i> Imprimir <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ path_for('project.print.tag', { 'id': project.project_id }) }}" target="_blank">
-                                     Etiqueta
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path_for('project.print', { 'id': project.project_id }) }}" target="_blank">
-                                    Completo
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    /
-                    {% if project.is_active %}
-                        <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-warning">
-                            <i class="fa fa-steam-square" aria-hidden="true"></i> Limbo
-                        </a>
-                    {% else %}
-                        <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-success">
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Resucitar
-                        </a>
-                    {% endif %}
-                    <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-delete">
-                        <i class="fa fa-trash" aria-hidden="true"></i> Borrar
-                    </a>
 
-                    <a href="{{ path_for('project.edit', { 'id': project.project_id }) }}" class="btn btn-primary pull-right">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
-                    </a>
+                        <a href="{{ path_for('project.edit', { 'id': project.project_id }) }}" class="btn btn-primary pull-right">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <hr>
+                <hr>
+            {% endif %}
             <div class="row">
                 <div class="col-xs-12">
                     <h2>
                         {{ project.name | raw }}<br>
                         <small>
                             {% for tag in project.tags %}
-                                <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}" class="label label-default">{{ tag.name }}</a>
+                                {% if authorization.hasPermission(['project.view']) %}
+                                    <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}" class="label label-default">
+                                {% else %}
+                                    <span class="label label-default">
+                                {% endif %}
+
+                                {{ tag.name }}
+
+                                {% if authorization.hasPermission(['project.view']) %}
+                                    </a>
+                                {% else %}
+                                    </span>&nbsp;
+                                {% endif %}
                             {% endfor %}
                         </small>
                     </h2>
@@ -144,80 +158,89 @@
                     {{ project.due_at | date('d-m-Y H:i:s', 'Europe/Madrid') }}
                 </div>
             </div>
-            <h5>Facturación</h5>
-            <hr>
-            <div class="row">
-                <div class="col-md-3">
-                    <p class="text-right"><strong>Factura</strong></p>
-                </div>
-                <div class="col-md-9">
-                    {{ project.bill }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <p class="text-right"><strong>Fecha de emisión</strong></p>
-                </div>
-                <div class="col-md-9">
-                    {{ project.issued_at | date('d-m-Y H:i:s', 'Europe/Madrid') }}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-12">
-                    {% if project.done_at == null %}
-                        <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-success">
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
-                        </a>
-                    {% else %}
-                        <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning">
-                            <i class="fa fa-square-o" aria-hidden="true"></i> Reabrir
-                        </a>
-                    {% endif %}
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-print" aria-hidden="true"></i> Imprimir <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ path_for('project.print.tag', { 'id': project.project_id }) }}" target="_blank">
-                                     Etiqueta
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path_for('project.print', { 'id': project.project_id }) }}" target="_blank">
-                                    Completo
-                                </a>
-                            </li>
-                        </ul>
+            {% if authorization.hasPermission(['project.view']) %}
+                <h5>Facturación</h5>
+                <hr>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="text-right"><strong>Factura</strong></p>
                     </div>
-                    /
-                    {% if project.is_active %}
-                        <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-warning">
-                            <i class="fa fa-steam-square" aria-hidden="true"></i> Limbo
-                        </a>
-                    {% else %}
-                        <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-success">
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Resucitar
-                        </a>
-                    {% endif %}
-                    <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-delete">
-                        <i class="fa fa-trash" aria-hidden="true"></i> Borrar
-                    </a>
-
-                    <a href="{{ path_for('project.edit', { 'id': project.project_id }) }}" class="btn btn-primary pull-right">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
-                    </a>
+                    <div class="col-md-9">
+                        {{ project.bill }}
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="text-right"><strong>Fecha de emisión</strong></p>
+                    </div>
+                    <div class="col-md-9">
+                        {{ project.issued_at | date('d-m-Y H:i:s', 'Europe/Madrid') }}
+                    </div>
+                </div>
+            {% endif %}
+            {% if authorization.hasPermission(['project.view']) %}
+                <hr>
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% if project.done_at == null %}
+                            <a href="{{ path_for('project.complete', { 'id': project.project_id }) }}" class="btn btn-success">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Completar
+                            </a>
+                        {% else %}
+                            <a href="{{ path_for('project.reopen', { 'id': project.project_id }) }}" class="btn btn-warning">
+                                <i class="fa fa-square-o" aria-hidden="true"></i> Reabrir
+                            </a>
+                        {% endif %}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print" aria-hidden="true"></i> Imprimir <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path_for('project.print.tag', { 'id': project.project_id }) }}" target="_blank">
+                                         Etiqueta
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path_for('project.print', { 'id': project.project_id }) }}" target="_blank">
+                                        Completo
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        /
+                        {% if project.is_active %}
+                            <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-warning">
+                                <i class="fa fa-steam-square" aria-hidden="true"></i> Limbo
+                            </a>
+                        {% else %}
+                            <a href="{{ path_for('project.toggle', { 'id': project.project_id }) }}" class="btn btn-success">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Resucitar
+                            </a>
+                        {% endif %}
+                        <a href="{{ path_for('project.delete', { 'id': project.project_id }) }}" class="btn btn-danger btn-delete">
+                            <i class="fa fa-trash" aria-hidden="true"></i> Borrar
+                        </a>
+
+                        <a href="{{ path_for('project.edit', { 'id': project.project_id }) }}" class="btn btn-primary pull-right">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-xs-12">
-            <p><a href="{{ path_for('task.new', { 'id': project.project_id }) }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
-            <h4>Tareas pendientes</h4>
+            {% if authorization.hasPermission(['project.view']) %}
+                <p><a href="{{ path_for('task.new', { 'id': project.project_id }) }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear una tarea</a></p>
+            {% endif %}
+
+            <h3>Tareas pendientes</h3>
+
             <p><strong>Total</strong>: {{ project.inProgressTasksTime }}</p>
+
             <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
                 <thead>
                     <tr>
@@ -245,7 +268,7 @@
                 </tbody>
             </table>
             <hr>
-            <h4>Tareas completadas</h4>
+            <h3>Tareas completadas</h3>
             <p><strong>Total</strong>: {{ project.completedTasksTime }}</p>
             <table data-toggle="table" data-sort-name="time" data-sort-order="desc" data-search="true" data-show-columns="true">
                 <thead>
@@ -275,44 +298,46 @@
             </table>
         </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="row">
-                <div class="col-xs-12">
-                    <form action="{{ path_for('comment.project.save', { 'id': project.project_id }) }}" class="form" method="post">
-                        <div class="form-group">
-                            <textarea name="description" class="tinymce form-control" placeholder="Añade un comentario"></textarea>
-                        </div>
-                        <button name="Submit" type="submit" class="btn btn-info btn-comment"><i class="fa fa-commenting" aria-hidden="true"></i> Comentar</button>
-                        {{ csrf.field | raw }}
-                    </form>
+    {% if authorization.hasPermission(['project.view']) %}
+        <hr>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form action="{{ path_for('comment.project.save', { 'id': project.project_id }) }}" class="form" method="post">
+                            <div class="form-group">
+                                <textarea name="description" class="tinymce form-control" placeholder="Añade un comentario"></textarea>
+                            </div>
+                            <button name="Submit" type="submit" class="btn btn-info btn-comment"><i class="fa fa-commenting" aria-hidden="true"></i> Comentar</button>
+                            {{ csrf.field | raw }}
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">Comentarios</h4>
-                        </div>
-                        <div class="panel-collapse">
-                            {% for comment in project.comments().orderBy('created_at', 'DESC').get() %}
-                                <div class="panel-body">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <h4 class="media-heading">{{ comment.user().first().fullName() }} <small class="text-info">{{ comment.created_at.formatLocalized('%d de %B de %Y - %H:%M') }}</small></h4>
-                                            {{ comment.description | raw }}
+                <hr>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">Comentarios</h4>
+                            </div>
+                            <div class="panel-collapse">
+                                {% for comment in project.comments().orderBy('created_at', 'DESC').get() %}
+                                    <div class="panel-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">{{ comment.user().first().fullName() }} <small class="text-info">{{ comment.created_at.formatLocalized('%d de %B de %Y - %H:%M') }}</small></h4>
+                                                {{ comment.description | raw }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}

@@ -1,21 +1,23 @@
-<div class="row">
-    <div class="col-xs-12">
-        <ol class="breadcrumb">
-            {% for route in breadcrumbs.routes %}
-                <li{% if loop.last %} class="active"{% endif %}>
-                    {% if loop.last == false %}
-                        <a href="{{ path_for(route.route) }}">
-                    {% endif %}
-                        {% if route.route == 'dashboard' %}
-                            <i class="fa fa-tachometer" aria-hidden="true"></i>{% if loop.last %} Escritorio{% endif %}
-                        {% else %}
-                            {{ route.name }}
+{% if authorization.hasPermission(['project.view']) %}
+    <div class="row">
+        <div class="col-xs-12">
+            <ol class="breadcrumb">
+                {% for route in breadcrumbs.routes %}
+                    <li{% if loop.last %} class="active"{% endif %}>
+                        {% if loop.last == false %}
+                            <a href="{{ path_for(route.route) }}">
                         {% endif %}
-                    {% if loop.last == false %}
-                        </a>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ol>
+                            {% if route.route == 'dashboard' %}
+                                <i class="fa fa-tachometer" aria-hidden="true"></i>{% if loop.last %} Escritorio{% endif %}
+                            {% else %}
+                                {{ route.name }}
+                            {% endif %}
+                        {% if loop.last == false %}
+                            </a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
     </div>
-</div>
+{% endif %}
