@@ -56,6 +56,23 @@ class NotificationController
         ]);
     }
 
+    public function emptyAction(Request $request, Response $response, array $args)
+    {
+        $notifications = Notification::where('user_id', $this->auth->getUserId())
+            ->where('is_readed', 0)
+            ->get();
+
+        foreach ($notifications as $notification) {
+            $notification->is_readed = 1;
+
+            $notification->save();
+        }
+
+        $route = $notification->notificable_type === 'App\Entities\Task' ? 'task.show' : 'project.show';
+
+        return $response->withRedirect($request->getHeader('HTTP_REFERER')[0]);
+    }
+
     public function showAction(Request $request, Response $response, array $args)
     {
         $notification = Notification::findOrFail($args['id']);

@@ -27,7 +27,8 @@ after('deploy', 'success');
 // Define a server for deployment.
 // Let's name it "prod" and use port 22.
 host('scl.prs3.expomark.es')
-    ->user('root')
+    ->user('deploy')
+    ->identityFile('~/.ssh/do_rsa')
     ->stage('production')
     ->set('deploy_path', '/var/www/gemini.expomark.es'); // Define the base path to deploy your project to.
 
@@ -47,10 +48,8 @@ set('http_user', 'www-data');
 set('keep_releases', 2);
 
 task('reload:server', function () {
-    // run('service nginx reload');
-    // run('service php-fcgi-tedae-org restart');
-    run('/etc/init.d/nginx reload');
-    run('/etc/init.d/php7.1-fpm restart');
+    run('sudo service nginx reload');
+    run('sudo service php7.1-fpm reload');
 });
 
 after('deploy', 'reload:server');

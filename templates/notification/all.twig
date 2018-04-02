@@ -1,6 +1,12 @@
 {% if notifications|length > 0 %}
     <a href="#0" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell fa-lg text-danger" aria-hidden="true"></i><span class="badge">{{ notifications | length }}</span> <span class="caret"></span></a>
     <ul class="dropdown-menu" role="menu">
+        <li class="text-right">
+            <a href="{{ path_for('notification.empty') }}">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li role="separator" class="divider"></li>
         {% for notification in notifications %}
             <li>
                 <a href="{{ path_for('notification.show', { 'id': notification.notification_id }) }}">

@@ -160,6 +160,8 @@ $app->group('', function () {
     $this->group('/notification', function () {
         // All notifications
         $this->get('/all', 'NotificationController:allAction')->setName('notification.all');
+        // Empty notifications
+        $this->get('/empty', 'NotificationController:emptyAction')->setName('notification.empty');
         // Show Notification
         $this->get('/show/{id:[0-9]+}', 'NotificationController:showAction')->setName('notification.show');
     });
