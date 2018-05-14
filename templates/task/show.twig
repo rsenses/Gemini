@@ -141,7 +141,18 @@
                             {% if track.is_completed %}
                                 <tr>
                                     <td>{{ track.created_at|date('Y/m/d') }}</td>
-                                    <td>{{ track.created_at|date('H:i:s', 'Europe/Madrid') }}</td>
+                                    <td>
+                                        <div class="editdate">
+                                            {{ track.created_at|date('H:i:s', 'Europe/Madrid') }}
+                                        </div>
+                                        <form action="{{ path_for('timetrack.modify', { 'id': track.time_track_id }) }}" ic-post-to="{{ path_for('timetrack.modify', { 'id': track.time_track_id }) }}" ic-target="closest td" method="post">
+                                            <div class="input-group datetimepicker hidden">
+                                                <input type="text" name="created_at" class="form-control" data-date-format="YYYY-MM-DD HH:mm:ss" value="{{ track.created_at }}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
+                                            </div>
+                                            {{ csrf.field | raw }}
+                                        </form>
+                                    </td>
                                     <td>
                                         <div class="editdate">
                                             {{ track.updated_at|date('H:i:s', 'Europe/Madrid') }}

@@ -1,4 +1,5 @@
 <?php
+
 // Home
 $app->get('/', 'HomeController:indexAction')->setName('home');
 

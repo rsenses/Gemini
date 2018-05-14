@@ -1,4 +1,5 @@
 <?php
+
 // Application middleware
 // it's executed in an ascending order
 // Slim 3 Middleware Execution Order (last in, first executed)

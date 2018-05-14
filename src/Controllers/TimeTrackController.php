@@ -7,16 +7,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
 use App\Auth\AuraAuth;
-use App\Upload\Upload;
 use Slim\Flash\Messages;
 use App\Validation\ValidatorInterface;
-use Respect\Validation\Validator as v;
 use Slim\Interfaces\RouterInterface;
-use Exception;
-use Cocur\Slugify\Slugify;
-use Carbon\Carbon;
 use Slim\Csrf\Guard;
-use JasonGrimes\Paginator;
 
 use App\Entities\TimeTrack;
 use App\Entities\Task;
@@ -82,24 +76,13 @@ class TimeTrackController
     {
         $timeTrack = TimeTrack::findOrFail($args['id']);
 
-        // $rules = [
-            // 'created_at' => v::notEmpty()->min($request->getParam('created_at'))->date(),
-            // 'updated_at' => v::notEmpty()->min($request->getParam('updated_at'))->date(),
-        // ];
+        if ($request->getParam('created_at')) {
+            $timeTrack->created_at = $request->getParam('created_at');
+        }
 
-        // $validation = $this->validator->validate($request, $rules);
-
-        // if ($validation->failed()) {
-        //     $this->flash->addMessage('danger', 'Tu contador no ha sido guardada, revisa los errores en el formulario.');
-
-        //     return $response->withRedirect($this->router->pathFor('task.show', [
-        //         'id' => $timeTrack->task_id,
-        //     ]));
-        // }
-
-
-        // $timeTrack->created_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('created_at'));
-        $timeTrack->updated_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->getParam('updated_at'));
+        if ($request->getParam('updated_at')) {
+            $timeTrack->updated_at = $request->getParam('updated_at');
+        }
 
         $timeTrack->save();
 
