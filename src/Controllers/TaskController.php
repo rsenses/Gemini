@@ -230,8 +230,11 @@ class TaskController
     {
         $task = Task::findOrFail($args['id']);
 
-        $staff = User::where('email', 'LIKE', '%@expomark.es')
-            ->orWhere('email', 'LIKE', '%@metech.es')
+        $staff = User::where('is_active', 1)
+            ->where(function ($q) {
+                $q->where('email', 'LIKE', '%@expomark.es')
+                    ->orWhere('email', 'LIKE', '%@metech.es');
+            })
             ->orderBy('first_name', 'ASC')
             ->get();
 
