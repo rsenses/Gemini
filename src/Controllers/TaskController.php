@@ -7,18 +7,13 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
 use App\Auth\AuraAuth;
-use App\Upload\Upload;
 use Slim\Flash\Messages;
 use App\Validation\ValidatorInterface;
 use Respect\Validation\Validator as v;
 use Slim\Interfaces\RouterInterface;
-use Exception;
-use Cocur\Slugify\Slugify;
 use Carbon\Carbon;
 use Slim\Csrf\Guard;
-use JasonGrimes\Paginator;
 
-use App\Entities\Client;
 use App\Entities\Project;
 use App\Entities\Task;
 use App\Entities\User;
@@ -84,7 +79,7 @@ class TaskController
                 'start' => $task->created_at->toDateString(),
                 'end' => $task->due_at->toDateString(),
                 'color' => $task->project->color,
-                'url' => '/task/show/'.$task->task_id,
+                'url' => '/task/show/' . $task->task_id,
             ];
         }
 
@@ -197,8 +192,11 @@ class TaskController
 
     public function newAction(Request $request, Response $response, array $args)
     {
-        $staff = User::where('email', 'LIKE', '%@expomark.es')
-            ->orWhere('email', 'LIKE', '%@metech.es')
+        $staff = User::where('is_active', 1)
+            ->where(function ($q) {
+                $q->where('email', 'LIKE', '%@expomark.es')
+                    ->orWhere('email', 'LIKE', '%@metech.es');
+            })
             ->orderBy('first_name', 'ASC')
             ->get();
 

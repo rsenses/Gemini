@@ -7,16 +7,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
 use App\Auth\AuraAuth;
-use App\Upload\Upload;
 use Slim\Flash\Messages;
 use App\Validation\ValidatorInterface;
 use Respect\Validation\Validator as v;
 use Slim\Interfaces\RouterInterface;
-use Exception;
-use Cocur\Slugify\Slugify;
 use Carbon\Carbon;
 use Slim\Csrf\Guard;
-use JasonGrimes\Paginator;
 
 use App\Entities\Client;
 use App\Entities\Project;
@@ -66,9 +62,9 @@ class ProjectController
 
         $projects = Project::whereNull('done_at')
             ->where('is_active', 1)
-            ->where(function($q) use($staffId) {
+            ->where(function ($q) use ($staffId) {
                 $q->where('project.user_id', $staffId);
-                $q->orWhereHas('users', function($q) use ($staffId) {
+                $q->orWhereHas('users', function ($q) use ($staffId) {
                     $q->where('user.user_id', $staffId);
                 });
             })
@@ -86,9 +82,9 @@ class ProjectController
 
         $projects = Project::whereNull('done_at')
             ->where('is_active', 0)
-            ->where(function($q) use($staffId) {
+            ->where(function ($q) use ($staffId) {
                 $q->where('project.user_id', $staffId);
-                $q->orWhereHas('users', function($q) use ($staffId) {
+                $q->orWhereHas('users', function ($q) use ($staffId) {
                     $q->where('user.user_id', $staffId);
                 });
             })
@@ -127,13 +123,13 @@ class ProjectController
             ->whereNotNull('started_at')
             ->whereNotNull('due_at')
             ->where('is_active', 1)
-            ->where(function($q) use($staffId) {
+            ->where(function ($q) use ($staffId) {
                 $q->where('project.user_id', $staffId);
-                $q->orWhereHas('users', function($q) use ($staffId) {
+                $q->orWhereHas('users', function ($q) use ($staffId) {
                     $q->where('user.user_id', $staffId);
                 });
             })
-            ->whereDoesntHave('tags', function($query) {
+            ->whereDoesntHave('tags', function ($query) {
                 $query->where('tag.slug', '=', 'mantenimiento')
                     ->orWhere('tag.slug', '=', 'contenidos')
                     ->orWhere('tag.slug', '=', 'colaboradores');
@@ -148,7 +144,7 @@ class ProjectController
                 'start' => $project->started_at->toDateString(),
                 'end' => $project->due_at->toDateString(),
                 'color' => $project->color,
-                'url' => '/project/show/'.$project->project_id,
+                'url' => '/project/show/' . $project->project_id,
             ];
         }
 
@@ -174,7 +170,7 @@ class ProjectController
         $projects = Project::whereRaw('MATCH (name, description, short_description) AGAINST (?)', [$q])
             ->orWhere('project_id', $q)
             ->orWhereHas('client', function ($query) use ($q) {
-                $query->where('name', 'like', '%'.$q.'%');
+                $query->where('name', 'like', '%' . $q . '%');
             })
             ->orderByRaw('(`project`.`due_at` < CURDATE()),
                 (CASE WHEN `project`.`due_at` > CURDATE() THEN `project`.`due_at` end) ASC,
@@ -229,8 +225,8 @@ class ProjectController
         $tagId = $args['id'];
 
         $projects = Project::whereHas('tags', function ($query) use ($tagId) {
-                $query->where('tag.tag_id', $tagId);
-            })
+            $query->where('tag.tag_id', $tagId);
+        })
             ->whereNull('done_at')
             ->orderBy('due_at', 'ASC')
             ->get();
@@ -244,8 +240,11 @@ class ProjectController
     {
         $clients = Client::orderBy('name', 'ASC')->get();
 
-        $staff = User::where('email', 'LIKE', '%@expomark.es')
-            ->orWhere('email', 'LIKE', '%@metech.es')
+        $staff = User::where('is_active', 1)
+            ->where(function ($q) {
+                $q->where('email', 'LIKE', '%@expomark.es')
+                    ->orWhere('email', 'LIKE', '%@metech.es');
+            })
             ->orderBy('first_name', 'ASC')
             ->get();
 
