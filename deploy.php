@@ -50,7 +50,7 @@ set('keep_releases', 2);
 
 task('reload:server', function () {
     run('sudo service nginx reload');
-    run('sudo service php7.1-fpm restart');
+    run('sudo service php7.2-fpm restart');
 });
 
 after('deploy', 'reload:server');
