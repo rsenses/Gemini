@@ -1,7 +1,12 @@
 {
-    "name": "slim/slim-skeleton",
-    "description": "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework", "rest", "router", "psr7"],
+    "name": "gemini",
+    "description": "Gemini de expomark",
+    "keywords": [
+        "microframework",
+        "rest",
+        "router",
+        "psr7"
+    ],
     "homepage": "http://github.com/slimphp/Slim-Skeleton",
     "license": "MIT",
     "authors": [
