@@ -31,7 +31,7 @@ class Project extends \Illuminate\Database\Eloquent\Model
 
     public function client()
     {
-        return $this->belongsTo('App\Entities\Client');
+        return $this->belongsTo('App\Entities\Client', 'client_id');
     }
 
     public function comments()
