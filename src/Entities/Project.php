@@ -51,7 +51,7 @@ class Project extends \Illuminate\Database\Eloquent\Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Entities\Tag');
+        return $this->belongsToMany('App\Entities\Tag', 'project_tag', 'project_id', 'tag_id');
     }
 
     public function tasks()
@@ -61,11 +61,11 @@ class Project extends \Illuminate\Database\Eloquent\Model
 
     public function user()
     {
-        return $this->belongsTo('App\Entities\User');
+        return $this->belongsTo('App\Entities\User', 'user_id');
     }
 
     public function users()
     {
-        return $this->belongsToMany('App\Entities\User');
+        return $this->belongsToMany('App\Entities\User', 'project_user', 'project_id', 'user_id');
     }
 }

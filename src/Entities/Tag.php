@@ -13,7 +13,7 @@ class Tag extends \Illuminate\Database\Eloquent\Model
 
     public function projects()
     {
-        return $this->belongsToMany('App\Entities\Project');
+        return $this->belongsToMany('App\Entities\Project', 'project_tag', 'tag_id', 'project_id');
     }
 
     public function users()

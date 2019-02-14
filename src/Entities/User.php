@@ -31,12 +31,12 @@ class User extends \Illuminate\Database\Eloquent\Model
 
     public function projects()
     {
-        return $this->hasMany('App\Entities\Project');
+        return $this->hasMany('App\Entities\Project', 'user_id');
     }
 
     public function projectsAssigned()
     {
-        return $this->belongsToMany('App\Entities\Project');
+        return $this->belongsToMany('App\Entities\Project', 'project_user', 'user_id', 'project_id');
     }
 
     public function roles()
