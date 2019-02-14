@@ -48,6 +48,6 @@ class Task extends \Illuminate\Database\Eloquent\Model
 
     public function timetracks()
     {
-        return $this->hasMany('App\Entities\TimeTrack');
+        return $this->hasMany('App\Entities\TimeTrack', 'task_id');
     }
 }

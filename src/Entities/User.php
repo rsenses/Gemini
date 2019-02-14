@@ -41,9 +41,9 @@ class User extends \Illuminate\Database\Eloquent\Model
 
     public function roles()
     {
-        return $this->belongsToMany('App\Entities\Role');
+        return $this->belongsToMany('App\Entities\Role', 'role_user', 'user_id', 'role_id');
     }
-    
+
     public function tags()
     {
         return $this->belongsToMany('App\Entities\Tag');
@@ -51,7 +51,7 @@ class User extends \Illuminate\Database\Eloquent\Model
 
     public function fullName()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function setPassword($password)

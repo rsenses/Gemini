@@ -33,10 +33,10 @@ class BreadCrumbsMiddleware
         ];
 
         //GET THE NAME OF CURRENT SELECTED PAGE
-        $routeName = $request->getAttribute('route')->getName();
+        $routeName = $request->getAttribute('route') ? $request->getAttribute('route')->getName() : null;
 
         //BUILD breadcrumbs
-        switch($routeName) {
+        switch ($routeName) {
             case 'auth.change.password':
                 $breadcrumbs['current'] = 'Cambiar Contraseña';
                 $breadcrumbs['routes'][] = [
@@ -302,6 +302,11 @@ class BreadCrumbsMiddleware
                     'url' => $this->getUrl($request, $routeName)
                 ];
                 break;
+            default:
+                $breadcrumbs['routes'][] = null;
+                $breadcrumbs['current'] = null;
+                $breadcrumbs['routes'][] = null;
+                break;
         }
 
         //ALLOW VIEW TO USE IT
@@ -311,7 +316,8 @@ class BreadCrumbsMiddleware
         return $response;
     }
 
-    private function getUrl(Request $request, $route) {
+    private function getUrl(Request $request, $route)
+    {
         $args = isset($request->getAttribute('routeInfo')[2]) ? $request->getAttribute('routeInfo')[2] : ['lang' => $this->settings['allowedLocales'][0]];
         return $this->router->pathFor($route, $args);
     }

@@ -13,6 +13,6 @@ class Role extends \Illuminate\Database\Eloquent\Model
 
     public function users()
     {
-        return $this->belongsToMany('App\Entities\User');
+        return $this->belongsToMany('App\Entities\User', 'role_user', 'role_id', 'user_id');
     }
 }

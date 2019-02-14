@@ -19,6 +19,6 @@ class TimeTrack extends \Illuminate\Database\Eloquent\Model
 
     public function task()
     {
-        return $this->belongsTo('App\Entities\Task');
+        return $this->belongsTo('App\Entities\Task', 'task_id');
     }
 }

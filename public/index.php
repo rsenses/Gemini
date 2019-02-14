@@ -1,8 +1,9 @@
 <?php
+
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
-    $url  = parse_url($_SERVER['REQUEST_URI']);
+    $url = parse_url($_SERVER['REQUEST_URI']);
     $file = __DIR__ . $url['path'];
     if (is_file($file)) {
         return false;
@@ -11,7 +12,7 @@ if (PHP_SAPI == 'cli-server') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = new Dotenv\Dotenv(__DIR__.'/../src/');
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/../src/');
 $dotenv->load();
 
 // Instantiate the app
@@ -24,7 +25,8 @@ ini_set('ignore_repeated_source', 0);
 ini_set('ignore_repeated_errors', 1); // do not log repeating errors
 // source of error plays role in determining if errors are different
 ini_set('log_errors', 1);
-ini_set('error_log', __DIR__.'/../storage/logs/'.date('Y-m-d').'_error.log');
+ini_set('error_log', __DIR__ . '/../storage/logs/' . date('Y-m-d') . '_error.log');
+
 if ($settings['settings']['displayErrorDetails']) {
     ini_set('display_errors', 1); // Mostramos los errores en pantalla
     ini_set('display_startup_errors', 1);
@@ -41,14 +43,14 @@ try {
     ];
     $db = new \PDO("{$settings['settings']['db']['driver']}:host={$settings['settings']['db']['host']};dbname={$settings['settings']['db']['database']};port={$settings['settings']['db']['port']};charset={$settings['settings']['db']['charset']}", $settings['settings']['db']['username'], $settings['settings']['db']['password'], $opt);
 } catch (\PDOException $e) {
-    die('Connect Error: '.$e->getMessage());
+    die('Connect Error: ' . $e->getMessage());
 }
 
 session_name($settings['settings']['session_name']);
+// session_set_cookie_params(14400);
+// ini_set('session.gc_maxlifetime', 14400);
+// session_set_save_handler(new App\Session\SessionHandler($db, $settings['settings']['db']['session_table']), true);
 session_start();
-session_set_cookie_params(14400);
-ini_set('session.gc_maxlifetime', 14400);
-session_set_save_handler(New App\Session\SessionHandler($db, $settings['settings']['db']['session_table']), true);
 
 $container = new \Slim\Container($settings);
 $app = new \Slim\App($container);

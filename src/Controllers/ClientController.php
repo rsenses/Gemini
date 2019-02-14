@@ -7,14 +7,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
 use App\Auth\AuraAuth;
-use App\Upload\Upload;
 use Slim\Flash\Messages;
 use App\Validation\ValidatorInterface;
 use Respect\Validation\Validator as v;
 use Slim\Interfaces\RouterInterface;
-use Exception;
-use Cocur\Slugify\Slugify;
-use Carbon\Carbon;
 use Slim\Csrf\Guard;
 
 use App\Entities\Client;
@@ -64,12 +60,12 @@ class ClientController
             'name' => filter_var($request->getParam('name'), FILTER_SANITIZE_STRING),
         ]);
 
-        return $response->withAddedHeader('X-IC-Script', "\$('#client').append(new Option('".$client->name."', ".$client->client_id.", true, true)).trigger('change');setTimeout(function(){\$('#newClient').modal('hide');}, 3000);")
+        return $response->withAddedHeader('X-IC-Script', "\$('#client').append(new Option('" . $client->name . "', " . $client->client_id . ", true, true)).trigger('change');\$('#clientModal').modal('hide');")
             ->withHeader('X-IC-Trigger', json_encode([
-            'show.alert.modal' => [
-                'alert-success',
-                'Cliente guardado correctamente.'
-            ]
-        ]));
+                'show.alert.modal' => [
+                    'alert-success',
+                    'Cliente guardado correctamente.'
+                ]
+            ]));
     }
 }
