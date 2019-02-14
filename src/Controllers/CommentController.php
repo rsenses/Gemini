@@ -7,19 +7,13 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
 use App\Auth\AuraAuth;
-use App\Upload\Upload;
 use Slim\Flash\Messages;
 use App\Validation\ValidatorInterface;
 use Respect\Validation\Validator as v;
 use Slim\Interfaces\RouterInterface;
-use Exception;
-use Cocur\Slugify\Slugify;
-use Carbon\Carbon;
-use Slim\Csrf\Guard;
 
 use App\Entities\Project;
 use App\Entities\Task;
-use App\Entities\Notification;
 
 /**
  *
@@ -27,17 +21,15 @@ use App\Entities\Notification;
 class CommentController
 {
     private $auth;
-    private $csrf;
     private $flash;
     private $logger;
     private $router;
     private $validator;
     private $view;
 
-    public function __construct(Twig $view, LoggerInterface $logger, AuraAuth $auth, Messages $flash, ValidatorInterface $validator, RouterInterface $router, Guard $csrf)
+    public function __construct(Twig $view, LoggerInterface $logger, AuraAuth $auth, Messages $flash, ValidatorInterface $validator, RouterInterface $router)
     {
         $this->auth = $auth;
-        $this->csrf = $csrf;
         $this->flash = $flash;
         $this->logger = $logger;
         $this->router = $router;
@@ -78,7 +70,7 @@ class CommentController
             if (!$notification) {
                 $task->notifications()->create([
                     'user_id' => $task->user->user_id,
-                    'description' => 'Nuevo comentario en '.$task->name,
+                    'description' => 'Nuevo comentario en ' . $task->name,
                 ]);
             }
         }
@@ -93,7 +85,7 @@ class CommentController
                 if (!$notification) {
                     $task->notifications()->create([
                         'user_id' => $user->user_id,
-                        'description' => 'Nuevo comentario en '.$task->name,
+                        'description' => 'Nuevo comentario en ' . $task->name,
                     ]);
                 }
             }
@@ -145,7 +137,7 @@ class CommentController
             if (!$notification) {
                 $project->notifications()->create([
                     'user_id' => $project->user->user_id,
-                    'description' => 'Nuevo comentario en '.$project->name,
+                    'description' => 'Nuevo comentario en ' . $project->name,
                 ]);
             }
         }
@@ -160,7 +152,7 @@ class CommentController
                 if (!$notification) {
                     $project->notifications()->create([
                         'user_id' => $user->user_id,
-                        'description' => 'Nuevo comentario en '.$project->name,
+                        'description' => 'Nuevo comentario en ' . $project->name,
                     ]);
                 }
             }

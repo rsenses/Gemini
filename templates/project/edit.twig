@@ -125,7 +125,7 @@
                             {% endif %}
                         </div>
                         <div class="col-md-2">
-                            <a href="#" class="btn btn-default" data-toggle="modal" data-target="#newClient">Nuevo <i class="fa fa-plus"></i></a>
+                            <a href="#" class="btn btn-default" data-toggle="modal" data-target="#clientModal">Nuevo <i class="fa fa-plus"></i></a>
                         </div>
                     </div>
                     <div class="form-group{{ validation_errors.contact ? ' has-error' : '' }}">
@@ -234,26 +234,31 @@
             </form>
         </div>
     </div>
-    <div class="modal fade" id="newClient" tabindex="-1" role="dialog" aria-labelledby="newClientLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form action="/client/save">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="newClientLabel">Nuevo Cliente</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="alert alert-info alert-modal alert-dismissible fade"></div>
-                        <input type="text" name="name" required class="form-control">
-                        {{ csrf.field | raw }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
-                        <button type="submit" class="btn btn-primary" ic-post-to="/client/save"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
+    <!-- Modal Cliente -->
+    <div class="modal fade" id="clientModal" tabindex="-1" role="dialog" aria-labelledby="clientModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="clientModalLabel">Nuevo Cliente</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-inline" id="clientSaveForm">
+					{{ csrf.field | raw }}
+  					<div class="form-group">
+    					<label for="clientInputName">Nombre del cliente</label>
+    					<input type="text" class="form-control" id="clientInputName" name="name" placeholder="Expomark" required>
+  					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
+				{# <button type="submit" class="btn btn-primary"form="clientSaveForm"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button> #}
+				<button type="button" class="btn btn-primary" ic-post-to="{{ path_for('client.save') }}" ic-include="#clientSaveForm" ic-indicator="#indicator"><i class="fa fa-floppy-o" aria-hidden="true"></i> <i class="fa fa-spinner fa-spin" id="indicator" style="display:none"></i> Guardar</button>
+			</div>
+			</div>
+		</div>
     </div>
 {% endblock %}
 

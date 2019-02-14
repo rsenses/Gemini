@@ -1,9 +1,10 @@
 <?php
+
 // -----------------------------------------------------------------------------
 // Action factories
 // -----------------------------------------------------------------------------
 
-$container['HomeController'] =  function ($container) {
+$container['HomeController'] = function ($container) {
     return new App\Controllers\HomeController(
         $container->view,
         $container->logger,
@@ -12,7 +13,7 @@ $container['HomeController'] =  function ($container) {
     );
 };
 
-$container['AuthController'] =  function ($container) {
+$container['AuthController'] = function ($container) {
     return new App\Controllers\Auth\AuthController(
         $container->view,
         $container->logger,
@@ -23,7 +24,7 @@ $container['AuthController'] =  function ($container) {
     );
 };
 
-$container['PasswordController'] =  function ($container) {
+$container['PasswordController'] = function ($container) {
     return new App\Controllers\Auth\PasswordController(
         $container->view,
         $container->logger,
@@ -34,7 +35,7 @@ $container['PasswordController'] =  function ($container) {
     );
 };
 
-$container['DashboardController'] =  function ($container) {
+$container['DashboardController'] = function ($container) {
     return new App\Controllers\DashboardController(
         $container->view,
         $container->logger,
@@ -42,55 +43,51 @@ $container['DashboardController'] =  function ($container) {
     );
 };
 
-$container['ProjectController'] =  function ($container) {
+$container['ProjectController'] = function ($container) {
     return new App\Controllers\ProjectController(
         $container->view,
         $container->logger,
         $container->auth,
         $container->flash,
         $container->validator,
-        $container->router,
-        $container->csrf
+        $container->router
     );
 };
 
-$container['TaskController'] =  function ($container) {
+$container['TaskController'] = function ($container) {
     return new App\Controllers\TaskController(
         $container->view,
         $container->logger,
         $container->auth,
         $container->flash,
         $container->validator,
-        $container->router,
-        $container->csrf
+        $container->router
     );
 };
 
-$container['TimeTrackController'] =  function ($container) {
+$container['TimeTrackController'] = function ($container) {
     return new App\Controllers\TimeTrackController(
         $container->view,
         $container->logger,
         $container->auth,
         $container->flash,
         $container->validator,
-        $container->router,
-        $container->csrf
+        $container->router
     );
 };
 
-$container['CommentController'] =  function ($container) {
+$container['CommentController'] = function ($container) {
     return new App\Controllers\CommentController(
         $container->view,
         $container->logger,
         $container->auth,
         $container->flash,
         $container->validator,
-        $container->router,
-        $container->csrf
+        $container->router
     );
 };
 
-$container['NotificationController'] =  function ($container) {
+$container['NotificationController'] = function ($container) {
     return new App\Controllers\NotificationController(
         $container->view,
         $container->logger,
@@ -99,19 +96,18 @@ $container['NotificationController'] =  function ($container) {
     );
 };
 
-$container['ClientController'] =  function ($container) {
+$container['ClientController'] = function ($container) {
     return new App\Controllers\ClientController(
         $container->view,
         $container->logger,
         $container->auth,
         $container->flash,
         $container->validator,
-        $container->router,
-        $container->csrf
+        $container->router
     );
 };
 
-$container['UserController'] =  function ($container) {
+$container['UserController'] = function ($container) {
     return new App\Controllers\UserController(
         $container->view,
         $container->logger,
@@ -124,14 +120,13 @@ $container['UserController'] =  function ($container) {
 };
 
 
-$container['ClientProjectController'] =  function ($container) {
+$container['ClientProjectController'] = function ($container) {
     return new App\Controllers\Client\ProjectController(
         $container->view,
         $container->logger,
         $container->auth,
         $container->flash,
         $container->validator,
-        $container->router,
-        $container->csrf
+        $container->router
     );
 };

@@ -32,7 +32,7 @@ $app->add(new \App\Middlewares\CsrfViewMiddleware(
     $container->csrf
 ));
 
-$app->add($container->csrf);
+// $app->add($container->csrf);
 
 // Appending data to a view
 $app->add(function ($request, $response, $next) {

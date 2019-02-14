@@ -10,7 +10,6 @@ use App\Auth\AuraAuth;
 use Slim\Flash\Messages;
 use App\Validation\ValidatorInterface;
 use Slim\Interfaces\RouterInterface;
-use Slim\Csrf\Guard;
 
 use App\Entities\TimeTrack;
 use App\Entities\Task;
@@ -21,17 +20,15 @@ use App\Entities\Task;
 class TimeTrackController
 {
     private $auth;
-    private $csrf;
     private $flash;
     private $logger;
     private $router;
     private $validator;
     private $view;
 
-    public function __construct(Twig $view, LoggerInterface $logger, AuraAuth $auth, Messages $flash, ValidatorInterface $validator, RouterInterface $router, Guard $csrf)
+    public function __construct(Twig $view, LoggerInterface $logger, AuraAuth $auth, Messages $flash, ValidatorInterface $validator, RouterInterface $router)
     {
         $this->auth = $auth;
-        $this->csrf = $csrf;
         $this->flash = $flash;
         $this->logger = $logger;
         $this->router = $router;
