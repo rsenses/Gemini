@@ -20,7 +20,7 @@ class Notification extends \Illuminate\Database\Eloquent\Model
 
     public function user()
     {
-        return $this->belongsTo('App\Entities\User');
+        return $this->belongsTo('App\Entities\User', 'user_id');
     }
 
     public function notificable()

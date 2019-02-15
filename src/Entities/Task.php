@@ -33,7 +33,7 @@ class Task extends \Illuminate\Database\Eloquent\Model
 
     public function project()
     {
-        return $this->belongsTo('App\Entities\Project');
+        return $this->belongsTo('App\Entities\Project', 'project_id');
     }
 
     public function staff()
@@ -43,7 +43,7 @@ class Task extends \Illuminate\Database\Eloquent\Model
 
     public function user()
     {
-        return $this->belongsTo('App\Entities\User');
+        return $this->belongsTo('App\Entities\User', 'user_id');
     }
 
     public function timetracks()

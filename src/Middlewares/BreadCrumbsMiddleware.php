@@ -37,6 +37,14 @@ class BreadCrumbsMiddleware
 
         //BUILD breadcrumbs
         switch ($routeName) {
+            case 'dashboard':
+                $breadcrumbs['current'] = 'Escritorio';
+                $breadcrumbs['routes'][] = [
+                    'name' => $breadcrumbs['current'],
+                    'route' => $routeName,
+                    'url' => $this->getUrl($request, $routeName)
+                ];
+                break;
             case 'auth.change.password':
                 $breadcrumbs['current'] = 'Cambiar Contraseña';
                 $breadcrumbs['routes'][] = [

@@ -21,12 +21,12 @@ class User extends \Illuminate\Database\Eloquent\Model
 
     public function comments()
     {
-        return $this->hasMany('App\Entities\Comment');
+        return $this->hasMany('App\Entities\Comment', 'project_id');
     }
 
     public function notifications()
     {
-        return $this->hasMany('App\Entities\Notification');
+        return $this->hasMany('App\Entities\Notification', 'user_id');
     }
 
     public function projects()
@@ -46,7 +46,7 @@ class User extends \Illuminate\Database\Eloquent\Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Entities\Tag');
+        return $this->belongsToMany('App\Entities\Tag', 'tag_user', 'user_id', 'tag_id');
     }
 
     public function fullName()

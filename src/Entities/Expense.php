@@ -12,6 +12,6 @@ class Expense extends \Illuminate\Database\Eloquent\Model
 
     public function project()
     {
-        return $this->belongsTo('App\Entities\Project');
+        return $this->belongsTo('App\Entities\Project', 'project_id');
     }
 }

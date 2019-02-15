@@ -18,6 +18,6 @@ class Tag extends \Illuminate\Database\Eloquent\Model
 
     public function users()
     {
-        return $this->belongsToMany('App\Entities\User');
+        return $this->belongsToMany('App\Entities\User', 'tag_user', 'tag_id', 'user_id');
     }
 }

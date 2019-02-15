@@ -41,7 +41,7 @@ class Project extends \Illuminate\Database\Eloquent\Model
 
     public function expenses()
     {
-        return $this->hasMany('App\Entities\Expense');
+        return $this->hasMany('App\Entities\Expense', 'project_id');
     }
 
     public function notifications()
@@ -56,7 +56,7 @@ class Project extends \Illuminate\Database\Eloquent\Model
 
     public function tasks()
     {
-        return $this->hasMany('App\Entities\Task');
+        return $this->hasMany('App\Entities\Task', 'project_id');
     }
 
     public function user()
