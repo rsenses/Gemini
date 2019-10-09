@@ -164,7 +164,7 @@ class ProjectController
     {
         $q = $request->getQueryParam('q');
 
-        $projects = Project::whereRaw('MATCH (name, description, short_description) AGAINST (?)', [$q])
+        $projects = Project::whereRaw('MATCH (name, description) AGAINST (?)', [$q])
             ->orWhere('project_id', $q)
             ->orWhereHas('client', function ($query) use ($q) {
                 $query->where('name', 'like', '%' . $q . '%');
@@ -453,12 +453,11 @@ class ProjectController
             'name' => v::notEmpty(),
             'color' => v::optional(v::hexRgbColor()),
             'tags' => v::notEmpty(),
-            'short_description' => v::notEmpty(),
             'description' => v::notEmpty(),
             'client' => v::notEmpty()->intVal(),
             'contact' => v::notEmpty(),
-            'started_at' => v::notEmpty()->date(),
-            'due_at' => v::notEmpty()->min($request->getParam('started_at'))->date(),
+            'started_at' => v::optional(v::date()),
+            'due_at' => v::optional(v::min($request->getParam('started_at'))->date()),
             'issued_at' => v::optional(v::date()),
         ];
 
@@ -473,13 +472,12 @@ class ProjectController
         $project = Project::create([
             'user_id' => filter_var($request->getParam('user'), FILTER_SANITIZE_NUMBER_INT),
             'name' => filter_var($request->getParam('name'), FILTER_SANITIZE_STRING),
-            'short_description' => filter_var($request->getParam('short_description'), FILTER_SANITIZE_STRING),
             'description' => $request->getParam('description'),
             'color' => $request->getParam('color') ? filter_var($request->getParam('color'), FILTER_SANITIZE_STRING) : $this->colorPicker(),
             'client_id' => filter_var($request->getParam('client'), FILTER_SANITIZE_NUMBER_INT),
             'contact' => filter_var($request->getParam('contact'), FILTER_SANITIZE_STRING),
-            'started_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('started_at')),
-            'due_at' => Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')),
+            'started_at' => $request->getParam('started_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('started_at')) : null,
+            'due_at' => $request->getParam('due_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')) : null,
             'budget' => filter_var($request->getParam('budget'), FILTER_SANITIZE_STRING),
             'bill' => $request->getParam('bill') ? filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING) : null,
             'issued_at' => $request->getParam('issued_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('issued_at')) : null,
@@ -522,7 +520,6 @@ class ProjectController
             'name' => v::notEmpty(),
             'color' => v::notEmpty()->hexRgbColor(),
             'tags' => v::notEmpty(),
-            'short_description' => v::notEmpty(),
             'description' => v::notEmpty(),
             'client' => v::notEmpty()->intVal(),
             'contact' => v::notEmpty(),
@@ -546,11 +543,10 @@ class ProjectController
         $project->user_id = filter_var($request->getParam('user'), FILTER_SANITIZE_NUMBER_INT);
         $project->name = filter_var($request->getParam('name'), FILTER_SANITIZE_STRING);
         $project->color = filter_var($request->getParam('color'), FILTER_SANITIZE_STRING);
-        $project->short_description = filter_var($request->getParam('short_description'), FILTER_SANITIZE_STRING);
         $project->description = $request->getParam('description');
         $project->client_id = filter_var($request->getParam('client'), FILTER_SANITIZE_NUMBER_INT);
-        $project->started_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('started_at'));
-        $project->due_at = Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at'));
+        $project->started_at = $request->getParam('started_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('started_at')) : null;
+        $project->due_at = $request->getParam('due_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('due_at')) : null;
         $project->budget = filter_var($request->getParam('budget'), FILTER_SANITIZE_STRING);
         $project->bill = $request->getParam('bill') ? filter_var($request->getParam('bill'), FILTER_SANITIZE_STRING) : null;
         $project->issued_at = $request->getParam('issued_at') ? Carbon::createFromFormat('Y-m-d H:i', $request->getParam('issued_at')) : null;

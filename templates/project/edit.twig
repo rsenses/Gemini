@@ -49,17 +49,6 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="form-group{{ validation_errors.short_description ? ' has-error' : '' }}">
-                    <label class="col-md-3 control-label" for="short_description">Descripción breve<span class="text-danger">*</span></label>
-                    <div class="col-md-9">
-                        <input class="form-control" id="short_description" type="text" name="short_description" value="{{ old_input.short_description ?? project.short_description | raw }}" required>
-                        {% if validation_errors.short_description %}
-                            <span class="help-block">
-                                {{ validation_errors.short_description | first }}
-                            </span>
-                        {% endif %}
-                    </div>
-                </div>
                 <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
                     <div class="col-md-9">
@@ -144,10 +133,10 @@
                 <fieldset>
                     <legend>Entrega</legend>
                     <div class="form-group{{ validation_errors.started_at ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Fecha de inicio<span class="text-danger">*</span></label>
+                        <label class="col-md-3 control-label">Fecha de inicio</label>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ old_input.started_at ?? project.started_at }}" required>
+                                <input type="text" name="started_at" id="started_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ old_input.started_at ?? project.started_at }}">
                                 <span class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                             </div>
                             {% if validation_errors.started_at %}
@@ -158,10 +147,10 @@
                         </div>
                     </div>
                     <div class="form-group{{ validation_errors.due_at ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Fecha de entrega<span class="text-danger">*</span></label>
+                        <label class="col-md-3 control-label">Fecha de entrega</label>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ old_input.due_at ?? project.due_at }}" required>
+                                <input type="text" name="due_at" id="due_at" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm" value="{{ old_input.due_at ?? project.due_at }}">
                                 <span class="input-group-addon"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></span>
                             </div>
                             {% if validation_errors.due_at %}
