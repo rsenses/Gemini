@@ -9,6 +9,67 @@ body {
     padding-top: 50px;
 }
 
+.online{
+	background-color: #6E6E6E;
+}
+
+.mantenimiento{
+	background-color: #B40431;
+}
+
+.desarrollo{
+	background-color: #8A084B;
+}
+
+.logistica{
+	background-color: #B404AE;
+}
+
+.diseno{
+	background-color: #29088A;
+}
+
+.hosting{
+	background-color: #DF7401;
+}
+
+.metech{
+	background-color: #BF00FF;
+}
+
+.expomark{
+	background-color: #86B404;
+}
+
+.contenidos{
+	background-color: #088A85;
+}
+
+.colaboradores{
+	background-color: #088A68;
+}
+
+.smart{
+	background-color: #0B3B2E;
+}
+
+.calibracion{
+	color: black;
+	background-color: #A9F5D0;
+}
+
+.mensual{
+	background-color: #0080FF;
+}
+
+.trimestral{
+	background-color: #088A08;
+}
+
+.anual{
+	color: black;
+	background-color: #F7FE2E;
+}
 /* Artículos de coña */
 /*
 .navbar-inverse {
