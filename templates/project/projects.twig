@@ -50,7 +50,7 @@
                                 <td>
                                         {% for tag in project.tags %}
                                             {% if authorization.hasPermission(['project.view']) %}
-                                                <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}">
+                                                <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}" class="badge badge-{{ tag.slug }}">
                                             {% endif %}
 
                                             {{ tag.name }}
