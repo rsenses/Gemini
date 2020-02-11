@@ -60,7 +60,7 @@
                         <small>
                             {% for tag in project.tags %}
                                 {% if authorization.hasPermission(['project.view']) %}
-                                    <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}" class="label label-default">
+                                    <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}" class="label label-default badge-{{ tag.slug }}">
                                 {% else %}
                                     <span class="label label-default">
                                 {% endif %}
