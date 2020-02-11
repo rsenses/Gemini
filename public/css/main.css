@@ -9,64 +9,64 @@ body {
     padding-top: 50px;
 }
 
-.online{
+.badge-online{
 	background-color: #6E6E6E;
 }
 
-.mantenimiento{
+.badge-mantenimiento{
 	background-color: #B40431;
 }
 
-.desarrollo{
+.badge-desarrollo{
 	background-color: #8A084B;
 }
 
-.logistica{
+.badge-logistica{
 	background-color: #B404AE;
 }
 
-.diseno{
+.badge-diseno{
 	background-color: #29088A;
 }
 
-.hosting{
+.badge-hosting{
 	background-color: #DF7401;
 }
 
-.metech{
+.badge-metech{
 	background-color: #BF00FF;
 }
 
-.expomark{
+.badge-expomark{
 	background-color: #86B404;
 }
 
-.contenidos{
+.badge-contenidos{
 	background-color: #088A85;
 }
 
-.colaboradores{
+.badge-colaboradores{
 	background-color: #088A68;
 }
 
-.smart{
+.badge-smart{
 	background-color: #0B3B2E;
 }
 
-.calibracion{
+.badge-calibracion{
 	color: black;
 	background-color: #A9F5D0;
 }
 
-.mensual{
+.badge-mensual{
 	background-color: #0080FF;
 }
 
-.trimestral{
+.badge-trimestral{
 	background-color: #088A08;
 }
 
-.anual{
+.badge-anual{
 	color: black;
 	background-color: #F7FE2E;
 }
