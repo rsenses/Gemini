@@ -43,7 +43,7 @@
                 </td>
                 <td>
                     {% if authorization.hasPermission(['project.view']) %}
-                        <a href="{{ path_for('project.client', {'id': project.user_id }) }}">
+                        <a href="{{ path_for('project.user', {'id': project.user_id }) }}">
                     {% endif %}
 
                     {{ project.user.fullname() }}
