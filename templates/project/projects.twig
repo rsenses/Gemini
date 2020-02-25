@@ -17,80 +17,8 @@
                         <a href="{{ path_for('project.new') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Crear un proyecto</a>
                     </p>
                 {% endif %}
-                <table data-toggle="table" data-sort-name="due" data-sort-order="asc" data-search="true" data-show-columns="true">
-                    <thead>
-                        <tr>
-                            <th data-field="id" data-sortable="true">Cód.</th>
-                            <th data-field="client" data-sortable="true">Cliente</th>
-                            <th data-field="name" data-sortable="true">Nombre</th>
-                            <th data-field="tags" data-sortable="true">Etiquetas</th>
-                            <th data-field="staff" data-sortable="true">Responsable</th>
-                            <th data-field="due" data-sortable="true">Cierre</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for project in projects %}
-                            <tr class="{{ project.user_id != auth.user.user_id ? 'assigned' : '' }}">
-                                <td class="text-center">{{ project.project_id }}</td>
-                                <td>
-                                    {% if authorization.hasPermission(['project.view']) %}
-                                        <a href="{{ path_for('project.client', {'id': project.client_id }) }}">
-                                    {% endif %}
-
-                                    {{ project.client.name }}
-
-                                    {% if authorization.hasPermission(['project.view']) %}
-                                        </a>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <a href="{{ path_for('project.show', {'id': project.project_id }) }}">{{ project.name | raw }}</a>
-                                </td>
-                                <td>
-                                        {% for tag in project.tags %}
-                                            {% if authorization.hasPermission(['project.view']) %}
-                                                <a href="{{ path_for('project.tag', { 'id': tag.tag_id }) }}" class="badge badge-{{ tag.slug }}">
-                                            {% endif %}
-
-                                            {{ tag.name }}
-
-                                            {% if authorization.hasPermission(['project.view']) %}
-                                                </a>
-                                            {% endif %}
-                                        {% endfor %}
-                                </td>
-                                <td>
-                                    {% if authorization.hasPermission(['project.view']) %}
-                                        <a href="{{ path_for('project.client', {'id': project.user_id }) }}">
-                                    {% endif %}
-
-                                    {{ project.user.fullname() }}
-
-                                    {% if authorization.hasPermission(['project.view']) %}
-                                        </a>
-                                    {% endif %}
-                                </td>
-                                <td class="text-nowrap">{{ project.due_at | date("Y-m-d") }}</td>
-                                <td class="text-nowrap text-center">
-                                    {% if project.is_printed == 0 and authorization.hasPermission(['project.view']) %}
-                                        <a href="{{ path_for('project.print', {'id': project.project_id }) }}" target="_blank" class="text-warning">
-                                            <i class="fa fa-print" aria-hidden="true"></i>
-                                        </a>
-                                    {% endif %}
-                                    {% if project.due_at < "now" | date_modify("-1 week") | date("Y-m-d H:i:s") %}
-                                        <abbr title="¡Proyecto caducado!">
-                                            <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
-                                        </abbr>
-                                    {% endif %}
-                                    <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="Información" data-content="{% if project.is_active == 0 %}Proyecto en el Limbo<br>{% endif %}El encargado es {{ project.user.fullname() }}<br>{% if project.bill %}Facturado: {{ project.bill }} {% endif %}" data-placement="left">
-                                        <i class="fa fa-info-circle text-info" aria-hidden="true"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                
+                {% include 'partials/projects.twig' %}
             </div>
         </div>
     {% else %}
