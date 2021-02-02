@@ -33,7 +33,8 @@ class AuraAuth
             PDO::ATTR_EMULATE_PREPARES => false,
         ];
         $pdo = new PDO("{$settings['driver']}:host={$settings['host']};dbname={$settings['database']};port={$settings['port']};charset={$settings['charset']}", $settings['username'], $settings['password'], $opt);
-        $hash = new PasswordVerifier(PASSWORD_BCRYPT);
+        $algo = null;
+        $hash = new PasswordVerifier($algo);
         $this->pdoAdapter = $this->authFactory->newPdoAdapter($pdo, $hash, $cols, $from, $where);
     }
 

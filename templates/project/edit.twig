@@ -52,7 +52,7 @@
                 <div class="form-group{{ validation_errors.description ? ' has-error' : '' }}">
                     <label class="col-md-3 control-label" for="description">Descripción<span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <textarea class="form-control tinymce" rows="3" id="description" name="description">{{ old_input.description ?? project.description }}</textarea>
+                        <textarea class="form-control" rows="3" id="description" name="description">{{ old_input.description ?? project.description }}</textarea>
                         {% if validation_errors.description %}
                             <span class="help-block">
                                 {{ validation_errors.description | first }}
@@ -204,7 +204,7 @@
                         <div class="form-group{{ validation_errors.bill_comment ? ' has-error' : '' }}">
                             <label class="col-md-3 control-label" for="bill_comment">Comentarios</label>
                             <div class="col-md-9">
-                                <textarea class="form-control tinymce" rows="3" id="bill_comment" name="bill_comment">{{ old_input.bill_comment ?? project.bill_comment | raw }}</textarea>
+                                <textarea class="form-control" rows="3" id="bill_comment" name="bill_comment">{{ old_input.bill_comment ?? project.bill_comment | raw }}</textarea>
                                 {% if validation_errors.bill_comment %}
                                     <span class="help-block">
                                         {{ validation_errors.bill_comment | first }}
@@ -285,5 +285,10 @@
             });
         });
     </script>
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js" integrity="sha512-98e5nQTE7pmtZ3xoD5GCVKafmziXDT5WINC91MugFzF57zzBnmvGQl1N70cvdyBSWxjCOC55gq9Zn76MUgtEMQ==" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('textarea').summernote();
+         });
+    </script>
 {% endblock %}
